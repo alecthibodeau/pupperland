@@ -1,0 +1,15 @@
+.login {
+  padding: 1rem;
+  background-color: aquamarine;
+}
+
+.login-fields {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  :last-child {
+    margin-top: 1rem;
+  }
+}

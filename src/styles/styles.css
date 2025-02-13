@@ -1,0 +1,7 @@
+@import url('./header');
+@import url('./login');
+@import url('./search');
+
+body {
+  margin: 0;
+}
