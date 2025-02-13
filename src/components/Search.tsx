@@ -40,20 +40,21 @@ function Search(): React.JSX.Element {
         throw new Error('Network response was not ok');
       }
       const data = await response.json();
-      console.log('Data:', data);
+      console.log('Data:', data.resultIds);
+      getDogs(data.resultIds);
     } catch (error) {
       console.error('Error:', error);
     }
   };
 
-  async function getDogs(): Promise<void> {
+  async function getDogs(resultIds: string[]): Promise<void> {
     try {
       const response = await fetch(urlDogs, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(['NnGFTIcBOvEgQ5OCx8A1']),
+        body: JSON.stringify(resultIds),
         credentials: 'include'
       });
       if (!response.ok) {
@@ -102,9 +103,6 @@ function Search(): React.JSX.Element {
     <div className="search">
       <button onClick={searchDogs}>
         Search Dogs
-      </button>
-      <button onClick={getDogs}>
-        Get Dogs
       </button>
       <div>
         {breeds.map(renderBreedName)}
