@@ -1,4 +1,5 @@
 import React from 'react';
+
 /* Interfaces */
 import HeaderProps from '../interfaces/HeaderProps';
 
@@ -8,7 +9,7 @@ import stringValues from '../constants/string-values';
 function Header(props: HeaderProps ): React.JSX.Element {
   const { urls: { urlLogOut } } = stringValues;
 
-  async function logOut(){
+  async function logOut(): Promise<void> {
     try {
       const response = await fetch(urlLogOut, {
         method: 'POST',

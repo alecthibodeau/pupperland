@@ -10,7 +10,7 @@ function Login(props: LoginProps): React.JSX.Element {
   const [name, setName] = useState<string>('potato');
   const { urls: { urlLogIn } } = stringValues;
 
-  async function logIn() {
+  async function logIn(): Promise<void> {
     try {
       const response = await fetch(urlLogIn, {
         method: 'POST',
@@ -37,13 +37,13 @@ function Login(props: LoginProps): React.JSX.Element {
           type="text"
           placeholder="Name"
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={(event) => setName(event.target.value)}
         />
         <input
           type="text"
           placeholder="Email"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(event) => setEmail(event.target.value)}
         />
         <button onClick={logIn}>
           Log In

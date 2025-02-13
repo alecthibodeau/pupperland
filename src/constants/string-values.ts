@@ -1,9 +1,12 @@
-const baseUrl = 'https://frontend-take-home-service.fetch.com';
+const urlBase = 'https://frontend-take-home-service.fetch.com';
+const urlDogs = `${urlBase}/dogs`;
 
 const urls: { [key: string]: string } = {
-  urlBreeds: `${baseUrl}/dogs/breeds`,
-  urlLogIn: `${baseUrl}/auth/login`,
-  urlLogOut: `${baseUrl}/auth/logout`
+  urlDogs: urlDogs,
+  urlDogsBreeds: `${urlDogs}/breeds`,
+  urlDogsSearch: `${urlDogs}/search`,
+  urlLogIn: `${urlBase}/auth/login`,
+  urlLogOut: `${urlBase}/auth/logout`
 }
 
 const stringValues = {
