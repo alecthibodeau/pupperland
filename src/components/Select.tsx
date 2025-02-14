@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 
 /* Interfaces */
 import Dog from '../interfaces/Dog';
+import SelectProps from '../interfaces/SelectProps';
 
 /* Helpers */
 import formatText from '../helpers/format-text';
 
-function Select(props: { dogs: Dog[] }): React.JSX.Element {
+function Select(props: SelectProps): React.JSX.Element {
   const [selectedDogs, setSelectedDogs] = useState<{ [key: string]: boolean }>({});
   const { formatLettersAndNumbers } = formatText;
 
@@ -30,10 +31,10 @@ function Select(props: { dogs: Dog[] }): React.JSX.Element {
   }
 
   function renderCard(dog: Dog, index: number): React.JSX.Element {
-    const altText = `${dog.name} the ${dog.breed}, who is ${dog.age} years old`;
+    const altText = `${dog.name} the ${dog.breed} who is ${dog.age} years old`;
     return (
       <button
-        key={`${index}${formatLettersAndNumbers(`${dog.name}${dog.breed}`)}`}
+        key={`${index}-${formatLettersAndNumbers(`${dog.name}${dog.breed}`)}`}
         onClick={() => onClickDog(dog.id)}
         className={`dog-card-button${selectedDogs[dog.id] ? ' selected' : ''}`}
       >
@@ -54,8 +55,20 @@ function Select(props: { dogs: Dog[] }): React.JSX.Element {
 
   return (
     <>
-      <div className="selected-dogs-count">
-        {`Dogs selected: ${Object.keys(selectedDogs).length}`}
+      <div className="dog-selections">
+        <div>
+          {`Dogs selected: ${Object.keys(selectedDogs).length}`}
+        </div>
+        <div>
+          <button onClick={() => setSelectedDogs({})}>
+            Clear Selections
+          </button>
+        </div>
+        <div>
+          <button onClick={() => props.onClearResults(true)}>
+            New Search
+          </button>
+        </div>
       </div>
       <div className="dog-cards">
         {props.dogs.map(renderCard)}

@@ -91,7 +91,7 @@ function Search(): React.JSX.Element {
   function renderBreedName(breedName: string, index: number): React.JSX.Element {
     const formattedBreedName = formatLettersAndNumbers(breedName);
     return (
-      <div key={`${index}${formattedBreedName}`}>
+      <div key={`${index}-${formattedBreedName}`}>
         <input
           type="checkbox"
           id={formattedBreedName}
@@ -106,11 +106,16 @@ function Search(): React.JSX.Element {
     );
   }
 
+  function enableNewSearch(): void {
+    setDogs([]);
+    setSelectedBreeds([]);
+  }
+
   return (
     <div className="search">
       {
         dogs.length ?
-        <Select dogs={dogs} /> :
+        <Select dogs={dogs} onClearResults={enableNewSearch} /> :
         <div>
           <button onClick={searchDogs}>
             Search Dogs
