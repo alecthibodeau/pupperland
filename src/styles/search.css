@@ -1,3 +1,13 @@
 .search {
   background-color: chocolate;
 }
+
+.card {
+  width: 300px;
+  border-radius: 1rem;
+  background-color: white;
+
+  img {
+    max-width: 300px;
+  }
+}

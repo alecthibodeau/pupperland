@@ -1,10 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
+/* Interfaces */
+import Dog from '../interfaces/Dog';
+
 /* Constants */
 import stringValues from '../constants/string-values';
 
 function Search(): React.JSX.Element {
   const [breeds, setBreeds] = useState<string[]>([]);
+  const [dogs, setDogs] = useState<Dog[]>([]);
   const [selectedBreeds, setSelectedBreeds] = useState<string[]>([]);
   const { urls: { urlDogs, urlDogsBreeds, urlDogsSearch } } = stringValues;
   const allButLettersAndNumbers: RegExp = /[^a-zA-Z0-9]/g;
@@ -45,7 +49,7 @@ function Search(): React.JSX.Element {
     } catch (error) {
       console.error('Error:', error);
     }
-  };
+  }
 
   async function getDogs(resultIds: string[]): Promise<void> {
     try {
@@ -62,10 +66,11 @@ function Search(): React.JSX.Element {
       }
       const data = await response.json();
       console.log('Success:', data);
+      setDogs(data);
     } catch (error) {
       console.error('Error:', error);
     }
-  };
+  }
 
   function formatLettersAndNumbers(text: string): string {
     return text.replace(allButLettersAndNumbers, '');
@@ -99,14 +104,49 @@ function Search(): React.JSX.Element {
     );
   }
 
+  function renderCard(dog: Dog, index: number): React.JSX.Element {
+    const altText = `${dog.name} the ${dog.breed}, who is ${dog.age} years old`;
+    return (
+      <div key={index} className="card">
+        <img src={dog.img} alt={altText} />
+        <div>
+          <div>
+            <span>Name: </span>
+            <span>{dog.name}</span>
+          </div>
+          <div>
+            <span>Age: </span>
+            <span>{dog.age}</span>
+          </div>
+          <div>
+            <span>Zip Code: </span>
+            <span>{dog.zip_code}</span>
+          </div>
+          <div>
+            <span>Breed: </span>
+            <span>{dog.breed}</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="search">
-      <button onClick={searchDogs}>
-        Search Dogs
-      </button>
-      <div>
-        {breeds.map(renderBreedName)}
-      </div>
+      {
+        dogs.length ?
+        <div>
+          {dogs.map(renderCard)}
+        </div> :
+        <div>
+          <button onClick={searchDogs}>
+            Search Dogs
+          </button>
+          <div>
+            {breeds.map(renderBreedName)}
+          </div>
+        </div>
+      }
     </div>
   );
 }
