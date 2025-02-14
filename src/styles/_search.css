@@ -9,26 +9,24 @@
 }
 
 .dog-card {
-  width: 200px;
-  border-radius: 1rem;
   display: flex;
   flex-direction: column;
-  width: 200px;
+  width: var(--card-dimension);
   border: 1px solid var(--color-application-dark);
-  border-radius: 1rem;
+  border-radius: var(--card-border-radius-outer);
   margin: 1rem;
-  background-color: var(--color-green-lighter);
+  background-color: var(--color-blue-lightest);
 
   &:hover {
     box-shadow: .25rem .25rem 1rem var(--color-gray);
   }
 
   img {
-    height: 200px;
-    min-height: 200px;
+    height: var(--card-dimension);
+    min-height: var(--card-dimension);
     object-fit: cover;
-    border-top-left-radius: .875rem;
-    border-top-right-radius: .875rem;
+    border-top-left-radius: var(--card-border-radius-inner);
+    border-top-right-radius: var(--card-border-radius-inner);
     border-bottom-width: 1px;
     border-bottom-style: solid;
     border-bottom-color: var(--color-application-dark);
@@ -36,6 +34,12 @@
 }
 
 .dog-card-info {
-  padding: 1rem;
+  padding: .5rem 1rem .75rem;
+  font-size: .75rem;
+}
+
+.dog-card-info-name {
   text-align: center;
+  font-size: .875rem;
+  font-weight: 700;
 }

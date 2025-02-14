@@ -18,12 +18,18 @@
   /* Colors Hued */
   --color-blue-light: #a8e4ef;
   --color-blue-lighter: #cbf6f8;
+  --color-blue-lightest: #e2ecfb;
   --color-blue-green: #87ebc9;
   --color-green-medium: #0cc078;
   --color-green-light: #79de79;
   --color-green-lighter: #cbf8cf;
-  --color-yellow-medium: #ece37e;
+  --color-yellow-medium: #ede696;
   --color-orange-medium: #f7b045;
   --color-red-light: #fb6962;
   --color-violet: #ae66f1;
+
+  /* Dimensions */
+  --card-dimension: 200px;
+  --card-border-radius-outer: 1rem;
+  --card-border-radius-inner: .875rem;
 }

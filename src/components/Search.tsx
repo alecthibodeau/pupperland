@@ -110,9 +110,12 @@ function Search(): React.JSX.Element {
       <div key={index} className="dog-card">
         <img src={dog.img} alt={altText} />
         <div className="dog-card-info">
-          <div>
-            <span>Name: </span>
+           <div className="dog-card-info-name">
             <span>{dog.name}</span>
+          </div>
+          <div>
+            <span>Breed: </span>
+            <span>{dog.breed}</span>
           </div>
           <div>
             <span>Age: </span>
@@ -121,10 +124,6 @@ function Search(): React.JSX.Element {
           <div>
             <span>Zip Code: </span>
             <span>{dog.zip_code}</span>
-          </div>
-          <div>
-            <span>Breed: </span>
-            <span>{dog.breed}</span>
           </div>
         </div>
       </div>
