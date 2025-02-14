@@ -1,6 +1,14 @@
 .dog-selections {
   text-align: center;
-  font-size: .75rem;
+}
+
+.new-search {
+  display: flex;
+  justify-content: end;
+}
+
+.button-clear-favorites {
+  margin-left: .5rem;
 }
 
 .dog-cards {
@@ -10,6 +18,7 @@
 }
 
 .dog-card-button {
+  position: relative;
   border: none;
   padding: 0;
   border: 1px solid var(--color-application-dark);
@@ -26,6 +35,39 @@
   }
 }
 
+.checkmark-container {
+  position: absolute;
+  display: flex;
+  justify-content: end;
+  width: 100%;
+}
+
+.checkmark {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin: 5px;
+  background-color: var(--color-green-dark);
+
+  div {
+    position: relative;
+    width: .375rem;
+    background-color: var(--color-application-light);
+    height: 1.25rem;
+    transform: rotate(45deg);
+
+    &:first-of-type {
+      top: .12rem;
+      right: .12rem;
+      transform: rotate(-45deg);
+      height: .75rem;
+    }
+  }
+}
+
 .dog-card {
   display: flex;
   flex-direction: column;
@@ -34,27 +76,40 @@
   background-color: var(--color-blue-light);
 
 
-  img {
-    height: var(--card-dimension);
-    min-height: var(--card-dimension);
-    object-fit: cover;
-    border-top-left-radius: var(--card-border-radius-inner);
-    border-top-right-radius: var(--card-border-radius-inner);
-    border-bottom-width: 1px;
-    border-bottom-style: solid;
-    border-bottom-color: var(--color-application-dark);
+  &.selected {
+    color: var(--color-application-light);
+    background-color: var(--color-green-dark);
+
+    img {
+      border-bottom-color: var(--color-green-light);
+    }
   }
+}
+
+.dog-image {
+  height: var(--card-dimension);
+  min-height: var(--card-dimension);
+  object-fit: cover;
+  border-top-left-radius: var(--card-border-radius-inner);
+  border-top-right-radius: var(--card-border-radius-inner);
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: var(--color-application-dark);
 }
 
 .dog-card-info {
   padding: .5rem 1rem .75rem;
   text-align: left;
-  font-size: .75rem;
+  font-size: 1rem;
+}
+
+.dog-card-info-line {
+  margin-top: .375rem;
 }
 
 .dog-card-info-name {
   margin-bottom: .25rem;
   text-align: center;
-  font-size: .875rem;
+  font-size: 1.25rem;
   font-weight: 700;
 }

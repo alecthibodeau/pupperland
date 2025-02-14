@@ -10,6 +10,7 @@ import formatText from '../helpers/format-text';
 function Select(props: SelectProps): React.JSX.Element {
   const [selectedDogs, setSelectedDogs] = useState<{ [key: string]: boolean }>({});
   const { formatLettersAndNumbers } = formatText;
+  const favoritesCount: number = Object.keys(selectedDogs).length;
 
   function onClickDog(id: string): void {
     if (selectedDogs[id]) {
@@ -23,7 +24,7 @@ function Select(props: SelectProps): React.JSX.Element {
 
   function renderInfoLine(label: string, value: string): React.JSX.Element {
     return (
-      <div>
+      <div className="dog-card-info-line">
         <span>{label}: </span>
         <span>{value}</span>
       </div>
@@ -32,14 +33,25 @@ function Select(props: SelectProps): React.JSX.Element {
 
   function renderCard(dog: Dog, index: number): React.JSX.Element {
     const altText = `${dog.name} the ${dog.breed} who is ${dog.age} years old`;
+    const isDogSelected = selectedDogs[dog.id];
     return (
       <button
         key={`${index}-${formatLettersAndNumbers(`${dog.name}${dog.breed}`)}`}
         onClick={() => onClickDog(dog.id)}
-        className={`dog-card-button${selectedDogs[dog.id] ? ' selected' : ''}`}
+        className={`dog-card-button${isDogSelected ? ' selected' : ''}`}
       >
-        <div className="dog-card">
-          <img src={dog.img} alt={altText} />
+        {
+          isDogSelected ?
+          <div className="checkmark-container">
+            <div className="checkmark">
+              <div></div>
+              <div></div>
+            </div>
+          </div> :
+          null
+        }
+        <div className={`dog-card${isDogSelected ? ' selected' : ''}`}>
+          <img src={dog.img} alt={altText} className="dog-image"/>
           <div className="dog-card-info">
             <div className="dog-card-info-name">
               {dog.name}
@@ -56,17 +68,17 @@ function Select(props: SelectProps): React.JSX.Element {
   return (
     <>
       <div className="dog-selections">
-        <div>
-          {`Dogs selected: ${Object.keys(selectedDogs).length}`}
-        </div>
-        <div>
-          <button onClick={() => setSelectedDogs({})}>
-            Clear Selections
+        <div className="new-search">
+          <button onClick={() => props.onClearResults(true)}>
+            New Search
           </button>
         </div>
         <div>
-          <button onClick={() => props.onClearResults(true)}>
-            New Search
+          <span>
+            {`${favoritesCount} favorite${favoritesCount === 1 ? '' : 's'}`}
+          </span>
+          <button className="button-clear-favorites" onClick={() => setSelectedDogs({})}>
+            Clear
           </button>
         </div>
       </div>
