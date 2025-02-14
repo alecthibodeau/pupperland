@@ -1,6 +1,7 @@
-@import url('./header');
-@import url('./login');
-@import url('./search');
+@import url('./_header');
+@import url('./_login');
+@import url('./_search');
+@import url('./_variables');
 
 body {
   margin: 0;

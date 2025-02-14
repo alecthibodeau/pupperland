@@ -107,9 +107,9 @@ function Search(): React.JSX.Element {
   function renderCard(dog: Dog, index: number): React.JSX.Element {
     const altText = `${dog.name} the ${dog.breed}, who is ${dog.age} years old`;
     return (
-      <div key={index} className="card">
+      <div key={index} className="dog-card">
         <img src={dog.img} alt={altText} />
-        <div>
+        <div className="dog-card-info">
           <div>
             <span>Name: </span>
             <span>{dog.name}</span>
@@ -135,7 +135,7 @@ function Search(): React.JSX.Element {
     <div className="search">
       {
         dogs.length ?
-        <div>
+        <div className="dog-cards">
           {dogs.map(renderCard)}
         </div> :
         <div>

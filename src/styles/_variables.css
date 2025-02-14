@@ -1,0 +1,29 @@
+/* Responsive Breakpoints for reference */
+/* --breakpoint-sm: 576px; */
+/* --breakpoint-md: 768px; */
+/* --breakpoint-lg: 992px; */
+/* --breakpoint-xl: 1200px; */
+/* --breakpoint-xxl: 1400px; */
+
+:root {
+
+  /* Colors Grayscale */
+  --color-white: #fff;
+  --color-black: #000;
+  --color-application-light: #f5f5f5;
+  --color-application-dark: #0d0d0d;
+  --color-gray: #808080;
+  --color-gray-light: #d3d3d3;
+
+  /* Colors Hued */
+  --color-blue-light: #a8e4ef;
+  --color-blue-lighter: #cbf6f8;
+  --color-blue-green: #87ebc9;
+  --color-green-medium: #0cc078;
+  --color-green-light: #79de79;
+  --color-green-lighter: #cbf8cf;
+  --color-yellow-medium: #ece37e;
+  --color-orange-medium: #f7b045;
+  --color-red-light: #fb6962;
+  --color-violet: #ae66f1;
+}

@@ -1,6 +1,6 @@
 .login {
   padding: 1rem;
-  background-color: aquamarine;
+  background-color: var(--color-blue-green);
 }
 
 .login-fields {
