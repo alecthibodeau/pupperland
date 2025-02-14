@@ -1,0 +1,60 @@
+.selected-dogs-count {
+  text-align: center;
+  font-size: .75rem;
+}
+
+.dog-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.dog-card-button {
+  border: none;
+  padding: 0;
+  border: 1px solid var(--color-application-dark);
+  border-radius: var(--card-border-radius-outer);
+  margin: 1rem;
+
+  &:hover {
+    box-shadow: .25rem .25rem 1rem var(--color-gray);
+  }
+
+  &.selected {
+    outline: 4px solid var(--color-green-medium);
+    border-color: var(--color-green-light);
+  }
+}
+
+.dog-card {
+  display: flex;
+  flex-direction: column;
+  width: var(--card-dimension);
+  border-radius: var(--card-border-radius-outer);
+  background-color: var(--color-blue-light);
+
+
+  img {
+    height: var(--card-dimension);
+    min-height: var(--card-dimension);
+    object-fit: cover;
+    border-top-left-radius: var(--card-border-radius-inner);
+    border-top-right-radius: var(--card-border-radius-inner);
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: var(--color-application-dark);
+  }
+}
+
+.dog-card-info {
+  padding: .5rem 1rem .75rem;
+  text-align: left;
+  font-size: .75rem;
+}
+
+.dog-card-info-name {
+  margin-bottom: .25rem;
+  text-align: center;
+  font-size: .875rem;
+  font-weight: 700;
+}

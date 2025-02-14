@@ -16,9 +16,7 @@
   --color-gray-light: #d3d3d3;
 
   /* Colors Hued */
-  --color-blue-light: #a8e4ef;
-  --color-blue-lighter: #cbf6f8;
-  --color-blue-lightest: #e2ecfb;
+  --color-blue-light: #cbe0fb;
   --color-blue-green: #87ebc9;
   --color-green-medium: #0cc078;
   --color-green-light: #79de79;
@@ -30,6 +28,6 @@
 
   /* Dimensions */
   --card-dimension: 200px;
-  --card-border-radius-outer: 1rem;
-  --card-border-radius-inner: .875rem;
+  --card-border-radius-outer: 1.0625rem;
+  --card-border-radius-inner: 1rem;
 }
