@@ -29,6 +29,6 @@
 
   /* Dimensions */
   --card-dimension: 200px;
-  --card-border-radius-outer: 1.0625rem;
-  --card-border-radius-inner: 1rem;
+  --card-border-radius-outer: .5625rem;
+  --card-border-radius-inner: .5rem;
 }

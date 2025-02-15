@@ -7,18 +7,25 @@ import SelectProps from '../interfaces/SelectProps';
 /* Helpers */
 import formatText from '../helpers/format-text';
 
-function Select(props: SelectProps): React.JSX.Element {
-  const [selectedDogs, setSelectedDogs] = useState<{ [key: string]: boolean }>({});
-  const { formatLettersAndNumbers } = formatText;
-  const favoritesCount: number = Object.keys(selectedDogs).length;
+/* Constants */
+import stringValues from '../constants/string-values';
 
-  function onClickDog(id: string): void {
-    if (selectedDogs[id]) {
-      const newSelectedDogs = { ...selectedDogs };
-      delete newSelectedDogs[id];
-      setSelectedDogs(newSelectedDogs);
+function Select(props: SelectProps): React.JSX.Element {
+  const [favoriteDogs, setFavoriteDogs] = useState<Dog[]>([]);
+  const [matchedDog, setMatchedDog] = useState<Dog | null>(null);
+  const { formatLettersAndNumbers } = formatText;
+  const { urls: { urlDogsMatch } } = stringValues;
+  const favoritesCount: number = favoriteDogs.length;
+
+  function isFavoriteDog(dog: Dog): boolean {
+    return favoriteDogs.some(favoriteDog => favoriteDog.id === dog.id);
+  }
+
+  function onClickDog(dog: Dog): void {
+    if (isFavoriteDog(dog)) {
+      setFavoriteDogs(favoriteDogs.filter(favoriteDog => favoriteDog.id !== dog.id));
     } else {
-      setSelectedDogs({ ...selectedDogs, [id]: true });
+      setFavoriteDogs([...favoriteDogs, dog]);
     }
   }
 
@@ -31,13 +38,13 @@ function Select(props: SelectProps): React.JSX.Element {
     );
   }
 
-  function renderCard(dog: Dog, index: number): React.JSX.Element {
-    const altText = `${dog.name} the ${dog.breed} who is ${dog.age} years old`;
-    const isDogSelected = selectedDogs[dog.id];
+  function renderCard(dog: Dog): React.JSX.Element {
+    const altText = `${dog.name} the ${dog.breed} whose age is ${dog.age}`;
+    const isDogSelected = isFavoriteDog(dog);
     return (
       <button
-        key={`${index}-${formatLettersAndNumbers(`${dog.name}${dog.breed}`)}`}
-        onClick={() => onClickDog(dog.id)}
+        key={`${dog.id}-${formatLettersAndNumbers(`${dog.name}${dog.breed}`)}`}
+        onClick={() => onClickDog(dog)}
         className={`dog-card-button${isDogSelected ? ' selected' : ''}`}
       >
         {
@@ -65,27 +72,92 @@ function Select(props: SelectProps): React.JSX.Element {
     );
   }
 
+  function onClickNewSearch(): void {
+    props.onClearResults(true);
+    setMatchedDog(null);
+  }
+
+  async function generateMatch(): Promise<void> {
+    const favoriteDogsIds = favoriteDogs.map(dog => dog.id);
+    try {
+      const response = await fetch(urlDogsMatch, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(favoriteDogsIds),
+        credentials: 'include'
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data: { match: string } = await response.json();
+      const matchingDog: Dog | undefined = favoriteDogs.find(dog => dog.id === data.match);
+      if (matchingDog) setMatchedDog(matchingDog);
+      setFavoriteDogs([]);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
+
   return (
-    <>
+    <div>
       <div className="dog-selections">
         <div className="new-search">
-          <button onClick={() => props.onClearResults(true)}>
+          <button onClick={onClickNewSearch}>
             New Search
           </button>
         </div>
-        <div>
-          <span>
-            {`${favoritesCount} favorite${favoritesCount === 1 ? '' : 's'}`}
+        {
+          favoritesCount ?
+          <div>
+            <span>
+              {`${favoritesCount} favorite${favoritesCount > 1 ? 's' : ''}`}
+            </span>
+            <button
+              onClick={() => setFavoriteDogs([])}
+              className="button-clear-favorites"
+            >
+              Clear Favorites
+            </button>
+            {
+              favoriteDogs.length > 1 ?
+              <button onClick={generateMatch}>
+                Generate Match
+              </button> :
+              null
+            }
+          </div> :
+          <div>
+            {
+              matchedDog ?
+              <span className="matched-dog-message">
+                {`Your match is ${matchedDog.name} the ${matchedDog.breed}!`}
+              </span>:
+              <span>
+                Click at least two favorite dogs before generating a match.
+              </span>
+            }
+          </div>
+        }
+      </div>
+      {
+        matchedDog ?
+        <div className="matched-dog">
+          <img
+            src={matchedDog.img}
+            alt={`${matchedDog.name} the ${matchedDog.breed}`}
+            className="matched-dog-image"
+          />
+          <span className="matched-dog-info">
+            {`${matchedDog.name} is age ${matchedDog.age} and from ${matchedDog.zip_code}.`}
           </span>
-          <button className="button-clear-favorites" onClick={() => setSelectedDogs({})}>
-            Clear
-          </button>
+        </div> :
+        <div className="dog-cards">
+          {props.dogs.map(renderCard)}
         </div>
-      </div>
-      <div className="dog-cards">
-        {props.dogs.map(renderCard)}
-      </div>
-    </>
+      }
+    </div>
   );
 }
 

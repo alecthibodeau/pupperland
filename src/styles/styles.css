@@ -8,4 +8,5 @@ body {
   margin: 0;
   font-family: 'Open Sans', serif;
   color: var(--color-application-dark);
+  background-color: var(--color-yellow-medium);
 }

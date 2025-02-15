@@ -51,13 +51,13 @@ function Search(): React.JSX.Element {
       }
       const data = await response.json();
       console.log('Data:', data.resultIds);
-      getDogs(data.resultIds);
+      fetchDogs(data.resultIds);
     } catch (error) {
       console.error('Error:', error);
     }
   }
 
-  async function getDogs(resultIds: string[]): Promise<void> {
+  async function fetchDogs(resultIds: string[]): Promise<void> {
     try {
       const response = await fetch(urlDogs, {
         method: 'POST',

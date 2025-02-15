@@ -5,6 +5,7 @@
 .new-search {
   display: flex;
   justify-content: end;
+  padding: .5rem;
 }
 
 .button-clear-favorites {
@@ -15,6 +16,8 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 .dog-card-button {
@@ -72,6 +75,7 @@
   display: flex;
   flex-direction: column;
   width: var(--card-dimension);
+  height: 100%;
   border-radius: var(--card-border-radius-outer);
   background-color: var(--color-blue-light);
 
@@ -112,4 +116,22 @@
   text-align: center;
   font-size: 1.25rem;
   font-weight: 700;
+}
+
+.matched-dog {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.matched-dog-message,
+.matched-dog-info {
+  font-size: 1.5rem;
+}
+
+.matched-dog-image {
+  outline: 5px solid var(--color-blue-green);
+  border: 5px solid var(--color-green-light);
+  border-radius: var(--card-border-radius-outer);
+  margin: 1rem;
 }
