@@ -5,6 +5,7 @@ import Select from './Select';
 
 /* Interfaces */
 import Dog from '../interfaces/Dog';
+import ResultsOfDogsSearch from '../interfaces/ResultsOfDogsSearch';
 
 /* Constants */
 import stringValues from '../constants/string-values';
@@ -21,14 +22,15 @@ function Search(): React.JSX.Element {
 
   const getBreeds = useCallback(async (): Promise<void> => {
     try {
-      const response = await fetch(urlDogsBreeds, {
+      const response: Response = await fetch(urlDogsBreeds, {
+        method: 'GET',
         credentials: 'include'
       });
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-      const data = await response.json();
-      setBreeds(data);
+      const availableBreeds: string[] = await response.json();
+      setBreeds(availableBreeds);
     } catch (error) {
       console.error('Error:', error);
     }
@@ -42,37 +44,38 @@ function Search(): React.JSX.Element {
     const url = new URL(`${urlDogsSearch}?ageMin=1&ageMax=1`)
     selectedBreeds.forEach(breed => url.searchParams.append('breeds', breed));
     try {
-      const response = await fetch(url, {
+      const response: Response = await fetch(url, {
         method: 'GET',
         credentials: 'include'
       });
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-      const data = await response.json();
-      console.log('Data:', data.resultIds);
-      fetchDogs(data.resultIds);
+      const resultsOfDogsSearch: ResultsOfDogsSearch = await response.json();
+      console.log('Results of dogs search:', resultsOfDogsSearch);
+      fetchDogs(resultsOfDogsSearch.resultIds);
     } catch (error) {
       console.error('Error:', error);
     }
   }
 
   async function fetchDogs(resultIds: string[]): Promise<void> {
+    const maximumAllowedIds = resultIds.slice(0, 100);
     try {
-      const response = await fetch(urlDogs, {
+      const response: Response = await fetch(urlDogs, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify(resultIds),
+        body: JSON.stringify(maximumAllowedIds),
         credentials: 'include'
       });
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-      const data = await response.json();
-      console.log('Success:', data);
-      setDogs(data);
+      const fetchedDogs: Dog[] = await response.json();
+      console.log('Fetched dogs:', fetchedDogs);
+      setDogs(fetchedDogs);
     } catch (error) {
       console.error('Error:', error);
     }

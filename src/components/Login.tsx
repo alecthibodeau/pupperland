@@ -12,7 +12,7 @@ function Login(props: LoginProps): React.JSX.Element {
 
   async function logIn(): Promise<void> {
     try {
-      const response = await fetch(urlLogIn, {
+      const response: Response = await fetch(urlLogIn, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -23,7 +23,7 @@ function Login(props: LoginProps): React.JSX.Element {
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-      console.log('Success:', response);
+      console.log(`Successfull login, status ${response.status}:`, response);
       props.onUpdateIsUserAuthenticated(true);
     } catch (error) {
       console.error('Error:', error);

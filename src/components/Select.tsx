@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 /* Interfaces */
 import Dog from '../interfaces/Dog';
+import Match from '../interfaces/Match';
 import SelectProps from '../interfaces/SelectProps';
 
 /* Helpers */
@@ -80,7 +81,7 @@ function Select(props: SelectProps): React.JSX.Element {
   async function generateMatch(): Promise<void> {
     const favoriteDogsIds = favoriteDogs.map(dog => dog.id);
     try {
-      const response = await fetch(urlDogsMatch, {
+      const response: Response = await fetch(urlDogsMatch, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -91,10 +92,15 @@ function Select(props: SelectProps): React.JSX.Element {
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-      const data: { match: string } = await response.json();
-      const matchingDog: Dog | undefined = favoriteDogs.find(dog => dog.id === data.match);
-      if (matchingDog) setMatchedDog(matchingDog);
-      setFavoriteDogs([]);
+      const match: Match = await response.json();
+      const matchingDogId: string = match.match;
+      const matchingDog: Dog | undefined = favoriteDogs.find(dog => dog.id === matchingDogId);
+      if (matchingDog) {
+        setMatchedDog(matchingDog);
+        setFavoriteDogs([]);
+      } else {
+        alert('No match found. Try again.');
+      }
     } catch (error) {
       console.error('Error:', error);
     }

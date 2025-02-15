@@ -11,14 +11,14 @@ function Header(props: HeaderProps ): React.JSX.Element {
 
   async function logOut(): Promise<void> {
     try {
-      const response = await fetch(urlLogOut, {
+      const response: Response = await fetch(urlLogOut, {
         method: 'POST',
         credentials: 'include'
       });
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-      console.log('Success:', response);
+      console.log(`Successfull logout, status ${response.status}:`, response);
       props.onUpdateIsUserAuthenticated(false);
     } catch (error) {
       console.error('Error:', error);
