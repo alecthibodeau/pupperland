@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
 /* Components */
+import FilterButton from './FilterButton';
 import Select from './Select';
 
 /* Interfaces */
@@ -9,7 +10,6 @@ import ResultsOfDogsSearch from '../interfaces/ResultsOfDogsSearch';
 
 /* Constants */
 import stringValues from '../constants/string-values';
-import svgPaths from '../constants/svg-paths';
 
 /* Helpers */
 import formatText from '../helpers/format-text';
@@ -17,8 +17,13 @@ import formatText from '../helpers/format-text';
 function Search(): React.JSX.Element {
   const [breeds, setBreeds] = useState<string[]>([]);
   const [dogs, setDogs] = useState<Dog[]>([]);
+  const [maximumAge, setMaximumAge] = useState<string>('');
+  const [minimumAge, setMinimumAge] = useState<string>('');
   const [selectedBreeds, setSelectedBreeds] = useState<string[]>([]);
-  const { urls: { urlDogs, urlDogsBreeds, urlDogsSearch } } = stringValues;
+  const {
+    texts: { textMaximum, textMinimum },
+    urls: { urlDogs, urlDogsBreeds, urlDogsSearch }
+  } = stringValues;
   const { formatLettersAndNumbers } = formatText;
 
   const getBreeds = useCallback(async (): Promise<void> => {
@@ -42,7 +47,11 @@ function Search(): React.JSX.Element {
   }, [getBreeds]);
 
   async function searchDogs(): Promise<void> {
-    const url = new URL(`${urlDogsSearch}?ageMin=1&ageMax=1`)
+    const minAgeParam = minimumAge ? `&ageMin=${minimumAge}` : '';
+    const maxAgeParam = maximumAge ? `&ageMax=${maximumAge}` : '';
+    const url = new URL(`
+      ${urlDogsSearch}?${minAgeParam}${maxAgeParam}&sort=breed:asc
+    `);
     selectedBreeds.forEach(breed => url.searchParams.append('breeds', breed));
     try {
       const response: Response = await fetch(url, {
@@ -99,36 +108,56 @@ function Search(): React.JSX.Element {
     ));
   }
 
-  function renderBreedOption(breedName: string, index: number): React.JSX.Element {
+  function onAgeSelect(age: string, qualifier: string): void {
+    console.log(`${qualifier} age selected:`, age);
+    if (qualifier === textMinimum) {
+      setMinimumAge(age);
+    } else if (qualifier === textMaximum) {
+      setMaximumAge(age);
+    }
+  }
+
+  function renderSelectOption(optionName: string, index: number): React.JSX.Element {
     return (
       <option
-        key={`${index}Option${formatLettersAndNumbers(breedName)}`}
-        value={breedName}>
-        {breedName}
+        key={`${index}Option${formatLettersAndNumbers(optionName)}`}
+        value={optionName}>
+        {optionName}
       </option>
     );
   }
 
-  function renderFilterButton(breedName: string, index: number): React.JSX.Element {
+  function renderFilterButton(label: string, index: number): React.JSX.Element {
     return (
-      <button
-        key={`${index}Option${formatLettersAndNumbers(breedName)}`}
-        onClick={() => removeFavoriteBreed(breedName)}
-        className="button-filter"
+      <FilterButton
+        key={`${index}Button${formatLettersAndNumbers(label)}`}
+        label={label}
+        onClickButton={(label) => removeFavoriteBreed(label.toString())}
+      />
+    );
+  }
+
+  function renderAgeSelectContainer(label: string, index: number): React.JSX.Element {
+    return (
+      <div
+        key={`${index}${formatLettersAndNumbers(label)}AgeSelectContainer`}
+        className="age-select-container"
       >
-        <span>
-          {breedName}
-        </span>
-        <svg
-          width="10"
-          height="10"
-          viewBox="0 0 420 420"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="#f5f5f5"
+        <select
+          onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
+            if (event.target.value) onAgeSelect(event.target.value, label);
+          }}
+          className="search-select age-select"
         >
-          <polygon points={svgPaths.closingX} />
-        </svg>
-      </button>
+          <option value=""></option>
+          {Array.from(
+            { length: 20 }, (_, index) => (index).toString()
+          ).map(renderSelectOption)}
+        </select>
+        <label>
+          <span>{label}</span> <span>age in years</span>
+        </label>
+      </div>
     );
   }
 
@@ -141,19 +170,32 @@ function Search(): React.JSX.Element {
           <h1>
             What dog are you looking for?
           </h1>
+          <h2>
+            Choose your preferences below or just click the search button now to
+            see a bunch of dogs!
+          </h2>
           <section>
-            <h2>Breed</h2>
-            <div>
-              <select onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
-                if (event.target.value) onBreedSelect(event.target.value);
-              }}>
+            <h3>Breed</h3>
+            <div className="choose-breeds">
+              <select
+                onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
+                  if (event.target.value) onBreedSelect(event.target.value);
+                }}
+                className="search-select"
+              >
                 <option value="">Select a breed</option>
-                {breeds.map(renderBreedOption)}
+                {breeds.map(renderSelectOption)}
               </select>
-              <span className="select-message">Select as many breeds as you wish!</span>
+              <span>Select as many breeds as you wish!</span>
             </div>
             <div>
               {selectedBreeds.map(renderFilterButton)}
+            </div>
+          </section>
+          <section>
+            <h3>Age</h3>
+            <div className="choose-age">
+              {[textMinimum, textMaximum].map(renderAgeSelectContainer)}
             </div>
           </section>
           <button onClick={searchDogs} className="button-primary button-search">

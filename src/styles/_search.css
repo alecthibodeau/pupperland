@@ -2,30 +2,72 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: .25rem 1rem;
+  padding: 1rem 2rem;
 }
 
 section {
   width: 80vw;
   padding: .5rem 1rem 1rem;
   border-radius: var(--border-radius-medium);
+  margin-bottom: 1rem;
   background-color: var(--color-yellow-light);
 }
 
-h2 {
-  margin: 0;
-  color: var(--color-blue-medium)
+h1 {
+  margin: 0 0 .5rem 0;
 }
 
-select {
+h2 {
+  margin: 0 0 1.5rem 0;
+  font-size: 1.25rem;
+  color: var(--color-green-dark);
+}
+
+h3 {
+  margin: 0 0 .5rem 0;
+  color: var(--color-blue-medium);
+}
+
+.choose-breeds {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: .25rem;
+
+  select {
+    margin: 0 .5rem .125rem 0;
+  }
+}
+
+.choose-age {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .25rem 2rem;
+  margin-bottom: .5rem;
+
+  label :first-child {
+    font-weight: 700;
+    color: var(--color-blue-medium);
+  }
+}
+
+.age-select-container {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  margin-bottom: .5rem;
+}
+
+.search-select {
   padding: .375rem;
-  margin: .5rem 0;
   border-radius: var(--border-radius-medium);
   border: 2px solid var(--color-blue-medium);
-}
 
-.select-message {
-  margin-left: 1rem;
+  &.age-select {
+    width: 3.5rem;
+    text-align: center;
+  }
 }
 
 .button-filter {
@@ -35,7 +77,7 @@ select {
   padding: .75rem 1rem;
   border: none;
   border-radius: 2rem;
-  margin: 0 .5rem .5rem 0;
+  margin: .5rem .5rem 0 0;
 
   background-color: var(--color-blue-medium);
   color: var(--color-application-light);

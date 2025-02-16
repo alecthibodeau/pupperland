@@ -4,7 +4,10 @@
 @import url('./_select');
 @import url('./_variables');
 
+html,
 body {
+  max-width: 100%;
+  overflow-x: hidden;
   margin: 0;
   font-family: 'Open Sans', serif;
   background-color: var(--color-yellow-medium);
