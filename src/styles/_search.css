@@ -7,7 +7,8 @@
 
 section {
   width: 80vw;
-  padding: .5rem 1rem 1rem;
+  max-width: 940px;
+  padding: .5rem 1rem 1.5rem;
   border-radius: var(--border-radius-medium);
   margin-bottom: 1rem;
   background-color: var(--color-yellow-light);
@@ -17,10 +18,14 @@ h1 {
   margin: 0 0 .5rem 0;
 }
 
-h2 {
+h2.search-message {
   margin: 0 0 1.5rem 0;
   font-size: 1.25rem;
   color: var(--color-green-dark);
+
+  &.sorry {
+    color: var(--color-red-dark);
+  }
 }
 
 h3 {
@@ -28,27 +33,17 @@ h3 {
   color: var(--color-blue-medium);
 }
 
-.choose-breeds {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  margin-bottom: .25rem;
-
-  select {
-    margin: 0 .5rem .125rem 0;
-  }
-}
-
-.choose-age {
+.choose {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: .25rem 2rem;
-  margin-bottom: .5rem;
+  gap: .5rem 2rem;
 
-  label :first-child {
-    font-weight: 700;
-    color: var(--color-blue-medium);
+  &.choose-age {
+    label :first-child {
+      font-weight: 700;
+      color: var(--color-blue-medium);
+    }
   }
 }
 
@@ -56,16 +51,21 @@ h3 {
   display: flex;
   align-items: center;
   gap: .5rem;
-  margin-bottom: .5rem;
 }
 
-.search-select {
+.search-select,
+.search-input {
   padding: .375rem;
   border-radius: var(--border-radius-medium);
   border: 2px solid var(--color-blue-medium);
 
   &.age-select {
     width: 3.5rem;
+    text-align: center;
+  }
+
+  &.size-input {
+    width: 4.5rem;
     text-align: center;
   }
 }

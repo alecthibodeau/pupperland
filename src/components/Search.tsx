@@ -17,11 +17,13 @@ import formatText from '../helpers/format-text';
 function Search(): React.JSX.Element {
   const [breeds, setBreeds] = useState<string[]>([]);
   const [dogs, setDogs] = useState<Dog[]>([]);
+  const [isFetchedResultEmpty, setIsFetchedResultEmpty] = useState<boolean>(false);
   const [maximumAge, setMaximumAge] = useState<string>('');
   const [minimumAge, setMinimumAge] = useState<string>('');
   const [selectedBreeds, setSelectedBreeds] = useState<string[]>([]);
+  const [size, setSize] = useState<string>('');
   const {
-    texts: { textMaximum, textMinimum },
+    texts: { textChoose, textSorry, textMaximum, textMinimum },
     urls: { urlDogs, urlDogsBreeds, urlDogsSearch }
   } = stringValues;
   const { formatLettersAndNumbers } = formatText;
@@ -49,8 +51,9 @@ function Search(): React.JSX.Element {
   async function searchDogs(): Promise<void> {
     const minAgeParam = minimumAge ? `&ageMin=${minimumAge}` : '';
     const maxAgeParam = maximumAge ? `&ageMax=${maximumAge}` : '';
+    const sizeParam = size ? `&size=${size}` : '';
     const url = new URL(`
-      ${urlDogsSearch}?${minAgeParam}${maxAgeParam}&sort=breed:asc
+      ${urlDogsSearch}?${minAgeParam}${maxAgeParam}${sizeParam}&sort=breed:asc
     `);
     selectedBreeds.forEach(breed => url.searchParams.append('breeds', breed));
     try {
@@ -84,16 +87,24 @@ function Search(): React.JSX.Element {
         throw new Error('Network response was not ok');
       }
       const fetchedDogs: Dog[] = await response.json();
-      console.log('Fetched dogs:', fetchedDogs);
-      setDogs(fetchedDogs);
+      if (fetchedDogs.length) {
+        setDogs(fetchedDogs);
+      } else {
+        setIsFetchedResultEmpty(true);
+      }
+      console.log('Fetched dogs:', fetchedDogs, isFetchedResultEmpty);
     } catch (error) {
       console.error('Error:', error);
     }
   }
 
   function enableNewSearch(): void {
+    setIsFetchedResultEmpty(false);
     setDogs([]);
     setSelectedBreeds([]);
+    setMinimumAge('');
+    setMaximumAge('');
+    setSize('');
   }
 
   function onBreedSelect(breed: string): void {
@@ -108,11 +119,11 @@ function Search(): React.JSX.Element {
     ));
   }
 
-  function onAgeSelect(age: string, qualifier: string): void {
-    console.log(`${qualifier} age selected:`, age);
-    if (qualifier === textMinimum) {
+  function onAgeSelect(age: string, parameter: string): void {
+    console.log(`${parameter} age selected:`, age);
+    if (parameter === textMinimum) {
       setMinimumAge(age);
-    } else if (qualifier === textMaximum) {
+    } else if (parameter === textMaximum) {
       setMaximumAge(age);
     }
   }
@@ -145,13 +156,14 @@ function Search(): React.JSX.Element {
       >
         <select
           onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
+            if (setIsFetchedResultEmpty) setIsFetchedResultEmpty(false);
             if (event.target.value) onAgeSelect(event.target.value, label);
           }}
           className="search-select age-select"
         >
           <option value=""></option>
           {Array.from(
-            { length: 20 }, (_, index) => (index).toString()
+            { length: 16 }, (_, index) => (index).toString()
           ).map(renderSelectOption)}
         </select>
         <label>
@@ -168,17 +180,17 @@ function Search(): React.JSX.Element {
         <Select dogs={dogs} onClearResults={enableNewSearch} /> :
         <div className="search">
           <h1>
-            What dog are you looking for?
+            Which pupper are you looking for?
           </h1>
-          <h2>
-            Choose your preferences below or just click the search button now to
-            see a bunch of dogs!
+          <h2 className={`search-message${isFetchedResultEmpty ? ' sorry' : ''}`}>
+            {isFetchedResultEmpty ? textSorry : textChoose}
           </h2>
           <section>
             <h3>Breed</h3>
-            <div className="choose-breeds">
+            <div className="choose choose-breeds">
               <select
                 onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
+                  if (setIsFetchedResultEmpty) setIsFetchedResultEmpty(false);
                   if (event.target.value) onBreedSelect(event.target.value);
                 }}
                 className="search-select"
@@ -186,7 +198,7 @@ function Search(): React.JSX.Element {
                 <option value="">Select a breed</option>
                 {breeds.map(renderSelectOption)}
               </select>
-              <span>Select as many breeds as you wish!</span>
+              <span>Choose as many breeds as you wish!</span>
             </div>
             <div>
               {selectedBreeds.map(renderFilterButton)}
@@ -194,8 +206,30 @@ function Search(): React.JSX.Element {
           </section>
           <section>
             <h3>Age</h3>
-            <div className="choose-age">
+            <div className="choose choose-age">
               {[textMinimum, textMaximum].map(renderAgeSelectContainer)}
+            </div>
+          </section>
+          <section>
+            <h3>Size</h3>
+            <div className="choose choose-size">
+              <input
+                type="number"
+                value={size.toLocaleString()}
+                maxLength={5}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                  if (setIsFetchedResultEmpty) setIsFetchedResultEmpty(false);
+                  if (event.target) {
+                    if (+event.target.value > 10000) {
+                      setSize('10000');
+                    } else {
+                      setSize(event.target.value);
+                    }
+                  }
+                }}
+                className="search-input size-input"
+              />
+              <span>Choose up to 10,000 dogs searched!</span>
             </div>
           </section>
           <button onClick={searchDogs} className="button-primary button-search">
