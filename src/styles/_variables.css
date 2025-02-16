@@ -25,10 +25,12 @@
   --color-yellow-medium: #ede696;
   --color-orange-medium: #f7b045;
   --color-red-light: #fb6962;
-  --color-violet: #ae66f1;
+  --color-violet: #9c4ee4;
+  --color-violet-light: #ae66f1;
 
   /* Dimensions */
+  --border-radius-medium: .5rem;
   --card-dimension: 200px;
   --card-border-radius-outer: .5625rem;
-  --card-border-radius-inner: .5rem;
+  --card-border-radius-inner: var(--border-radius-medium);
 }

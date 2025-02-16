@@ -27,14 +27,15 @@ function Header(props: HeaderProps ): React.JSX.Element {
 
   return (
     <header>
+      <span className="header-title">
+        Pupperland
+      </span>
       {
         props.isUserAuthenticated ?
-        <button onClick={logOut}>
-          Log Out
+        <button onClick={logOut} className="logout-button">
+          Log out
         </button> :
-        <div>
-          Log in
-        </div>
+        null
       }
     </header>
   );
