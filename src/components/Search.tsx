@@ -9,6 +9,7 @@ import ResultsOfDogsSearch from '../interfaces/ResultsOfDogsSearch';
 
 /* Constants */
 import stringValues from '../constants/string-values';
+import svgPaths from '../constants/svg-paths';
 
 /* Helpers */
 import formatText from '../helpers/format-text';
@@ -81,37 +82,52 @@ function Search(): React.JSX.Element {
     }
   }
 
-  function addOrRemoveBreed(event: React.ChangeEvent<HTMLInputElement>): void {
-    if (event.target.checked) {
-      setSelectedBreeds([...selectedBreeds, event.target.value]);
-    } else {
-      setSelectedBreeds(selectedBreeds.filter(
-        selectedBreed => selectedBreed !== event.target.value
-      ));
-    }
-  }
-
-  function renderBreedName(breedName: string, index: number): React.JSX.Element {
-    const formattedBreedName = formatLettersAndNumbers(breedName);
-    return (
-      <div key={`${index}-${formattedBreedName}`}>
-        <input
-          type="checkbox"
-          id={formattedBreedName}
-          name={formattedBreedName}
-          value={breedName}
-          onChange={(event) => addOrRemoveBreed(event)}
-        />
-        <label htmlFor={formattedBreedName}>
-          {breedName}
-        </label>
-      </div>
-    );
-  }
-
   function enableNewSearch(): void {
     setDogs([]);
     setSelectedBreeds([]);
+  }
+
+  function onBreedSelect(breed: string): void {
+    if (!selectedBreeds.includes(breed)) {
+      setSelectedBreeds([...selectedBreeds, breed]);
+    }
+  }
+
+  function removeFavoriteBreed(breed: string): void {
+    setSelectedBreeds(selectedBreeds.filter(
+      selectedBreed => selectedBreed !== breed
+    ));
+  }
+
+  function renderBreedListItem(breedName: string, index: number): React.JSX.Element {
+    return (
+      <option
+        key={`${index}Option${formatLettersAndNumbers(breedName)}`}
+        value={breedName}>
+        {breedName}
+      </option>
+    );
+  }
+
+  function renderBreedButton(breedName: string, index: number): React.JSX.Element {
+    return (
+      <button
+        key={`${index}Option${formatLettersAndNumbers(breedName)}`}
+        onClick={() => removeFavoriteBreed(breedName)}
+      >
+        <span>
+          {breedName}
+        </span>
+        <svg
+          width="10"
+          height="10"
+          viewBox="0 0 420 420"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <polygon points={svgPaths.closingX} />
+        </svg>
+      </button>
+    );
   }
 
   return (
@@ -120,11 +136,22 @@ function Search(): React.JSX.Element {
         dogs.length ?
         <Select dogs={dogs} onClearResults={enableNewSearch} /> :
         <div>
+          <div>
+            What kind of dog are you looking for?
+          </div>
           <button onClick={searchDogs}>
             Search Dogs
           </button>
           <div>
-            {breeds.map(renderBreedName)}
+            <select onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
+              if (event.target.value) onBreedSelect(event.target.value);
+            }}>
+              <option value="">Select a breed</option>
+              {breeds.map(renderBreedListItem)}
+            </select>
+          </div>
+          <div>
+            {selectedBreeds.map(renderBreedButton)}
           </div>
         </div>
       }
