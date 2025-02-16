@@ -23,7 +23,7 @@ function Header(props: HeaderProps ): React.JSX.Element {
     } catch (error) {
       console.error('Error:', error);
     }
-  };
+  }
 
   return (
     <header>

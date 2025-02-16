@@ -44,7 +44,7 @@ function Select(props: SelectProps): React.JSX.Element {
     const isDogSelected = isFavoriteDog(dog);
     return (
       <button
-        key={`${dog.id}-${formatLettersAndNumbers(`${dog.name}${dog.breed}`)}`}
+        key={`${dog.id}CardButton${formatLettersAndNumbers(`${dog.name}${dog.breed}`)}`}
         onClick={() => onClickDog(dog)}
         className={`dog-card-button${isDogSelected ? ' selected' : ''}`}
       >
@@ -84,7 +84,7 @@ function Select(props: SelectProps): React.JSX.Element {
       const response: Response = await fetch(urlDogsMatch, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(favoriteDogsIds),
         credentials: 'include'

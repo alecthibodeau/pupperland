@@ -15,7 +15,7 @@ function Login(props: LoginProps): React.JSX.Element {
       const response: Response = await fetch(urlLogIn, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({ name, email }),
         credentials: 'include'
@@ -28,7 +28,7 @@ function Login(props: LoginProps): React.JSX.Element {
     } catch (error) {
       console.error('Error:', error);
     }
-  };
+  }
 
   return (
     <div className="login">
@@ -37,13 +37,17 @@ function Login(props: LoginProps): React.JSX.Element {
           type="text"
           placeholder="Name"
           value={name}
-          onChange={(event) => setName(event.target.value)}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            if (event.target) setName(event.target.value);
+          }}
         />
         <input
           type="text"
           placeholder="Email"
           value={email}
-          onChange={(event) => setEmail(event.target.value)}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            if (event.target) setEmail(event.target.value);
+          }}
         />
         <button onClick={logIn}>
           Log In
