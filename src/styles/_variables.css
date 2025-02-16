@@ -16,16 +16,19 @@
   --color-gray-light: #d3d3d3;
 
   /* Colors Hued */
-  --color-blue-light: #cbe0fb;
+  --color-blue-medium: #1252f0;
+  --color-blue-light: #2c62e9;
+  --color-blue-pale: #cbe0fb;
   --color-blue-green: #87ebc9;
-  --color-green-medium: #0cc078;
   --color-green-dark: #006d41;
+  --color-green-medium: #0cc078;
   --color-green-light: #79de79;
   --color-green-lighter: #cbf8cf;
   --color-yellow-medium: #ede696;
+  --color-yellow-light: #f2f0b9;
   --color-orange-medium: #f7b045;
   --color-red-light: #fb6962;
-  --color-violet: #9c4ee4;
+  --color-violet-medium: #9c4ee4;
   --color-violet-light: #ae66f1;
 
   /* Dimensions */

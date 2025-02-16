@@ -99,7 +99,7 @@ function Search(): React.JSX.Element {
     ));
   }
 
-  function renderBreedListItem(breedName: string, index: number): React.JSX.Element {
+  function renderBreedOption(breedName: string, index: number): React.JSX.Element {
     return (
       <option
         key={`${index}Option${formatLettersAndNumbers(breedName)}`}
@@ -109,11 +109,12 @@ function Search(): React.JSX.Element {
     );
   }
 
-  function renderBreedButton(breedName: string, index: number): React.JSX.Element {
+  function renderFilterButton(breedName: string, index: number): React.JSX.Element {
     return (
       <button
         key={`${index}Option${formatLettersAndNumbers(breedName)}`}
         onClick={() => removeFavoriteBreed(breedName)}
+        className="button-filter"
       >
         <span>
           {breedName}
@@ -123,6 +124,7 @@ function Search(): React.JSX.Element {
           height="10"
           viewBox="0 0 420 420"
           xmlns="http://www.w3.org/2000/svg"
+          fill="#f5f5f5"
         >
           <polygon points={svgPaths.closingX} />
         </svg>
@@ -131,31 +133,35 @@ function Search(): React.JSX.Element {
   }
 
   return (
-    <div className="search">
+    <>
       {
         dogs.length ?
         <Select dogs={dogs} onClearResults={enableNewSearch} /> :
-        <div>
-          <div>
-            What kind of dog are you looking for?
-          </div>
-          <button onClick={searchDogs}>
+        <div className="search">
+          <h1>
+            What dog are you looking for?
+          </h1>
+          <section>
+            <h2>Breed</h2>
+            <div>
+              <select onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
+                if (event.target.value) onBreedSelect(event.target.value);
+              }}>
+                <option value="">Select a breed</option>
+                {breeds.map(renderBreedOption)}
+              </select>
+              <span className="select-message">Select as many breeds as you wish!</span>
+            </div>
+            <div>
+              {selectedBreeds.map(renderFilterButton)}
+            </div>
+          </section>
+          <button onClick={searchDogs} className="button-primary button-search">
             Search Dogs
           </button>
-          <div>
-            <select onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
-              if (event.target.value) onBreedSelect(event.target.value);
-            }}>
-              <option value="">Select a breed</option>
-              {breeds.map(renderBreedListItem)}
-            </select>
-          </div>
-          <div>
-            {selectedBreeds.map(renderBreedButton)}
-          </div>
         </div>
       }
-    </div>
+    </>
   );
 }
 
