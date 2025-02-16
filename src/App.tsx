@@ -17,11 +17,13 @@ function App() {
         onUpdateIsUserAuthenticated={setIsUserAuthenticated}
         isUserAuthenticated={isUserAuthenticated}
       />
-      {
-        isUserAuthenticated ?
-        <Search /> :
-        <Login onUpdateIsUserAuthenticated={setIsUserAuthenticated}/>
-      }
+      <main>
+        {
+          isUserAuthenticated ?
+          <Search /> :
+          <Login onUpdateIsUserAuthenticated={setIsUserAuthenticated}/>
+        }
+      </main>
     </>
   )
 }

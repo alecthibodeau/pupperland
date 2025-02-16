@@ -32,7 +32,10 @@ function Header(props: HeaderProps ): React.JSX.Element {
       </span>
       {
         props.isUserAuthenticated ?
-        <button onClick={logOut} className="logout-button">
+        <button
+          onClick={logOut}
+          className="button-primary button-authentication"
+        >
           Log out
         </button> :
         null

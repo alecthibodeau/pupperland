@@ -49,10 +49,13 @@ function Login(props: LoginProps): React.JSX.Element {
             if (event.target) setEmail(event.target.value);
           }}
         />
-        <button onClick={logIn}>
-          Log In
-        </button>
       </div>
+      <button
+        onClick={logIn}
+        className="button-primary button-authentication button-login"
+      >
+        Log In
+      </button>
     </div>
   );
 }
