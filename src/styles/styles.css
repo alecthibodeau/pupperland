@@ -1,8 +1,15 @@
 @import url('./_dogs-search');
 @import url('./_dogs-select');
+@import url('./_footer');
 @import url('./_header');
 @import url('./_login');
 @import url('./_variables');
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 
 html,
 body {

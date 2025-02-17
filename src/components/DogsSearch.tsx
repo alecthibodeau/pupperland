@@ -221,7 +221,7 @@ function DogsSearch(): React.JSX.Element {
       {
         dogs.length ?
         <DogsSelect dogs={dogs} onClearResults={enableNewSearch} /> :
-        <div className="search">
+        <div className="dogs-search">
           <h1>
             Which pupper are you looking for?
           </h1>
