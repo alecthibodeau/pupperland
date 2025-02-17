@@ -232,13 +232,14 @@ function DogsSearch(): React.JSX.Element {
             <h3>Breed</h3>
             <div className="choose choose-breeds">
               <select
+                id="breedSelect"
                 onChange={handleChangeBreed}
                 className="search-select"
               >
-                <option value="">Select a breed</option>
+                <option value=""></option>
                 {breeds.map(renderSelectOption)}
               </select>
-              <span>Choose as many breeds as you wish</span>
+              <label htmlFor="breedSelect">Choose as many breeds as you wish</label>
             </div>
             <div>
               {selectedBreeds.map(renderFilterButton)}
@@ -261,18 +262,20 @@ function DogsSearch(): React.JSX.Element {
             <h3>Search Size</h3>
             <div className="choose choose-size">
               <input
+                id="sizeSelect"
                 type="text"
                 value={size}
                 onChange={handleChangeSize}
                 className="search-input size-input"
               />
-              <span>Choose up to 10,000 dogs searched</span>
+              <label htmlFor="sizeSelect">Choose up to 10,000 dogs searched</label>
             </div>
           </section>
           <section>
             <h3>Zip Code</h3>
             <div className="choose choose-zip-code">
               <input
+                id="zipCodeSelect"
                 type="text"
                 ref={zipCodeInputRef}
                 value={zipCode}
@@ -282,7 +285,9 @@ function DogsSearch(): React.JSX.Element {
               <button onClick={onClickButtonAddZipCode} className="button-add">
                 Add
               </button>
-              <span>See if there are any dogs located in specific zip codes</span>
+              <label htmlFor="zipCodeSelect">
+                See if there are any dogs located in specific zip codes
+              </label>
             </div>
             <div>
               {selectedZipCodes.map(renderFilterButton)}

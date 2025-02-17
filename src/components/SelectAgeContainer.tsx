@@ -36,13 +36,14 @@ function SelectAgeContainer(props: SelectContainerProps): React.JSX.Element {
   return (
     <div className="select-age-container">
       <select
+        id={`${props.label}AgeSelect`}
         onChange={handleChangeOption}
         className="search-select age-select"
       >
         <option value=""></option>
         {props.options.map(renderSelectOption)}
       </select>
-      <label>
+      <label htmlFor={`${props.label}AgeSelect`}>
         <span>{props.label}</span> <span>age in years</span>
       </label>
     </div>
