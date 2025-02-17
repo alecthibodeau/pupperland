@@ -53,7 +53,7 @@ function DogsSearch(): React.JSX.Element {
   }, [maximumAge, minimumAge, selectedBreeds, selectedZipCodes, size, zipCode]);
 
   async function onClickButtonSearchDogs(): Promise<void> {
-    const fetchedDogs = await apiDogs.searchDogs(apiSearchDogsParameters);
+    const fetchedDogs: Dog[] | undefined = await apiDogs.searchDogs(apiSearchDogsParameters);
     if (fetchedDogs) {
       if (fetchedDogs.length) {
         setDogs(fetchedDogs);

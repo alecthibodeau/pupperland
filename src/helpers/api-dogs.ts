@@ -4,10 +4,11 @@ import APISearchDogsProps from '../interfaces/apiSearchDogsProps';
 
 /* Interfaces */
 import Dog from '../interfaces/Dog';
+import Match from '../interfaces/Match';
 import ResultsOfDogsSearch from '../interfaces/ResultsOfDogsSearch';
 
 const {
-  urls: { urlDogs, urlDogsBreeds, urlDogsSearch }
+  urls: { urlDogs, urlDogsBreeds, urlDogsMatch, urlDogsSearch }
 } = stringValues;
 
 async function getBreeds(): Promise<string[] | undefined> {
@@ -74,7 +75,30 @@ async function fetchDogs(resultIds: string[]): Promise<Dog[] | undefined> {
   }
 }
 
+async function generateMatch(favoriteDogs: Dog[]): Promise<string | undefined> {
+  const favoriteDogsIds = favoriteDogs.map(dog => dog.id);
+  try {
+    const response: Response = await fetch(urlDogsMatch, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(favoriteDogsIds),
+      credentials: 'include'
+    });
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const match: Match = await response.json();
+    const matchingDogId: string = match.match;
+    return matchingDogId ? matchingDogId : undefined;
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
 const apiDogs = {
+  generateMatch,
   getBreeds,
   searchDogs
 };

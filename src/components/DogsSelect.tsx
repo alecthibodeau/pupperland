@@ -2,21 +2,28 @@ import React, { useState } from 'react';
 
 /* Interfaces */
 import Dog from '../interfaces/Dog';
-import Match from '../interfaces/Match';
 import SelectProps from '../interfaces/SelectProps';
 
 /* Helpers */
+import apiDogs from '../helpers/api-dogs';
 import formatText from '../helpers/format-text';
-
-/* Constants */
-import stringValues from '../constants/string-values';
 
 function DogsSelect(props: SelectProps): React.JSX.Element {
   const [favoriteDogs, setFavoriteDogs] = useState<Dog[]>([]);
   const [matchedDog, setMatchedDog] = useState<Dog | null>(null);
   const { formatLettersAndNumbers } = formatText;
-  const { urls: { urlDogsMatch } } = stringValues;
   const favoritesCount: number = favoriteDogs.length;
+
+  async function onClickGenerateMatch(): Promise<void> {
+    const matchingDogId: string | undefined = await apiDogs.generateMatch(favoriteDogs);
+    const matchingDog: Dog | undefined = favoriteDogs.find(dog => dog.id === matchingDogId);
+    if (matchingDog) {
+      setMatchedDog(matchingDog);
+      setFavoriteDogs([]);
+    } else {
+      alert('No match found. Try again.');
+    }
+  }
 
   function isFavoriteDog(dog: Dog): boolean {
     return favoriteDogs.some(favoriteDog => favoriteDog.id === dog.id);
@@ -78,34 +85,6 @@ function DogsSelect(props: SelectProps): React.JSX.Element {
     setMatchedDog(null);
   }
 
-  async function generateMatch(): Promise<void> {
-    const favoriteDogsIds = favoriteDogs.map(dog => dog.id);
-    try {
-      const response: Response = await fetch(urlDogsMatch, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(favoriteDogsIds),
-        credentials: 'include'
-      });
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const match: Match = await response.json();
-      const matchingDogId: string = match.match;
-      const matchingDog: Dog | undefined = favoriteDogs.find(dog => dog.id === matchingDogId);
-      if (matchingDog) {
-        setMatchedDog(matchingDog);
-        setFavoriteDogs([]);
-      } else {
-        alert('No match found. Try again.');
-      }
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  }
-
   return (
     <div className="dogs-select">
       <div className="dogs-selections">
@@ -128,7 +107,7 @@ function DogsSelect(props: SelectProps): React.JSX.Element {
             </button>
             {
               favoriteDogs.length > 1 ?
-              <button onClick={generateMatch}>
+              <button onClick={onClickGenerateMatch}>
                 Generate Match
               </button> :
               null
