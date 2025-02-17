@@ -1,10 +1,10 @@
 /* Interfaces */
-import FilterButtonProps from '../interfaces/FilterButton';
+import ButtonFilterProps from '../interfaces/ButtonFilter';
 
 /* Constants */
 import svgPaths from '../constants/svg-paths';
 
-function FilterButton(props: FilterButtonProps): React.JSX.Element {
+function ButtonFilter(props: ButtonFilterProps): React.JSX.Element {
   return (
     <button
       onClick={() => props.onClickButton(props.label)}
@@ -27,4 +27,4 @@ function FilterButton(props: FilterButtonProps): React.JSX.Element {
   );
 }
 
-export default FilterButton;
+export default ButtonFilter;

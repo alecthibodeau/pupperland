@@ -1,8 +1,8 @@
 const allButLettersAndNumbers: RegExp = /[^a-zA-Z0-9]/g;
-const onlyNumbersAndMaximumFiveCharacters: RegExp = /^[0-9]{0,5}$/;
+const onlyDigits: RegExp = /^\d+$/;
 
-function isTextOnlyNumbersAndFiveCharacters(text: string): boolean {
-  return onlyNumbersAndMaximumFiveCharacters.test(text);
+function isTextOnlyDigits(text: string): boolean {
+  return onlyDigits.test(text);
 }
 
 function formatLettersAndNumbers(text: string): string {
@@ -10,7 +10,7 @@ function formatLettersAndNumbers(text: string): string {
 }
 
 const formatText = {
-  isTextOnlyNumbersAndFiveCharacters,
+  isTextOnlyDigits,
   formatLettersAndNumbers
 };
 

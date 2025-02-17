@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 /* Components */
-import FilterButton from './FilterButton';
+import ButtonFilter from './ButtonFilter';
 import DogsSelect from './DogsSelect';
 
 /* Interfaces */
@@ -26,7 +26,7 @@ function DogsSearch(): React.JSX.Element {
   const [size, setSize] = useState<string>('');
   const [zipCode, setZipCode] = useState<string>('');
   const zipCodeInputRef = useRef<HTMLInputElement>(null);
-  const { isTextOnlyNumbersAndFiveCharacters, formatLettersAndNumbers } = formatText;
+  const { isTextOnlyDigits, formatLettersAndNumbers } = formatText;
   const {
     selectOptions: { ages },
     texts: { textChoose, textSorry, textMaximum, textMinimum },
@@ -133,7 +133,7 @@ function DogsSearch(): React.JSX.Element {
   }
 
   function onClickFilterButton(label: string): void {
-    const isZipCode: boolean = isTextOnlyNumbersAndFiveCharacters(label);
+    const isZipCode: boolean = isTextOnlyDigits(label);
     if (isZipCode) {
       removeSelectedZipCode(label);
     } else {
@@ -161,7 +161,7 @@ function DogsSearch(): React.JSX.Element {
 
   function renderFilterButton(label: string, index: number): React.JSX.Element {
     return (
-      <FilterButton
+      <ButtonFilter
         key={`${index}Button${formatLettersAndNumbers(label)}`}
         label={label}
         onClickButton={label => onClickFilterButton(label.toString())}
@@ -189,7 +189,9 @@ function DogsSearch(): React.JSX.Element {
 
   function handleChangeSize(event: React.ChangeEvent<HTMLInputElement>): void {
     if (event.target) {
-      if (+event.target.value > 10000) {
+      if (!isTextOnlyDigits(event.target.value.slice(-1))) {
+        setSize(event.target.value.slice(0, -1));
+      } else if (+event.target.value > 10000) {
         setSize('10000');
       } else {
         setSize(event.target.value);
@@ -199,8 +201,10 @@ function DogsSearch(): React.JSX.Element {
 
   function handleChangeZipCode(event: React.ChangeEvent<HTMLInputElement>): void {
     if (event.target) {
-      if (!isTextOnlyNumbersAndFiveCharacters(event.target.value)) {
-        setZipCode('');
+      if (!isTextOnlyDigits(event.target.value.slice(-1))) {
+        setZipCode(event.target.value.slice(0, -1));
+      } else if (event.target.value.length > 5) {
+        setZipCode(event.target.value.slice(0, 5));
       } else {
         setZipCode(event.target.value);
       }
@@ -245,7 +249,7 @@ function DogsSearch(): React.JSX.Element {
             <h3>Search Size</h3>
             <div className="choose choose-size">
               <input
-                type="number"
+                type="text"
                 value={size}
                 onChange={handleChangeSize}
                 className="search-input size-input"

@@ -107,8 +107,8 @@ function DogsSelect(props: SelectProps): React.JSX.Element {
   }
 
   return (
-    <div>
-      <div className="dog-selections">
+    <div className="dogs-select">
+      <div className="dogs-selections">
         <div className="new-search">
           <button onClick={onClickNewSearch}>
             New Search

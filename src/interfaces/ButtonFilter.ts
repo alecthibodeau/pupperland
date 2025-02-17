@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction } from 'react';
 
-interface FilterButtonProps {
+interface ButtonFilterProps {
   label: string;
   onClickButton: Dispatch<SetStateAction<string>>;
 }
 
-export default FilterButtonProps;
+export default ButtonFilterProps;
