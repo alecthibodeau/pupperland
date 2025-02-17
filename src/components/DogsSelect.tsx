@@ -11,7 +11,7 @@ import formatText from '../helpers/format-text';
 /* Constants */
 import stringValues from '../constants/string-values';
 
-function Select(props: SelectProps): React.JSX.Element {
+function DogsSelect(props: SelectProps): React.JSX.Element {
   const [favoriteDogs, setFavoriteDogs] = useState<Dog[]>([]);
   const [matchedDog, setMatchedDog] = useState<Dog | null>(null);
   const { formatLettersAndNumbers } = formatText;
@@ -167,4 +167,4 @@ function Select(props: SelectProps): React.JSX.Element {
   );
 }
 
-export default Select;
+export default DogsSelect;

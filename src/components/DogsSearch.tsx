@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 /* Components */
 import FilterButton from './FilterButton';
-import Select from './Select';
+import DogsSelect from './DogsSelect';
 
 /* Interfaces */
 import Dog from '../interfaces/Dog';
@@ -13,8 +13,9 @@ import stringValues from '../constants/string-values';
 
 /* Helpers */
 import formatText from '../helpers/format-text';
+import SelectAgeContainer from './SelectAgeContainer';
 
-function Search(): React.JSX.Element {
+function DogsSearch(): React.JSX.Element {
   const [breeds, setBreeds] = useState<string[]>([]);
   const [dogs, setDogs] = useState<Dog[]>([]);
   const [isFetchedResultEmpty, setIsFetchedResultEmpty] = useState<boolean>(false);
@@ -25,12 +26,12 @@ function Search(): React.JSX.Element {
   const [size, setSize] = useState<string>('');
   const [zipCode, setZipCode] = useState<string>('');
   const zipCodeInputRef = useRef<HTMLInputElement>(null);
+  const { isTextOnlyNumbersAndFiveCharacters, formatLettersAndNumbers } = formatText;
   const {
+    selectOptions: { ages },
     texts: { textChoose, textSorry, textMaximum, textMinimum },
     urls: { urlDogs, urlDogsBreeds, urlDogsSearch }
   } = stringValues;
-  const { isTextOnlyNumbersAndFiveCharacters, formatLettersAndNumbers } = formatText;
-  const ages: string[] = Array.from({ length: 16 }, (_, index) => (index).toString());
 
   const getBreeds = useCallback(async (): Promise<void> => {
     try {
@@ -51,6 +52,10 @@ function Search(): React.JSX.Element {
   useEffect(() => {
     getBreeds();
   }, [getBreeds]);
+
+  useEffect(() => {
+    if (setIsFetchedResultEmpty) setIsFetchedResultEmpty(false);
+  }, [maximumAge, minimumAge, selectedBreeds, selectedZipCodes, size, zipCode]);
 
   async function searchDogs(): Promise<void> {
     const minAgeParam = minimumAge ? `&ageMin=${minimumAge}` : '';
@@ -115,7 +120,6 @@ function Search(): React.JSX.Element {
   }
 
   function removeSelectedBreed(breed: string): void {
-    resetIsFetchedResultEmpty();
     setSelectedBreeds(selectedBreeds.filter(
       selectedBreed => selectedBreed !== breed
     ));
@@ -123,17 +127,12 @@ function Search(): React.JSX.Element {
 
   function removeSelectedZipCode(zipCode: string): void {
     setZipCode('');
-    resetIsFetchedResultEmpty();
     setSelectedZipCodes(selectedZipCodes.filter(
       selectedZipCode => selectedZipCode !== zipCode
     ));
   }
 
-  function resetIsFetchedResultEmpty(): void {
-    if (setIsFetchedResultEmpty) setIsFetchedResultEmpty(false);
-  }
-
-  function onFilterButtonClick(label: string): void {
+  function onClickFilterButton(label: string): void {
     const isZipCode: boolean = isTextOnlyNumbersAndFiveCharacters(label);
     if (isZipCode) {
       removeSelectedZipCode(label);
@@ -142,15 +141,7 @@ function Search(): React.JSX.Element {
     }
   }
 
-  function onAgeChange(age: string, parameter: string): void {
-    if (parameter === textMinimum) {
-      setMinimumAge(age);
-    } else if (parameter === textMaximum) {
-      setMaximumAge(age);
-    }
-  }
-
-  function onZipCodeAdd(): void {
+  function onClickAddZipCode(): void {
     if (!selectedZipCodes.includes(zipCode)) {
       setZipCode('');
       setSelectedZipCodes([...selectedZipCodes, zipCode]);
@@ -158,12 +149,12 @@ function Search(): React.JSX.Element {
     }
   }
 
-  function renderSelectOption(optionName: string, index: number): React.JSX.Element {
+  function renderSelectOption(optionLabel: string, index: number): React.JSX.Element {
     return (
       <option
-        key={`${index}Option${formatLettersAndNumbers(optionName)}`}
-        value={optionName}>
-        {optionName}
+        key={`${index}Option${formatLettersAndNumbers(optionLabel)}`}
+        value={optionLabel}>
+        {optionLabel}
       </option>
     );
   }
@@ -173,43 +164,30 @@ function Search(): React.JSX.Element {
       <FilterButton
         key={`${index}Button${formatLettersAndNumbers(label)}`}
         label={label}
-        onClickButton={label => onFilterButtonClick(label.toString())}
+        onClickButton={label => onClickFilterButton(label.toString())}
       />
     );
   }
 
-  function renderAgeSelectContainer(label: string, index: number): React.JSX.Element {
+  function renderSelectAgeContainer(label: string, index: number): React.JSX.Element {
     return (
-      <div
-        key={`${index}${formatLettersAndNumbers(label)}AgeSelectContainer`}
-        className="age-select-container"
-      >
-        <select
-          onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
-            resetIsFetchedResultEmpty();
-            if (event.target.value) onAgeChange(event.target.value, label);
-          }}
-          className="search-select age-select"
-        >
-          <option value=""></option>
-          {ages.map(renderSelectOption)}
-        </select>
-        <label>
-          <span>{label}</span> <span>age in years</span>
-        </label>
-      </div>
+      <SelectAgeContainer
+        key={`${index}${formatLettersAndNumbers(label)}SelectAgeContainer`}
+        label={label}
+        options={ages}
+        onUpdateMinimumAge={age => {setMinimumAge(age)}}
+        onUpdateMaximumAge={age => {setMaximumAge(age)}}
+      />
     );
   }
 
-  function handleBreedChange(event: React.ChangeEvent<HTMLSelectElement>): void {
-    resetIsFetchedResultEmpty();
+  function handleChangeBreed(event: React.ChangeEvent<HTMLSelectElement>): void {
     if (event.target.value && !selectedBreeds.includes(event.target.value)) {
       setSelectedBreeds([...selectedBreeds, event.target.value]);
     }
   }
 
-  function handleSizeChange(event: React.ChangeEvent<HTMLInputElement>): void {
-    resetIsFetchedResultEmpty();
+  function handleChangeSize(event: React.ChangeEvent<HTMLInputElement>): void {
     if (event.target) {
       if (+event.target.value > 10000) {
         setSize('10000');
@@ -219,8 +197,7 @@ function Search(): React.JSX.Element {
     }
   }
 
-  function handleZipCodeChange(event: React.ChangeEvent<HTMLInputElement>): void {
-    resetIsFetchedResultEmpty();
+  function handleChangeZipCode(event: React.ChangeEvent<HTMLInputElement>): void {
     if (event.target) {
       if (!isTextOnlyNumbersAndFiveCharacters(event.target.value)) {
         setZipCode('');
@@ -234,7 +211,7 @@ function Search(): React.JSX.Element {
     <>
       {
         dogs.length ?
-        <Select dogs={dogs} onClearResults={enableNewSearch} /> :
+        <DogsSelect dogs={dogs} onClearResults={enableNewSearch} /> :
         <div className="search">
           <h1>
             Which pupper are you looking for?
@@ -246,7 +223,7 @@ function Search(): React.JSX.Element {
             <h3>Breed</h3>
             <div className="choose choose-breeds">
               <select
-                onChange={handleBreedChange}
+                onChange={handleChangeBreed}
                 className="search-select"
               >
                 <option value="">Select a breed</option>
@@ -261,7 +238,7 @@ function Search(): React.JSX.Element {
           <section>
             <h3>Age</h3>
             <div className="choose choose-age">
-              {[textMinimum, textMaximum].map(renderAgeSelectContainer)}
+              {[textMinimum, textMaximum].map(renderSelectAgeContainer)}
             </div>
           </section>
           <section>
@@ -270,7 +247,7 @@ function Search(): React.JSX.Element {
               <input
                 type="number"
                 value={size}
-                onChange={handleSizeChange}
+                onChange={handleChangeSize}
                 className="search-input size-input"
               />
               <span>Choose up to 10,000 dogs searched</span>
@@ -283,12 +260,13 @@ function Search(): React.JSX.Element {
                 type="text"
                 ref={zipCodeInputRef}
                 value={zipCode}
-                onChange={handleZipCodeChange}
+                onChange={handleChangeZipCode}
                 className="search-input size-input"
               />
-              <button onClick={onZipCodeAdd} className="button-add">
+              <button onClick={onClickAddZipCode} className="button-add">
                 Add
               </button>
+              <span>See if there are any dogs located in specific zip codes</span>
             </div>
             <div>
               {selectedZipCodes.map(renderFilterButton)}
@@ -303,4 +281,4 @@ function Search(): React.JSX.Element {
   );
 }
 
-export default Search;
+export default DogsSearch;

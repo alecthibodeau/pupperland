@@ -8,11 +8,11 @@ import stringValues from '../constants/string-values';
 function Login(props: LoginProps): React.JSX.Element {
   const [email, setEmail] = useState<string>('potato@website.com');
   const [name, setName] = useState<string>('potato');
-  const { urls: { urlLogIn } } = stringValues;
+  const { urls: { urlAuthLogin } } = stringValues;
 
   async function logIn(): Promise<void> {
     try {
-      const response: Response = await fetch(urlLogIn, {
+      const response: Response = await fetch(urlAuthLogin, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

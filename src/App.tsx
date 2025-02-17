@@ -1,9 +1,9 @@
 import { useState } from 'react'
 
 /* Components */
+import DogsSearch from './components/DogsSearch';
 import Header from './components/Header';
 import Login from './components/Login'
-import Search from './components/Search';
 
 /* Styles */
 import './App.css'
@@ -20,7 +20,7 @@ function App() {
       <main>
         {
           isUserAuthenticated ?
-          <Search /> :
+          <DogsSearch /> :
           <Login onUpdateIsUserAuthenticated={setIsUserAuthenticated}/>
         }
       </main>
