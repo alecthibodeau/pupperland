@@ -1,8 +1,9 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 /* Components */
 import ButtonFilter from './ButtonFilter';
 import DogsSelect from './DogsSelect';
+import SelectAgeContainer from './SelectAgeContainer';
 
 /* Interfaces */
 import Dog from '../interfaces/Dog';
@@ -12,8 +13,8 @@ import ResultsOfDogsSearch from '../interfaces/ResultsOfDogsSearch';
 import stringValues from '../constants/string-values';
 
 /* Helpers */
+import apiDogs from '../helpers/api-dogs';
 import formatText from '../helpers/format-text';
-import SelectAgeContainer from './SelectAgeContainer';
 
 function DogsSearch(): React.JSX.Element {
   const [breeds, setBreeds] = useState<string[]>([]);
@@ -31,28 +32,15 @@ function DogsSearch(): React.JSX.Element {
   const {
     selectOptions: { ages },
     texts: { textChoose, textSorry, textMaximum, textMinimum },
-    urls: { urlDogs, urlDogsBreeds, urlDogsSearch }
+    urls: { urlDogs, urlDogsSearch }
   } = stringValues;
 
-  const getBreeds = useCallback(async (): Promise<void> => {
-    try {
-      const response: Response = await fetch(urlDogsBreeds, {
-        method: 'GET',
-        credentials: 'include'
-      });
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const availableBreeds: string[] = await response.json();
-      setBreeds(availableBreeds);
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  }, [urlDogsBreeds]);
-
   useEffect(() => {
-    getBreeds();
-  }, [getBreeds]);
+    (async (): Promise<void> => {
+      const breeds = await apiDogs.getBreeds();
+      setBreeds(breeds || []);
+    })();
+  }, []);
 
   useEffect(() => {
     if (minimumAge && maximumAge) setIsAgeRangeValid(+minimumAge <= +maximumAge);
