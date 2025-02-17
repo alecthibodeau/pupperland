@@ -18,6 +18,7 @@ import SelectAgeContainer from './SelectAgeContainer';
 function DogsSearch(): React.JSX.Element {
   const [breeds, setBreeds] = useState<string[]>([]);
   const [dogs, setDogs] = useState<Dog[]>([]);
+  const [isAgeRangeValid, setIsAgeRangeValid] = useState<boolean>(true);
   const [isFetchedResultEmpty, setIsFetchedResultEmpty] = useState<boolean>(false);
   const [maximumAge, setMaximumAge] = useState<string>('');
   const [minimumAge, setMinimumAge] = useState<string>('');
@@ -52,6 +53,10 @@ function DogsSearch(): React.JSX.Element {
   useEffect(() => {
     getBreeds();
   }, [getBreeds]);
+
+  useEffect(() => {
+    if (minimumAge && maximumAge) setIsAgeRangeValid(+minimumAge <= +maximumAge);
+  }, [maximumAge, minimumAge]);
 
   useEffect(() => {
     if (setIsFetchedResultEmpty) setIsFetchedResultEmpty(false);
@@ -132,7 +137,7 @@ function DogsSearch(): React.JSX.Element {
     ));
   }
 
-  function onClickFilterButton(label: string): void {
+  function onClickButtonFilter(label: string): void {
     const isZipCode: boolean = isTextOnlyDigits(label);
     if (isZipCode) {
       removeSelectedZipCode(label);
@@ -141,7 +146,7 @@ function DogsSearch(): React.JSX.Element {
     }
   }
 
-  function onClickAddZipCode(): void {
+  function onClickButtonAddZipCode(): void {
     if (!selectedZipCodes.includes(zipCode)) {
       setZipCode('');
       setSelectedZipCodes([...selectedZipCodes, zipCode]);
@@ -164,7 +169,7 @@ function DogsSearch(): React.JSX.Element {
       <ButtonFilter
         key={`${index}Button${formatLettersAndNumbers(label)}`}
         label={label}
-        onClickButton={label => onClickFilterButton(label.toString())}
+        onClickButton={label => onClickButtonFilter(label.toString())}
       />
     );
   }
@@ -175,8 +180,8 @@ function DogsSearch(): React.JSX.Element {
         key={`${index}${formatLettersAndNumbers(label)}SelectAgeContainer`}
         label={label}
         options={ages}
-        onUpdateMinimumAge={age => {setMinimumAge(age)}}
-        onUpdateMaximumAge={age => {setMaximumAge(age)}}
+        onUpdateMinimumAge={age => setMinimumAge(age)}
+        onUpdateMaximumAge={age => setMaximumAge(age)}
       />
     );
   }
@@ -244,6 +249,13 @@ function DogsSearch(): React.JSX.Element {
             <div className="choose choose-age">
               {[textMinimum, textMaximum].map(renderSelectAgeContainer)}
             </div>
+            {
+             !isAgeRangeValid ?
+              <div className="validation-message-age">
+                Minimum age must be less than or equal to maximum age
+              </div> :
+              null
+            }
           </section>
           <section>
             <h3>Search Size</h3>
@@ -267,7 +279,7 @@ function DogsSearch(): React.JSX.Element {
                 onChange={handleChangeZipCode}
                 className="search-input size-input"
               />
-              <button onClick={onClickAddZipCode} className="button-add">
+              <button onClick={onClickButtonAddZipCode} className="button-add">
                 Add
               </button>
               <span>See if there are any dogs located in specific zip codes</span>
@@ -276,7 +288,11 @@ function DogsSearch(): React.JSX.Element {
               {selectedZipCodes.map(renderFilterButton)}
             </div>
           </section>
-          <button onClick={searchDogs} className="button-primary button-search">
+          <button
+            onClick={searchDogs}
+            disabled={!isAgeRangeValid}
+            className={`button-primary button-search${!isAgeRangeValid ? ' disabled' : ''}`}
+          >
             Search Dogs
           </button>
         </div>

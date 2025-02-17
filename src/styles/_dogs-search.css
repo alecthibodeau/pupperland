@@ -55,6 +55,11 @@ h3 {
   gap: .5rem;
 }
 
+.validation-message-age {
+  margin-top: .5rem;
+  color: var(--color-red-dark);
+}
+
 .search-select,
 .search-input {
   padding: .375rem;
@@ -105,5 +110,9 @@ h3 {
 
   &:hover {
     background-color: var(--color-violet-medium);
+  }
+
+  &.disabled {
+    background-color: var(--color-gray);
   }
 }
