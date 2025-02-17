@@ -33,7 +33,9 @@
   --color-violet-light: #ae66f1;
 
   /* Dimensions */
+  --border-radius-small: .375rem;
   --border-radius-medium: .5rem;
+  --border-radius-button-pill: 2rem;
   --card-dimension: 200px;
   --card-border-radius-outer: .5625rem;
   --card-border-radius-inner: var(--border-radius-medium);

@@ -78,7 +78,7 @@ h3 {
   gap: .5rem;
   padding: .75rem 1rem;
   border: none;
-  border-radius: 2rem;
+  border-radius: var(--border-radius-button-pill);
   margin: .5rem .5rem 0 0;
 
   background-color: var(--color-blue-medium);
@@ -92,7 +92,7 @@ h3 {
 .button-add {
   padding: .375rem .625rem;
   border: none;
-  border-radius: 2rem;
+  border-radius: var(--border-radius-button-pill);
   background-color: var(--color-application-dark);
   color: var(--color-application-light);
 }
