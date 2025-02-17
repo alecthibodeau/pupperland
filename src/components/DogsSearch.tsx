@@ -6,8 +6,8 @@ import DogsSelect from './DogsSelect';
 import SelectAgeContainer from './SelectAgeContainer';
 
 /* Interfaces */
+import APISearchDogsProps from '../interfaces/apiSearchDogsProps';
 import Dog from '../interfaces/Dog';
-import ResultsOfDogsSearch from '../interfaces/ResultsOfDogsSearch';
 
 /* Constants */
 import stringValues from '../constants/string-values';
@@ -32,8 +32,10 @@ function DogsSearch(): React.JSX.Element {
   const {
     selectOptions: { ages },
     texts: { textChoose, textSorry, textMaximum, textMinimum },
-    urls: { urlDogs, urlDogsSearch }
   } = stringValues;
+  const apiSearchDogsParameters: APISearchDogsProps = {
+    maximumAge, minimumAge, size, selectedBreeds, selectedZipCodes
+  };
 
   useEffect(() => {
     (async (): Promise<void> => {
@@ -50,54 +52,15 @@ function DogsSearch(): React.JSX.Element {
     if (setIsFetchedResultEmpty) setIsFetchedResultEmpty(false);
   }, [maximumAge, minimumAge, selectedBreeds, selectedZipCodes, size, zipCode]);
 
-  async function searchDogs(): Promise<void> {
-    const minAgeParam = minimumAge ? `&ageMin=${minimumAge}` : '';
-    const maxAgeParam = maximumAge ? `&ageMax=${maximumAge}` : '';
-    const sizeParam = size ? `&size=${size}` : '';
-    const url = new URL(`
-      ${urlDogsSearch}?${minAgeParam}${maxAgeParam}${sizeParam}&sort=breed:asc
-    `);
-    selectedBreeds.forEach(breed => url.searchParams.append('breeds', breed));
-    selectedZipCodes.forEach(zipCode => url.searchParams.append('zipCodes', zipCode));
-    try {
-      const response: Response = await fetch(url, {
-        method: 'GET',
-        credentials: 'include'
-      });
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const resultsOfDogsSearch: ResultsOfDogsSearch = await response.json();
-      console.log('Results of dogs search:', resultsOfDogsSearch);
-      fetchDogs(resultsOfDogsSearch.resultIds);
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  }
-
-  async function fetchDogs(resultIds: string[]): Promise<void> {
-    const maximumAllowedIds = resultIds.slice(0, 100);
-    try {
-      const response: Response = await fetch(urlDogs, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(maximumAllowedIds),
-        credentials: 'include'
-      });
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const fetchedDogs: Dog[] = await response.json();
+  async function onClickButtonSearchDogs(): Promise<void> {
+    const fetchedDogs = await apiDogs.searchDogs(apiSearchDogsParameters);
+    if (fetchedDogs) {
       if (fetchedDogs.length) {
         setDogs(fetchedDogs);
       } else {
         setIsFetchedResultEmpty(true);
       }
       console.log('Fetched dogs:', fetchedDogs, isFetchedResultEmpty);
-    } catch (error) {
-      console.error('Error:', error);
     }
   }
 
@@ -282,7 +245,7 @@ function DogsSearch(): React.JSX.Element {
             </div>
           </section>
           <button
-            onClick={searchDogs}
+            onClick={onClickButtonSearchDogs}
             disabled={!isAgeRangeValid}
             className={`button-primary button-search${!isAgeRangeValid ? ' disabled' : ''}`}
           >
