@@ -1,10 +1,10 @@
 import { Dispatch, SetStateAction } from 'react';
 
-interface SelectContainerProps {
+interface SelectAgeContainerProps {
   label: string;
   options: string[];
   onUpdateMaximumAge: Dispatch<SetStateAction<string>>;
   onUpdateMinimumAge: Dispatch<SetStateAction<string>>;
 }
 
-export default SelectContainerProps;
+export default SelectAgeContainerProps;

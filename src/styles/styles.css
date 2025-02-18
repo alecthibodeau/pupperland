@@ -1,3 +1,5 @@
+@import url('./_checkmark');
+@import url('./_dog-card');
 @import url('./_dogs-search');
 @import url('./_dogs-select');
 @import url('./_footer');

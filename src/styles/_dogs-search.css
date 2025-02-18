@@ -96,7 +96,6 @@ h3 {
 
 .button-search {
   width: fit-content;
-  margin: 1.5rem;
   background-color: var(--color-green-dark);
   color: var(--color-application-light);
 

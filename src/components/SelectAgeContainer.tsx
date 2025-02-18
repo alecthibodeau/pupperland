@@ -1,5 +1,5 @@
 /* Interfaces */
-import SelectContainerProps from '../interfaces/SelectContainerProps';
+import SelectAgeContainerProps from '../interfaces/SelectAgeContainerProps';
 
 /* Helpers */
 import formatText from '../helpers/format-text';
@@ -7,7 +7,7 @@ import formatText from '../helpers/format-text';
 /* Constants */
 import stringValues from '../constants/string-values';
 
-function SelectAgeContainer(props: SelectContainerProps): React.JSX.Element {
+function SelectAgeContainer(props: SelectAgeContainerProps): React.JSX.Element {
   const { formatLettersAndNumbers } = formatText;
   const { texts: { textMaximum, textMinimum } } = stringValues;
 

@@ -1,8 +1,8 @@
 /* Constants */
 import stringValues from '../constants/string-values';
-import APISearchDogsProps from '../interfaces/apiSearchDogsProps';
 
 /* Interfaces */
+import APISearchDogsProps from '../interfaces/APISearchDogsProps';
 import Dog from '../interfaces/Dog';
 import Match from '../interfaces/Match';
 import ResultsOfDogsSearch from '../interfaces/ResultsOfDogsSearch';

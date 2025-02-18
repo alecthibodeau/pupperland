@@ -6,7 +6,7 @@ import DogsSelect from './DogsSelect';
 import SelectAgeContainer from './SelectAgeContainer';
 
 /* Interfaces */
-import APISearchDogsProps from '../interfaces/apiSearchDogsProps';
+import APISearchDogsProps from '../interfaces/APISearchDogsProps';
 import Dog from '../interfaces/Dog';
 
 /* Constants */
@@ -39,8 +39,8 @@ function DogsSearch(): React.JSX.Element {
 
   useEffect(() => {
     (async (): Promise<void> => {
-      const breeds = await apiDogs.getBreeds();
-      setBreeds(breeds || []);
+      const fetchedBreeds = await apiDogs.getBreeds();
+      setBreeds(fetchedBreeds || []);
     })();
   }, []);
 
@@ -120,7 +120,7 @@ function DogsSearch(): React.JSX.Element {
       <ButtonFilter
         key={`${index}Button${formatLettersAndNumbers(label)}`}
         label={label}
-        onClickButton={label => onClickButtonFilter(label.toString())}
+        onClickButton={onClickButtonFilter}
       />
     );
   }
@@ -131,8 +131,8 @@ function DogsSearch(): React.JSX.Element {
         key={`${index}${formatLettersAndNumbers(label)}SelectAgeContainer`}
         label={label}
         options={ages}
-        onUpdateMinimumAge={age => setMinimumAge(age)}
-        onUpdateMaximumAge={age => setMaximumAge(age)}
+        onUpdateMinimumAge={setMinimumAge}
+        onUpdateMaximumAge={setMaximumAge}
       />
     );
   }
@@ -171,7 +171,7 @@ function DogsSearch(): React.JSX.Element {
     <>
       {
         dogs.length ?
-        <DogsSelect dogs={dogs} onClearResults={enableNewSearch} /> :
+        <DogsSelect dogs={dogs} onClickNewSearchButton={enableNewSearch} /> :
         <div className="dogs-search">
           <h1>
             Which pupper are you looking for?

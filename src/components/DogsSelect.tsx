@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 
 /* Components */
+import DogCard from './DogCard';
 import MatchedDog from './MatchedDog';
 
 /* Interfaces */
 import Dog from '../interfaces/Dog';
-import SelectProps from '../interfaces/SelectProps';
+import DogsSelectProps from '../interfaces/DogsSelectProps';
 
 /* Helpers */
 import apiDogs from '../helpers/api-dogs';
 import formatText from '../helpers/format-text';
 
-function DogsSelect(props: SelectProps): React.JSX.Element {
+function DogsSelect(props: DogsSelectProps): React.JSX.Element {
   const [favoriteDogs, setFavoriteDogs] = useState<Dog[]>([]);
   const [matchedDog, setMatchedDog] = useState<Dog | null>(null);
   const { formatLettersAndNumbers } = formatText;
@@ -29,11 +30,11 @@ function DogsSelect(props: SelectProps): React.JSX.Element {
   }
 
   function onClickNewSearchButton(): void {
-    props.onClearResults(true);
+    props.onClickNewSearchButton(true);
     setMatchedDog(null);
   }
 
-  function onClickDog(dog: Dog): void {
+  function updateDogStatus(dog: Dog): void {
     if (isFavoriteDog(dog)) {
       setFavoriteDogs(favoriteDogs.filter(favoriteDog => favoriteDog.id !== dog.id));
     } else {
@@ -45,46 +46,14 @@ function DogsSelect(props: SelectProps): React.JSX.Element {
     return favoriteDogs.some(favoriteDog => favoriteDog.id === dog.id);
   }
 
-  function renderInfoLine(label: string, value: string): React.JSX.Element {
+  function renderDogCard(dog: Dog): React.JSX.Element {
     return (
-      <div className="dog-card-info-line">
-        <span>{label}: </span>
-        <span>{value}</span>
-      </div>
-    );
-  }
-
-  function renderCard(dog: Dog): React.JSX.Element {
-    const altText: string = `${dog.name} the ${dog.breed} whose age is ${dog.age}`;
-    const isDogSelected: boolean = isFavoriteDog(dog);
-    return (
-      <button
-        key={`${dog.id}CardButton${formatLettersAndNumbers(`${dog.name}${dog.breed}`)}`}
-        onClick={() => onClickDog(dog)}
-        className={`dog-card-button${isDogSelected ? ' selected' : ''}`}
-      >
-        {
-          isDogSelected ?
-          <div className="checkmark-container">
-            <div className="checkmark">
-              <div></div>
-              <div></div>
-            </div>
-          </div> :
-          null
-        }
-        <div className={`dog-card${isDogSelected ? ' selected' : ''}`}>
-          <img src={dog.img} alt={altText} className="dog-image"/>
-          <div className="dog-card-info">
-            <div className="dog-card-info-name">
-              {dog.name}
-            </div>
-            {renderInfoLine('Breed', dog.breed)}
-            {renderInfoLine('Age', dog.age.toString())}
-            {renderInfoLine('Zip Code', dog.zip_code)}
-          </div>
-        </div>
-      </button>
+      <DogCard
+        key={`${dog.id}DogCard${formatLettersAndNumbers(`${dog.name}${dog.breed}`)}`}
+        dog={dog}
+        isDogSelected={isFavoriteDog(dog)}
+        onClickDogCard={updateDogStatus}
+      />
     );
   }
 
@@ -108,7 +77,7 @@ function DogsSelect(props: SelectProps): React.JSX.Element {
             Clear
           </button>
           <div className="dog-cards">
-            {props.dogs.map(renderCard)}
+            {props.dogs.map(renderDogCard)}
           </div>
           {
             favoriteDogs.length > 1 ?
