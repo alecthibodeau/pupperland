@@ -1,0 +1,12 @@
+.matched-dog {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.matched-dog-image {
+  outline: 5px solid var(--color-blue-green);
+  border: 5px solid var(--color-green-light);
+  border-radius: var(--card-border-radius-outer);
+  margin: 1rem;
+}

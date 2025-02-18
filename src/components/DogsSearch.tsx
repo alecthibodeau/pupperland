@@ -202,7 +202,7 @@ function DogsSearch(): React.JSX.Element {
               {[textMinimum, textMaximum].map(renderSelectAgeContainer)}
             </div>
             {
-             !isAgeRangeValid ?
+              !isAgeRangeValid ?
               <div className="validation-message-age">
                 Minimum age must be less than or equal to maximum age
               </div> :
@@ -233,7 +233,7 @@ function DogsSearch(): React.JSX.Element {
                 onChange={handleChangeZipCode}
                 className="search-input size-input"
               />
-              <button onClick={onClickButtonAddZipCode} className="button-add">
+              <button onClick={onClickButtonAddZipCode} className="button-secondary">
                 Add
               </button>
               <label htmlFor="zipCodeSelect">

@@ -39,4 +39,6 @@
   --card-dimension: 200px;
   --card-border-radius-outer: .5625rem;
   --card-border-radius-inner: var(--border-radius-medium);
+  --dimension-viewport-margin: 5vmin;
+  --dimension-floating-action-button: 120px;
 }

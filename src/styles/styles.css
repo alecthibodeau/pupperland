@@ -3,6 +3,7 @@
 @import url('./_footer');
 @import url('./_header');
 @import url('./_login');
+@import url('./_matched-dog');
 @import url('./_variables');
 
 #root {
@@ -24,6 +25,7 @@ body {
 main {
   display: flex;
   justify-content: center;
+  padding-bottom: 2rem;
 }
 
 .button-primary {
@@ -32,6 +34,15 @@ main {
   border-radius: var(--border-radius-medium);
   font-size: 1rem;
   font-family: 'Open Sans', sans-serif;
+}
+
+.button-secondary {
+  height: fit-content;
+  padding: .375rem .625rem;
+  border: none;
+  border-radius: var(--border-radius-button-pill);
+  background-color: var(--color-application-dark);
+  color: var(--color-application-light);
 }
 
 .button-authentication {
