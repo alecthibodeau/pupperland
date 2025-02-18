@@ -173,9 +173,7 @@ function DogsSearch(): React.JSX.Element {
         dogs.length ?
         <DogsSelect dogs={dogs} onClickNewSearchButton={enableNewSearch} /> :
         <div className="dogs-search">
-          <h1>
-            Which pupper are you looking for?
-          </h1>
+          <h1 className="search-heading">Welcome to Pupperland.</h1>
           <h2 className={`search-message${isFetchedResultEmpty ? ' sorry' : ''}`}>
             {isFetchedResultEmpty ? textSorry : textChoose}
           </h2>

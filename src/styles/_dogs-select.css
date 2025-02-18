@@ -3,48 +3,59 @@
 }
 
 .dogs-selections {
+  padding: 0 .75rem;
   text-align: center;
 }
 
-.new-search {
+.button-new-search-container {
   display: flex;
-  justify-content: end;
+  justify-content: start;
   padding: .5rem;
 }
 
-.button-new-search {
-  background-color: var(--color-blue-medium);
-  color: var(--color-application-light);
-
-  &:hover {
-    background-color: var(--color-blue-light);
-  }
+h1.search-results {
+  font-family: 'Fredoka', serif;
+  color: var(--color-blue-dark);
 }
 
-.favorites-count-container {
+h2.instructions {
+  color: var(--color-gold-dark)
+}
+
+h3.favorites-count-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: .75rem;
-}
+  gap: .5rem;
 
-.favorites-count {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--color-green-dark);
+  .favorites-count {
+    color: var(--color-green-dark);
+  }
 }
 
 .floating-action-button {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
   width: var(--dimension-floating-action-button);
   height: var(--dimension-floating-action-button);
-  position: fixed;
-  z-index: 1;
   inset-block: auto var(--dimension-viewport-margin);
   inset-inline: auto var(--dimension-viewport-margin);
-  border: none;
+  border: 5px solid transparent;
   border-radius: 50%;
-  font-size: 2rem;
+  font-size: 1.75rem;
   font-weight: 700;
+  background-color: var(--color-gray);
+  color: var(--color-gray-medium);
+
+  &:not(.disabled) {
+    outline: 5px solid var(--color-green-light);
+    border-color: var(--color-blue-light);
+    background-color: var(--color-blue-dark);
+    color: var(--color-application-light);
+  }
 }
 
 .dog-cards {

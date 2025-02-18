@@ -22,12 +22,13 @@
   width: var(--card-dimension);
   height: 100%;
   border-radius: var(--card-border-radius-outer);
-  background-color: var(--color-blue-pale);
+  background-color: var(--color-blue-lighter);
+  color: var(--color-application-dark);
 
 
   &.selected {
-    color: var(--color-application-light);
     background-color: var(--color-green-dark);
+    color: var(--color-application-light);
 
     img {
       border-bottom-color: var(--color-green-light);

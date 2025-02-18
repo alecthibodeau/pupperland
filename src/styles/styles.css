@@ -20,8 +20,12 @@ body {
   overflow-x: hidden;
   margin: 0;
   font-family: 'Open Sans', serif;
-  background-color: var(--color-yellow-medium);
+  background-color: var(--color-blue-dark);
   color: var(--color-application-dark);
+}
+
+body {
+  background-color: var(--color-yellow-medium);
 }
 
 main {
@@ -43,6 +47,7 @@ main {
   padding: .375rem .625rem;
   border: none;
   border-radius: var(--border-radius-button-pill);
+  font-weight: 600;
   background-color: var(--color-application-dark);
   color: var(--color-application-light);
 }

@@ -17,6 +17,7 @@ function DogsSelect(props: DogsSelectProps): React.JSX.Element {
   const [matchedDog, setMatchedDog] = useState<Dog | null>(null);
   const { formatLettersAndNumbers } = formatText;
   const favoritesCount: number = favoriteDogs.length;
+  const isFavoritesCountLessThanTwo: boolean = favoritesCount < 2;
 
   async function onClickMatchButton(): Promise<void> {
     const matchingDogId: string | undefined = await apiDogs.generateMatch(favoriteDogs);
@@ -59,7 +60,7 @@ function DogsSelect(props: DogsSelectProps): React.JSX.Element {
 
   return (
     <div className="dogs-select">
-      <div className="new-search">
+      <div className="button-new-search-container">
         <button onClick={onClickNewSearchButton} className="button-secondary">
           New Search
         </button>
@@ -68,24 +69,35 @@ function DogsSelect(props: DogsSelectProps): React.JSX.Element {
         matchedDog ?
         <MatchedDog matchedDog={matchedDog}/> :
         <div className="dogs-selections">
-          <h1>Click at least two favorite dogs to enable match generation</h1>
-          <h2>{`${favoritesCount} favorite${favoritesCount !== 1 ? 's' : ''}`}</h2>
-          <button
-            onClick={() => setFavoriteDogs([])}
-            className="button-secondary"
-          >
-            Clear
-          </button>
+          <h1 className="search-results">Search Results</h1>
+          <h2 className="instructions">
+            Click two or more favorites, then click Match.
+          </h2>
+          <h3 className="favorites-count-container">
+            <span className="favorites-count">
+              {`${favoritesCount} favorite${favoritesCount !== 1 ? 's' : ''}`}
+            </span>
+            <button
+              onClick={() => setFavoriteDogs([])}
+              className="button-secondary"
+            >
+              Clear
+            </button>
+          </h3>
           <div className="dog-cards">
             {props.dogs.map(renderDogCard)}
           </div>
-          {
-            favoriteDogs.length > 1 ?
-            <button onClick={onClickMatchButton} className="floating-action-button">
-              Match
-            </button> :
-            null
-          }
+          <button
+            onClick={onClickMatchButton}
+            disabled={isFavoritesCountLessThanTwo}
+            className={`
+              floating-action-button ${isFavoritesCountLessThanTwo ?
+              ' disabled' :
+              ''}
+            `}
+          >
+            <span>Match</span>
+          </button>
         </div>
       }
     </div>
