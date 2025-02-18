@@ -53,6 +53,7 @@ function DogsSearch(): React.JSX.Element {
   }, [maximumAge, minimumAge, selectedBreeds, selectedZipCodes, size, zipCode]);
 
   async function onClickButtonSearchDogs(): Promise<void> {
+    window.scrollTo(0, 0);
     const fetchedDogs: Dog[] | undefined = await apiDogs.searchDogs(apiSearchDogsParameters);
     if (fetchedDogs) {
       if (fetchedDogs.length) {
@@ -171,7 +172,7 @@ function DogsSearch(): React.JSX.Element {
     <>
       {
         dogs.length ?
-        <DogsSelect dogs={dogs} onClickNewSearchButton={enableNewSearch} /> :
+        <DogsSelect dogs={dogs} onClickButtonNewSearch={enableNewSearch} /> :
         <div className="dogs-search">
           <h1 className="search-heading">Welcome to Pupperland.</h1>
           <h2 className={`search-message${isFetchedResultEmpty ? ' sorry' : ''}`}>

@@ -34,13 +34,15 @@
   --color-orange-medium: #f7b045;
   --color-red-dark: #c50303;
   --color-red-light: #fb6962;
+  --color-violet-dark: #8a36d9;
   --color-violet-medium: #9c4ee4;
   --color-violet-light: #ae66f1;
 
   /* Dimensions */
   --border-radius-small: .375rem;
   --border-radius-medium: .5rem;
-  --border-radius-button-pill: 2rem;
+  --border-radius-large: 2rem;
+  --border-radius-button-pill: var(--border-radius-large);
   --card-dimension: 200px;
   --card-border-radius-outer: .5625rem;
   --card-border-radius-inner: var(--border-radius-medium);

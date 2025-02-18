@@ -6,8 +6,8 @@ header {
 }
 
 .header-title {
-  font-size: 1.75rem;
   font-family: 'Fredoka', serif;
+  font-size: 1.75rem;
   font-weight: 600;
   color: var(--color-application-light);
 }

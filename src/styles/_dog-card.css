@@ -60,6 +60,7 @@
 .dog-card-info-name {
   margin-bottom: .25rem;
   text-align: center;
+  font-family: 'Fredoka', serif;
   font-size: 1.25rem;
-  font-weight: 700;
+  font-weight: 600;
 }

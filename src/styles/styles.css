@@ -18,6 +18,7 @@ html,
 body {
   max-width: 100%;
   overflow-x: hidden;
+  scroll-behavior: smooth;
   margin: 0;
   font-family: 'Open Sans', serif;
   background-color: var(--color-blue-dark);
