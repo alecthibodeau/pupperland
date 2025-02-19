@@ -2,6 +2,10 @@ const urlBase = 'https://frontend-take-home-service.fetch.com';
 const urlDogs = `${urlBase}/dogs`;
 const ages: string[] = Array.from({ length: 16 }, (_, index) => (index).toString());
 
+const hexColors: { [key: string]: string } = {
+  colorApplicationLight: '#f5f5f5'
+}
+
 const selectOptions: { [key: string]: string[] } = {
   ages
 }
@@ -23,6 +27,7 @@ const urls: { [key: string]: string } = {
 }
 
 const stringValues = {
+  hexColors,
   selectOptions,
   texts,
   urls

@@ -2,9 +2,11 @@
 import ButtonFilterProps from '../interfaces/ButtonFilter';
 
 /* Constants */
+import stringValues from '../constants/string-values';
 import svgPaths from '../constants/svg-paths';
 
 function ButtonFilter(props: ButtonFilterProps): React.JSX.Element {
+  const { hexColors: { colorApplicationLight } } = stringValues;
   return (
     <button
       onClick={() => props.onClickButton(props.label)}
@@ -14,12 +16,12 @@ function ButtonFilter(props: ButtonFilterProps): React.JSX.Element {
         {props.label}
       </label>
       <svg
-        aria-labelledby="click to remove filter"
+        aria-labelledby="closing x icon"
         width="10"
         height="10"
         viewBox="0 0 420 420"
         xmlns="http://www.w3.org/2000/svg"
-        fill="#f5f5f5"
+        fill={colorApplicationLight}
       >
         <polygon points={svgPaths.closingX} />
       </svg>
