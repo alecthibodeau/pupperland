@@ -6,9 +6,12 @@ import LoginProps from '../interfaces/LoginProps';
 import stringValues from '../constants/string-values';
 
 function Login(props: LoginProps): React.JSX.Element {
-  const [email, setEmail] = useState<string>('potato@website.com');
-  const [name, setName] = useState<string>('potato');
+  const [email, setEmail] = useState<string>('');
+  const [name, setName] = useState<string>('');
+  const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
+  const [isNameValid, setIsNameValid] = useState<boolean>(true);
   const { urls: { urlAuthLogin } } = stringValues;
+  const validEmailAddress: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   async function logIn(): Promise<void> {
     try {
@@ -30,6 +33,25 @@ function Login(props: LoginProps): React.JSX.Element {
     }
   }
 
+  function handleChangeName(event: React.ChangeEvent<HTMLInputElement>): void {
+    if (event.target) setName(event.target.value);
+  }
+
+  function handleChangeEmail(event: React.ChangeEvent<HTMLInputElement>): void {
+    if (event.target) setEmail(event.target.value);
+  }
+
+  function OnClickButtonLogin(): void {
+    const isEmailTestValid: boolean = validEmailAddress.test(email);
+    const isNameNotEmptyString: boolean = (name !== '');
+    if (isEmailTestValid && isNameNotEmptyString) {
+      logIn();
+    } else {
+      setIsEmailValid(isEmailTestValid);
+      setIsNameValid(isNameNotEmptyString);
+    }
+  }
+
   return (
     <div className="login">
       <div className="login-fields">
@@ -37,25 +59,43 @@ function Login(props: LoginProps): React.JSX.Element {
           type="text"
           placeholder="Name"
           value={name}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            if (event.target) setName(event.target.value);
-          }}
+          maxLength={50}
+          onChange={handleChangeName}
         />
         <input
           type="text"
           placeholder="Email"
           value={email}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            if (event.target) setEmail(event.target.value);
-          }}
+          maxLength={50}
+          onChange={handleChangeEmail}
         />
       </div>
       <button
-        onClick={logIn}
+        onClick={OnClickButtonLogin}
         className="button-primary button-authentication button-login"
       >
         Log In
       </button>
+      {
+        !isNameValid || !isEmailValid ?
+        <div className="validation-message-container">
+          {
+            !isNameValid ?
+            <div className="validation-message">
+              Enter a valid name.
+            </div> :
+            null
+          }
+          {
+            !isEmailValid ?
+            <div className="validation-message">
+              Enter a valid email.
+            </div> :
+            null
+          }
+        </div> :
+        null
+      }
     </div>
   );
 }

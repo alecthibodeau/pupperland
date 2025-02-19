@@ -66,3 +66,18 @@ h2 {
   background-color: var(--color-application-dark);
   color: var(--color-application-light);
 }
+
+.button-authentication {
+  font-weight: 600;
+  background-color: var(--color-violet-medium);
+  color: var(--color-application-light);
+
+  &:hover {
+    background-color: var(--color-violet-light);
+  }
+}
+
+.validation-message {
+  /* margin-top: .5rem; */
+  color: var(--color-red-dark);
+}

@@ -202,7 +202,7 @@ function DogsSearch(): React.JSX.Element {
             </div>
             {
               !isAgeRangeValid ?
-              <div className="validation-message-age">
+              <div className="validation-message">
                 Minimum age must be less than or equal to maximum age
               </div> :
               null
