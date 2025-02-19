@@ -142,34 +142,41 @@ function DogsSearch(): React.JSX.Element {
   }
 
   function handleChangeBreed(event: React.ChangeEvent<HTMLSelectElement>): void {
-    if (event.target.value && !selectedBreeds.includes(event.target.value)) {
-      setSelectedBreeds([...selectedBreeds, event.target.value]);
+    const enteredBreed: string = event.target.value;
+    if (enteredBreed && !selectedBreeds.includes(enteredBreed)) {
+      setSelectedBreeds([...selectedBreeds, enteredBreed]);
     }
   }
 
   function handleChangeSize(event: React.ChangeEvent<HTMLInputElement>): void {
+    const enteredSize: string = event.target.value;
+    const lastEnteredCharacter: string = enteredSize.slice(-1);
     if (event.target) {
-      if (!isTextOnlyDigits(event.target.value.slice(-1))) {
-        setSize(event.target.value.slice(0, -1));
-      } else if (+event.target.value > 10000) {
-        setSize('10000');
+      if (!isTextOnlyDigits(lastEnteredCharacter) || +enteredSize > 10000) {
+        setSize(enteredSize.slice(0, -1));
       } else {
-        setSize(event.target.value);
+        setSize(enteredSize);
       }
     }
   }
 
   function handleChangeZipCode(event: React.ChangeEvent<HTMLInputElement>): void {
+    const enteredZipCode: string = event.target.value;
+    const lastEnteredCharacter: string = enteredZipCode.slice(-1);
     if (!isZipCodeValid) setIsZipCodeValid(true);
     if (event.target) {
-      if (!isTextOnlyDigits(event.target.value.slice(-1))) {
-        setZipCode(event.target.value.slice(0, -1));
-      } else if (event.target.value.length > 5) {
-        setZipCode(event.target.value.slice(0, 5));
+      if (!isTextOnlyDigits(lastEnteredCharacter)) {
+        setZipCode(enteredZipCode.slice(0, -1));
+      } else if (enteredZipCode.length > 5) {
+        setZipCode(enteredZipCode.slice(0, 5));
       } else {
-        setZipCode(event.target.value);
+        setZipCode(enteredZipCode);
       }
     }
+  }
+
+  function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
+    if (event.key === 'Enter') onClickButtonAddZipCode();
   }
 
   return (
@@ -234,6 +241,7 @@ function DogsSearch(): React.JSX.Element {
                 ref={zipCodeInputRef}
                 value={zipCode}
                 onChange={handleChangeZipCode}
+                onKeyDown={handleKeyDown}
                 className="search-input size-input"
               />
               <button onClick={onClickButtonAddZipCode} className="button-secondary">
