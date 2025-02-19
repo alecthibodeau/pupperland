@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 /* Components */
 import DogCard from './DogCard';
 import MatchedDog from './MatchedDog';
+import Pagination from './Pagination';
 
 /* Interfaces */
 import Dog from '../interfaces/Dog';
@@ -13,15 +14,21 @@ import apiDogs from '../helpers/api-dogs';
 import formatText from '../helpers/format-text';
 
 function DogsSelect(props: DogsSelectProps): React.JSX.Element {
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [isDogsListAscending, setIsDogsListAscending] = useState<boolean>(true);
   const [favoriteDogs, setFavoriteDogs] = useState<Dog[]>([]);
   const [matchedDog, setMatchedDog] = useState<Dog | null>(null);
   const { formatLettersAndNumbers } = formatText;
   const dogsAscending: Dog[] = props.dogs;
   const dogsDescending: Dog[] = [...props.dogs].reverse();
-  const dogsListCurrent: Dog[] = isDogsListAscending ? dogsAscending : dogsDescending;
+  const dogsListSorted: Dog[] = isDogsListAscending ? dogsAscending : dogsDescending;
+  const dogsPerPage: number = 8;
   const favoritesCount: number = favoriteDogs.length;
   const isFavoritesCountLessThanTwo: boolean = favoritesCount < 2;
+
+  const indexOfLastDog: number = currentPage * dogsPerPage;
+  const indexOfFirstDog: number = indexOfLastDog - dogsPerPage;
+  const currentDogs: Dog[] = dogsListSorted.slice(indexOfFirstDog, indexOfLastDog);
 
   async function onClickMatchButton(): Promise<void> {
     const matchingDogId: string | undefined = await apiDogs.generateMatch(favoriteDogs);
@@ -72,11 +79,6 @@ function DogsSelect(props: DogsSelectProps): React.JSX.Element {
 
   return (
     <div className="dogs-select">
-      <div className="button-new-search-container">
-        <button onClick={onClickButtonNewSearch} className="button-secondary">
-          New Search
-        </button>
-      </div>
       {
         matchedDog ?
         <MatchedDog matchedDog={matchedDog}/> :
@@ -85,8 +87,14 @@ function DogsSelect(props: DogsSelectProps): React.JSX.Element {
           <h2 className="instructions">
             Click two or more favorites, then click Match.
           </h2>
-          <h3 className="user-actions">
-            <div className="user-action-container">
+
+          <div className="user-actions-container">
+            <div className="user-action">
+              <button onClick={onClickButtonNewSearch} className="button-secondary">
+                New Search
+              </button>
+            </div>
+            <div className="user-action">
               <span className="favorites-count">
                 {`${favoritesCount} favorite${favoritesCount !== 1 ? 's' : ''}`}
               </span>
@@ -94,7 +102,7 @@ function DogsSelect(props: DogsSelectProps): React.JSX.Element {
                 Clear
               </button>
             </div>
-            <div className="user-action-container">
+            <div className="user-action">
               <span className={`sort-arrow${isDogsListAscending ? '' : ' descending'}`}>
                 {isDogsListAscending ? <span>&darr;</span> : <span>&uarr;</span>}
               </span>
@@ -102,10 +110,20 @@ function DogsSelect(props: DogsSelectProps): React.JSX.Element {
                 Sort
               </button>
             </div>
-          </h3>
-          <div className="dog-cards">
-            {dogsListCurrent.map(renderDogCard)}
+            <div className="user-action">
+              <Pagination
+                 currentPage={currentPage}
+                 dogsPerPage={dogsPerPage}
+                 totalDogs={dogsListSorted.length}
+                 onClickButtonPageNumber={setCurrentPage}
+               />
+            </div>
           </div>
+
+          <div className="dog-cards">
+            {currentDogs.map(renderDogCard)}
+          </div>
+
           <button
             onClick={onClickMatchButton}
             disabled={isFavoritesCountLessThanTwo}

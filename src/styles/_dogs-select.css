@@ -3,48 +3,39 @@
 }
 
 .dogs-selections {
-  padding: 0 .75rem;
-  text-align: center;
-}
-
-.button-new-search-container {
   display: flex;
-  justify-content: start;
-  padding: .5rem;
-}
-
-h1.search-results {
-  font-family: 'Fredoka', serif;
-  color: var(--color-blue-dark);
+  flex-direction: column;
+  align-items: center;
 }
 
 h2.instructions {
   color: var(--color-gold-dark);
 }
 
-h3.user-actions {
+.user-actions-container {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
-  gap: .5rem;
+  max-width: 660px;
+  gap: 0 1rem;
 }
 
-.user-action-container {
+.user-action {
   display: flex;
   align-items: center;
-  gap: .375rem;
-  padding: .75rem;
-  border-radius: var(--border-radius-large);
-  background-color: var(--color-yellow-light);
+  gap: .25rem;
+  padding: .5rem;
 }
 
 .favorites-count {
   padding-left: .25rem;
   color: var(--color-green-dark);
+  font-weight: 700;
 }
 
 .sort-arrow {
-  color: var(--color-blue-medium);
+  font-weight: 500;
+  color: var(--color-blue-dark);
 
   &.descending {
     color: var(--color-violet-dark)
@@ -74,6 +65,11 @@ h3.user-actions {
     border-color: var(--color-blue-light);
     background-color: var(--color-blue-dark);
     color: var(--color-application-light);
+  }
+
+  &:not(.disabled):hover {
+    background-color: var(--color-application-light);
+    color: var(--color-blue-dark);
   }
 }
 

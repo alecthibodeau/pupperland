@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1rem 2rem;
 }
 
 section {
@@ -14,14 +13,7 @@ section {
   background-color: var(--color-yellow-light);
 }
 
-h1.search-heading {
-  font-family: 'Fredoka', serif;
-  color: var(--color-blue-medium);
-}
-
 h2.search-message {
-  margin: 0 0 1.5rem 0;
-  font-size: 1.25rem;
   color: var(--color-green-dark);
 
   &.sorry {

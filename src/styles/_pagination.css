@@ -1,0 +1,18 @@
+.pagination {
+  display: flex;
+  gap: .25rem;
+}
+
+.button-page-number {
+  width: 1.5rem;
+  aspect-ratio: 1;
+  padding: .25rem;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--color-application-dark);
+  color: var(--color-application-light);
+
+  &.active {
+    background-color: var(--color-blue-dark);
+  }
+}
