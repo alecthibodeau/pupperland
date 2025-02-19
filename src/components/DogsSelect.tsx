@@ -25,7 +25,6 @@ function DogsSelect(props: DogsSelectProps): React.JSX.Element {
   const dogsPerPage: number = 8;
   const favoritesCount: number = favoriteDogs.length;
   const isFavoritesCountLessThanTwo: boolean = favoritesCount < 2;
-
   const indexOfLastDog: number = currentPage * dogsPerPage;
   const indexOfFirstDog: number = indexOfLastDog - dogsPerPage;
   const currentDogs: Dog[] = dogsListSorted.slice(indexOfFirstDog, indexOfLastDog);
@@ -83,20 +82,22 @@ function DogsSelect(props: DogsSelectProps): React.JSX.Element {
         matchedDog ?
         <MatchedDog matchedDog={matchedDog}/> :
         <div className="dogs-selections">
-          <h1 className="search-results">Search Results</h1>
-          <h2 className="instructions">
-            Click two or more favorites, then click Match.
-          </h2>
+          <div className="new-search-container">
+          </div>
+          <h1 className="search-results">
+            <span>
+              Search Results
+            </span>
+            <button onClick={onClickButtonNewSearch} className="button-secondary">
+              New
+            </button>
+          </h1>
+          <h2>Click two or more favorites, then click Match.</h2>
 
           <div className="user-actions-container">
             <div className="user-action">
-              <button onClick={onClickButtonNewSearch} className="button-secondary">
-                New Search
-              </button>
-            </div>
-            <div className="user-action">
               <span className="favorites-count">
-                {`${favoritesCount} favorite${favoritesCount !== 1 ? 's' : ''}`}
+                {favoritesCount}
               </span>
               <button onClick={onClickButtonClear} className="button-secondary">
                 Clear

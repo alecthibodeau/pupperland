@@ -8,8 +8,10 @@
   align-items: center;
 }
 
-h2.instructions {
-  color: var(--color-gold-dark);
+h1.search-results {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
 }
 
 .user-actions-container {
@@ -17,28 +19,31 @@ h2.instructions {
   flex-wrap: wrap;
   justify-content: center;
   max-width: 660px;
-  gap: 0 1rem;
+  gap: .5rem 1.5rem;
+  margin-bottom: .5rem;
 }
 
 .user-action {
   display: flex;
   align-items: center;
-  gap: .25rem;
-  padding: .5rem;
+  gap: .125rem;
 }
 
 .favorites-count {
-  padding-left: .25rem;
-  color: var(--color-green-dark);
+  padding-right: .25rem;
+  font-size: 1.5rem;
   font-weight: 700;
+  line-height: 2rem;
+  color: var(--color-green-dark);
 }
 
 .sort-arrow {
+  font-size: 1.5rem;
   font-weight: 500;
-  color: var(--color-blue-dark);
+  color: var(--color-violet-dark);
 
   &.descending {
-    color: var(--color-violet-dark)
+    color: var(--color-red-dark)
   }
 }
 

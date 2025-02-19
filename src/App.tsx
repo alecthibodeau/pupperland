@@ -15,8 +15,8 @@ function App() {
   return (
     <>
       <Header
-        onUpdateIsUserAuthenticated={setIsUserAuthenticated}
         isUserAuthenticated={isUserAuthenticated}
+        onUpdateIsUserAuthenticated={setIsUserAuthenticated}
       />
       <main>
         {
