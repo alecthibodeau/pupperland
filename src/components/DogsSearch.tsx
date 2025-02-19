@@ -21,6 +21,7 @@ function DogsSearch(): React.JSX.Element {
   const [dogs, setDogs] = useState<Dog[]>([]);
   const [isAgeRangeValid, setIsAgeRangeValid] = useState<boolean>(true);
   const [isFetchedResultEmpty, setIsFetchedResultEmpty] = useState<boolean>(false);
+  const [isZipCodeValid, setIsZipCodeValid] = useState<boolean>(true);
   const [maximumAge, setMaximumAge] = useState<string>('');
   const [minimumAge, setMinimumAge] = useState<string>('');
   const [selectedBreeds, setSelectedBreeds] = useState<string[]>([]);
@@ -99,7 +100,9 @@ function DogsSearch(): React.JSX.Element {
   }
 
   function onClickButtonAddZipCode(): void {
-    if (!selectedZipCodes.includes(zipCode)) {
+    if (zipCode.length !== 5) {
+      setIsZipCodeValid(false);
+    } else if (!selectedZipCodes.includes(zipCode)) {
       setZipCode('');
       setSelectedZipCodes([...selectedZipCodes, zipCode]);
       if (zipCodeInputRef.current) zipCodeInputRef.current.focus();
@@ -157,6 +160,7 @@ function DogsSearch(): React.JSX.Element {
   }
 
   function handleChangeZipCode(event: React.ChangeEvent<HTMLInputElement>): void {
+    if (!isZipCodeValid) setIsZipCodeValid(true);
     if (event.target) {
       if (!isTextOnlyDigits(event.target.value.slice(-1))) {
         setZipCode(event.target.value.slice(0, -1));
@@ -202,7 +206,7 @@ function DogsSearch(): React.JSX.Element {
             </div>
             {
               !isAgeRangeValid ?
-              <div className="validation-message age-validation-message">
+              <div className="validation-message search-field-validation-message">
                 Minimum age must be less than or equal to maximum age.
               </div> :
               null
@@ -239,6 +243,13 @@ function DogsSearch(): React.JSX.Element {
                 See if there are any dogs located in specific zip codes
               </label>
             </div>
+            {
+              !isZipCodeValid ?
+              <div className="validation-message search-field-validation-message">
+                Enter a valid five-digit zip code.
+              </div> :
+              null
+            }
             <div>
               {selectedZipCodes.map(renderFilterButton)}
             </div>
@@ -246,7 +257,9 @@ function DogsSearch(): React.JSX.Element {
           <button
             onClick={onClickButtonSearchDogs}
             disabled={!isAgeRangeValid}
-            className={`button-primary button-search${!isAgeRangeValid ? ' disabled' : ''}`}
+            className={`
+              button-primary button-search-dogs${!isAgeRangeValid ? ' disabled' : ''}
+            `}
           >
             Search Dogs
           </button>

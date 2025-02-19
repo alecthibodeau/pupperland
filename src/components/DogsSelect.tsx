@@ -22,7 +22,7 @@ function DogsSelect(props: DogsSelectProps): React.JSX.Element {
   const dogsAscending: Dog[] = props.dogs;
   const dogsDescending: Dog[] = [...props.dogs].reverse();
   const dogsListSorted: Dog[] = isDogsListAscending ? dogsAscending : dogsDescending;
-  const dogsPerPage: number = 8;
+  const dogsPerPage: number = 10;
   const favoritesCount: number = favoriteDogs.length;
   const isFavoritesCountLessThanTwo: boolean = favoritesCount < 2;
   const indexOfLastDog: number = currentPage * dogsPerPage;
@@ -85,14 +85,12 @@ function DogsSelect(props: DogsSelectProps): React.JSX.Element {
           <div className="new-search-container">
           </div>
           <h1 className="search-results">
-            <span>
-              Search Results
-            </span>
+            <span>{dogsAscending.length} puppers found</span>
             <button onClick={onClickButtonNewSearch} className="button-secondary">
-              New
+              New Search
             </button>
           </h1>
-          <h2>Click two or more favorites, then click Match.</h2>
+          <h2>Click two or more favorites and then Match.</h2>
 
           <div className="user-actions-container">
             <div className="user-action">
@@ -120,11 +118,9 @@ function DogsSelect(props: DogsSelectProps): React.JSX.Element {
                />
             </div>
           </div>
-
           <div className="dog-cards">
             {currentDogs.map(renderDogCard)}
           </div>
-
           <button
             onClick={onClickMatchButton}
             disabled={isFavoritesCountLessThanTwo}

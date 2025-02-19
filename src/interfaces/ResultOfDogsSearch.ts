@@ -1,8 +1,8 @@
-interface ResultsOfDogsSearch {
+interface ResultOfDogsSearch {
   resultIds: string[];
   total: number;
   next?: string;
   prev?: string;
 }
 
-export default ResultsOfDogsSearch;
+export default ResultOfDogsSearch;

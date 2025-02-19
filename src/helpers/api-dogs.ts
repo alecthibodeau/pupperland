@@ -5,7 +5,7 @@ import stringValues from '../constants/string-values';
 import APISearchDogsProps from '../interfaces/APISearchDogsProps';
 import Dog from '../interfaces/Dog';
 import Match from '../interfaces/Match';
-import ResultsOfDogsSearch from '../interfaces/ResultsOfDogsSearch';
+import ResultOfDogsSearch from '../interfaces/ResultOfDogsSearch';
 
 const {
   urls: { urlDogs, urlDogsBreeds, urlDogsMatch, urlDogsSearch }
@@ -46,9 +46,9 @@ async function searchDogs(props: APISearchDogsProps): Promise<Dog[] | undefined>
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
-    const resultsOfDogsSearch: ResultsOfDogsSearch = await response.json();
-    console.log('Results of dogs search:', resultsOfDogsSearch);
-    return fetchDogs(resultsOfDogsSearch.resultIds);
+    const resultOfDogsSearch: ResultOfDogsSearch = await response.json();
+    console.log('Result of dogs search:', resultOfDogsSearch);
+    return fetchDogs(resultOfDogsSearch.resultIds);
   } catch (error) {
     console.error('Error:', error);
   }
