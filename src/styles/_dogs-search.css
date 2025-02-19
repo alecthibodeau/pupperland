@@ -4,7 +4,7 @@
   align-items: center;
 }
 
-section {
+section.search-parameter-container {
   width: 80vw;
   max-width: 940px;
   padding: .5rem 1rem 1.5rem;
@@ -19,12 +19,12 @@ h2.search-message.sorry {
   color: var(--color-red-dark);
 }
 
-section > h3 {
+section.search-parameter-container > h3 {
   margin: 0 0 .5rem 0;
   color: var(--color-blue-dark);
 }
 
-.choose {
+.search-parameter {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -38,29 +38,13 @@ section > h3 {
   }
 }
 
-.select-age-container {
-  display: flex;
-  align-items: center;
-  gap: .5rem;
+.age-validation-message {
+  margin-top: .5rem;
 }
 
-.search-select,
-.search-input {
-  padding: .375rem;
-  border-radius: var(--border-radius-medium);
-  border: 2px solid var(--color-blue-dark);
-  font-size: 1rem;
-  color: var(--color-application-dark);
-
-  &.age-select {
-    width: 3.5rem;
-    text-align: center;
-  }
-
-  &.size-input {
-    width: 4.5rem;
-    text-align: center;
-  }
+.search-input.size-input {
+  width: 4.5rem;
+  text-align: center;
 }
 
 .button-filter {

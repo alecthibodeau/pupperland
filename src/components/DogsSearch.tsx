@@ -178,9 +178,9 @@ function DogsSearch(): React.JSX.Element {
           <h2 className={`search-message${isFetchedResultEmpty ? ' sorry' : ''}`}>
             {isFetchedResultEmpty ? textSorry : textChoose}
           </h2>
-          <section>
+          <section className="search-parameter-container">
             <h3>Breed</h3>
-            <div className="choose choose-breeds">
+            <div className="search-parameter choose-breeds">
               <select
                 id="breedSelect"
                 onChange={handleChangeBreed}
@@ -195,22 +195,22 @@ function DogsSearch(): React.JSX.Element {
               {selectedBreeds.map(renderFilterButton)}
             </div>
           </section>
-          <section>
+          <section className="search-parameter-container">
             <h3>Age</h3>
-            <div className="choose choose-age">
+            <div className="search-parameter choose-age">
               {[textMinimum, textMaximum].map(renderSelectAgeContainer)}
             </div>
             {
               !isAgeRangeValid ?
-              <div className="validation-message">
-                Minimum age must be less than or equal to maximum age
+              <div className="validation-message age-validation-message">
+                Minimum age must be less than or equal to maximum age.
               </div> :
               null
             }
           </section>
-          <section>
+          <section className="search-parameter-container">
             <h3>Search Size</h3>
-            <div className="choose choose-size">
+            <div className="search-parameter choose-size">
               <input
                 id="sizeSelect"
                 type="text"
@@ -221,9 +221,9 @@ function DogsSearch(): React.JSX.Element {
               <label htmlFor="sizeSelect">Choose up to 10,000 dogs searched</label>
             </div>
           </section>
-          <section>
+          <section className="search-parameter-container">
             <h3>Zip Code</h3>
-            <div className="choose choose-zip-code">
+            <div className="search-parameter choose-zip-code">
               <input
                 id="zipCodeSelect"
                 type="text"

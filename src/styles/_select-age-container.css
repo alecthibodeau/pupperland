@@ -1,0 +1,10 @@
+.select-age-container {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+.search-select.age-select {
+  width: 3.5rem;
+  text-align: center;
+}
