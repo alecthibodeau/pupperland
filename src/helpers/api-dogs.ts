@@ -55,24 +55,27 @@ async function searchDogs(props: APISearchDogsProps): Promise<Dog[] | undefined>
 }
 
 async function fetchDogs(resultIds: string[]): Promise<Dog[] | undefined> {
-  const maximumAllowedIds: string[] = resultIds.slice(0, 100);
+  const batchSize: number = 100;
+  const fetchedDogsTotal: Dog[] = [];
   try {
-    const response: Response = await fetch(urlDogs, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(maximumAllowedIds),
-      credentials: 'include'
-    });
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
+    for (let i = 0; i < resultIds.length; i += batchSize) {
+      const dogsIdsBatch: string[] = resultIds.slice(i, i + batchSize);
+      const response: Response = await fetch(urlDogs, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(dogsIdsBatch),
+        credentials: 'include'
+      });
+      const fetchedDogsBatch: Dog[] = await response.json();
+      fetchedDogsTotal.push(...fetchedDogsBatch);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
     }
-    const fetchedDogs: Dog[] = await response.json();
-    return fetchedDogs;
   } catch (error) {
     console.error('Error:', error);
   }
+  return fetchedDogsTotal;
 }
 
 async function generateMatch(favoriteDogs: Dog[]): Promise<string | undefined> {
@@ -80,9 +83,7 @@ async function generateMatch(favoriteDogs: Dog[]): Promise<string | undefined> {
   try {
     const response: Response = await fetch(urlDogsMatch, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(favoriteDogsIds),
       credentials: 'include'
     });
