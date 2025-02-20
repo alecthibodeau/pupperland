@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 /* Components */
 import ButtonFilter from './ButtonFilter';
 import DogsSelect from './DogsSelect';
+import Loader from './Loader';
 import SelectAgeContainer from './SelectAgeContainer';
 
 /* Interfaces */
@@ -21,6 +22,7 @@ function DogsSearch(): React.JSX.Element {
   const [dogs, setDogs] = useState<Dog[]>([]);
   const [isAgeRangeValid, setIsAgeRangeValid] = useState<boolean>(true);
   const [isFetchedResultEmpty, setIsFetchedResultEmpty] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [isZipCodeValid, setIsZipCodeValid] = useState<boolean>(true);
   const [maximumAge, setMaximumAge] = useState<string>('');
   const [minimumAge, setMinimumAge] = useState<string>('');
@@ -54,11 +56,13 @@ function DogsSearch(): React.JSX.Element {
   }, [maximumAge, minimumAge, selectedBreeds, selectedZipCodes, size, zipCode]);
 
   async function onClickButtonSearchDogs(): Promise<void> {
+    setIsLoading(true);
     window.scrollTo(0, 0);
     const fetchedDogs: Dog[] | undefined = await apiDogs.searchDogs(apiSearchDogsParameters);
     if (fetchedDogs) {
       if (fetchedDogs.length) {
         setDogs(fetchedDogs);
+        setIsLoading(false);
       } else {
         setIsFetchedResultEmpty(true);
       }
@@ -181,6 +185,7 @@ function DogsSearch(): React.JSX.Element {
 
   return (
     <>
+      {isLoading ? <Loader /> : null }
       {
         dogs.length ?
         <DogsSelect dogs={dogs} onClickButtonNewSearch={enableNewSearch} /> :
