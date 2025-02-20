@@ -22,8 +22,10 @@ const selectOptions: { [key: string]: string[] } = {
 }
 
 const texts: { [key: string]: string } = {
-  textChoose: 'Search for puppers by choosing your preferences below, or just click Search Dogs now to view a bunch of puppers!',
+  textChoose: 'Choose your preferences to search for lovable puppers (shelter dogs looking to match with a new home). Or just click Search Dogs now to view a bunch of puppers!',
   textSorry: 'Sorry! No dogs found with your preferences. Try again.',
+  textLeft: 'left',
+  textRight: 'right',
   textMaximum: 'maximum',
   textMinimum: 'minimum'
 }

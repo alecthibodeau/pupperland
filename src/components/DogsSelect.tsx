@@ -23,7 +23,8 @@ function DogsSelect(props: DogsSelectProps): React.JSX.Element {
   const [matchedDog, setMatchedDog] = useState<Dog | null>(null);
   const { formatLettersAndNumbers } = formatText;
   const {
-    characters: { greaterThan, lessThan, doubleGreaterThan, doubleLessThan }
+    characters: { greaterThan, lessThan, doubleGreaterThan, doubleLessThan },
+    texts: { textLeft, textRight }
   } = stringValues;
   const dogsAscending: Dog[] = props.dogs;
   const dogsDescending: Dog[] = [...props.dogs].reverse();
@@ -95,7 +96,7 @@ function DogsSelect(props: DogsSelectProps): React.JSX.Element {
     );
   }
 
-  function renderRangeButton(increment: number): React.JSX.Element {
+  function renderPageRangeButton(increment: number, direction?: string): React.JSX.Element {
     const isLeftSide: boolean = increment < 0;
     const isRightSide: boolean = increment > 0;
     const isVisible: boolean =
@@ -112,8 +113,15 @@ function DogsSelect(props: DogsSelectProps): React.JSX.Element {
       <button
         onClick={() => onClickButtonPaginationRange(increment)}
         className={`button-pages-range ${isVisible ? '' : 'hidden'}`}
+        aria-labelledby={`${isLeftSide ? 'decrement' : 'increment'} pages`}
       >
-        {character}
+        {
+          direction ?
+          <div className={
+            `triangle-${direction === textRight ? textRight : textLeft}`
+          }></div>:
+          <span>{character}</span>
+        }
       </button>
     );
   }
@@ -132,7 +140,7 @@ function DogsSelect(props: DogsSelectProps): React.JSX.Element {
               New Search
             </button>
           </h1>
-          <h2>Match with two or more</h2>
+          <h2>Click two or more, then Match!</h2>
           <div className="user-actions-container">
             <div className="user-action">
               <span className="user-action-text favorites-count">
@@ -151,20 +159,20 @@ function DogsSelect(props: DogsSelectProps): React.JSX.Element {
               </button>
             </div>
             <div className="user-action page-counter-container">
-              <span>{renderRangeButton(-1)}</span>
+              <span>{renderPageRangeButton(-1, textLeft)}</span>
               <span className="user-action-text page-counter">
                 {currentPageNumber}/{lastPageNumberRoundedUp}
               </span>
-              <span>{renderRangeButton(1)}</span>
+              <span>{renderPageRangeButton(1, textRight)}</span>
             </div>
           </div>
           <div className="dog-cards">
             {currentDogs.map(renderDogCard)}
           </div>
-          <div className="user-action">
+          <div className="user-action pagination-container">
             <div>
-              <span>{renderRangeButton(-displayedPageButtonsCount)}</span>
-              <span>{renderRangeButton(-1)}</span>
+              <span>{renderPageRangeButton(-displayedPageButtonsCount)}</span>
+              <span>{renderPageRangeButton(-1)}</span>
             </div>
             <Pagination
               currentPageNumber={currentPageNumber}
@@ -173,8 +181,8 @@ function DogsSelect(props: DogsSelectProps): React.JSX.Element {
               onClickButtonPageNumber={setCurrentPage}
             />
             <div>
-              <span>{renderRangeButton(1)}</span>
-              <span>{renderRangeButton(displayedPageButtonsCount)}</span>
+              <span>{renderPageRangeButton(1)}</span>
+              <span>{renderPageRangeButton(displayedPageButtonsCount)}</span>
             </div>
           </div>
           <button
