@@ -2,12 +2,13 @@
 import stringValues from '../constants/string-values';
 
 /* Interfaces */
-import APISearchDogsProps from '../interfaces/APISearchDogsProps';
+import APISearchDogs from '../interfaces/APISearchDogs';
 import Dog from '../interfaces/Dog';
 import Match from '../interfaces/Match';
 import ResultOfDogsSearch from '../interfaces/ResultOfDogsSearch';
 
 const {
+  networkMessages: { textResponseNotOkay },
   urls: { urlDogs, urlDogsBreeds, urlDogsMatch, urlDogsSearch }
 } = stringValues;
 
@@ -18,21 +19,22 @@ async function getBreeds(): Promise<string[] | undefined> {
       credentials: 'include'
     });
     if (!response.ok) {
-      throw new Error('Network response was not ok');
+      throw new Error(textResponseNotOkay);
     }
     const availableBreeds: string[] = await response.json();
     console.log('Available breeds:', availableBreeds);
     return availableBreeds;
   } catch (error) {
-    console.error('Error:', error);
+    console.error(error);
   }
 }
 
-async function searchDogs(props: APISearchDogsProps): Promise<Dog[] | undefined> {
+async function searchDogs(props: APISearchDogs): Promise<Dog[] | undefined> {
   const { minimumAge, maximumAge, size, selectedBreeds, selectedZipCodes } = props;
   const minAgeParam: string = minimumAge ? `&ageMin=${minimumAge}` : '';
   const maxAgeParam: string = maximumAge ? `&ageMax=${maximumAge}` : '';
   const sizeParam: string = size ? `&size=${size}` : '';
+  const unauthorizedStatusCode: number = 401;
   const url = new URL(`
     ${urlDogsSearch}?${minAgeParam}${maxAgeParam}${sizeParam}&sort=breed:asc
   `);
@@ -44,18 +46,23 @@ async function searchDogs(props: APISearchDogsProps): Promise<Dog[] | undefined>
       credentials: 'include'
     });
     if (!response.ok) {
-      throw new Error('Network response was not ok');
+      if (response.status === unauthorizedStatusCode) {
+        window.location.reload();
+      } else {
+        throw new Error(textResponseNotOkay);
+      }
     }
     const resultOfDogsSearch: ResultOfDogsSearch = await response.json();
     console.log('Result of dogs search:', resultOfDogsSearch);
     return fetchDogs(resultOfDogsSearch.resultIds);
   } catch (error) {
-    console.error('Error:', error);
+    console.error(error);
   }
 }
 
 async function fetchDogs(resultIds: string[]): Promise<Dog[] | undefined> {
-  const batchSize: number = 100;
+  const apiRequestFetchedDogsLimit: number = 100;
+  const batchSize: number = apiRequestFetchedDogsLimit;
   const fetchedDogsTotal: Dog[] = [];
   try {
     for (let i = 0; i < resultIds.length; i += batchSize) {
@@ -69,11 +76,11 @@ async function fetchDogs(resultIds: string[]): Promise<Dog[] | undefined> {
       const fetchedDogsBatch: Dog[] = await response.json();
       fetchedDogsTotal.push(...fetchedDogsBatch);
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error(textResponseNotOkay);
       }
     }
   } catch (error) {
-    console.error('Error:', error);
+    console.error(error);
   }
   return fetchedDogsTotal;
 }
@@ -88,13 +95,13 @@ async function generateMatch(favoriteDogs: Dog[]): Promise<string | undefined> {
       credentials: 'include'
     });
     if (!response.ok) {
-      throw new Error('Network response was not ok');
+      throw new Error(textResponseNotOkay);
     }
     const match: Match = await response.json();
     const matchingDogId: string = match.match;
     return matchingDogId ? matchingDogId : undefined;
   } catch (error) {
-    console.error('Error:', error);
+    console.error(error);
   }
 }
 

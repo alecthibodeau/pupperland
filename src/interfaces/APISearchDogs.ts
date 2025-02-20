@@ -1,4 +1,4 @@
-interface APISearchDogsProps {
+interface APISearchDogs {
   maximumAge: string;
   minimumAge: string;
   size: string;
@@ -6,4 +6,4 @@ interface APISearchDogsProps {
   selectedZipCodes: string[];
 }
 
-export default APISearchDogsProps;
+export default APISearchDogs;

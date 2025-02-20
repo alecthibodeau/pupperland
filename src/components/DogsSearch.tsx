@@ -6,7 +6,7 @@ import DogsSelect from './DogsSelect';
 import SelectAgeContainer from './SelectAgeContainer';
 
 /* Interfaces */
-import APISearchDogsProps from '../interfaces/APISearchDogsProps';
+import APISearchDogsProps from '../interfaces/APISearchDogs';
 import Dog from '../interfaces/Dog';
 
 /* Constants */

@@ -13,6 +13,10 @@ const hexColors: { [key: string]: string } = {
   colorApplicationLight: '#f5f5f5'
 }
 
+const networkMessages: { [key: string]: string } = {
+  textResponseNotOkay: 'Network response was not ok.'
+}
+
 const selectOptions: { [key: string]: string[] } = {
   ages
 }
@@ -36,6 +40,7 @@ const urls: { [key: string]: string } = {
 const stringValues = {
   characters,
   hexColors,
+  networkMessages,
   selectOptions,
   texts,
   urls
