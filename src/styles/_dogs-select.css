@@ -29,11 +29,14 @@ h1.search-results {
   gap: .125rem;
 }
 
-.favorites-count {
-  padding-right: .25rem;
-  font-size: 1.5rem;
+.user-action-text {
+  font-size: 1.25rem;
   font-weight: 700;
   line-height: 2rem;
+}
+
+.favorites-count {
+  padding-right: .25rem;
   color: var(--color-green-dark);
 }
 
@@ -47,17 +50,29 @@ h1.search-results {
   }
 }
 
-.button-range {
+.page-counter-container {
+  span button {
+    font-size: 1.75rem;
+
+    &.hidden {
+      visibility: initial;
+    }
+  }
+
+  .page-counter {
+    color: var(--color-gold-dark);
+  }
+}
+
+.button-pages-range {
   border: none;
   border-radius: var(--border-radius-small);
-  font-size: 1.25rem;
-  font-weight: 600;
+  font-size: 1rem;
   background-color: transparent;
-  color: var(--color-gold-dark);
+  color: var(--color-application-dark);
 
-  &:hover {
-    background-color: var(--color-gold-dark);
-    color: var(--color-application-light);
+  &.hidden {
+    visibility: hidden;
   }
 }
 

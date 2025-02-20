@@ -17,7 +17,7 @@ import formatText from '../helpers/format-text';
 import stringValues from '../constants/string-values';
 
 function DogsSelect(props: DogsSelectProps): React.JSX.Element {
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [currentPageNumber, setCurrentPage] = useState<number>(1);
   const [isDogsListAscending, setIsDogsListAscending] = useState<boolean>(true);
   const [favoriteDogs, setFavoriteDogs] = useState<Dog[]>([]);
   const [matchedDog, setMatchedDog] = useState<Dog | null>(null);
@@ -31,11 +31,11 @@ function DogsSelect(props: DogsSelectProps): React.JSX.Element {
   const dogsPerPage: number = 10;
   const favoritesCount: number = favoriteDogs.length;
   const isFavoritesCountLessThanTwo: boolean = favoritesCount < 2;
-  const indexOfLastDog: number = currentPage * dogsPerPage;
+  const indexOfLastDog: number = currentPageNumber * dogsPerPage;
   const indexOfFirstDog: number = indexOfLastDog - dogsPerPage;
   const currentDogs: Dog[] = dogsListSorted.slice(indexOfFirstDog, indexOfLastDog);
   const lastPageNumberRoundedUp: number = Math.ceil(props.dogs.length/dogsPerPage);
-  const displayedPageButtonsCount: number = 10;
+  const displayedPageButtonsCount: number = 5;
 
   async function onClickMatchButton(): Promise<void> {
     const matchingDogId: string | undefined = await apiDogs.generateMatch(favoriteDogs);
@@ -61,14 +61,14 @@ function DogsSelect(props: DogsSelectProps): React.JSX.Element {
     setIsDogsListAscending(!isDogsListAscending);
   }
 
-  function onClickButtonPaginationRange(page: number): void {
-    const isIncrementing: boolean = page > 0;
-    if (isIncrementing && currentPage + page > lastPageNumberRoundedUp) {
+  function onClickButtonPaginationRange(pageNumber: number): void {
+    const isIncrementing: boolean = pageNumber > 0;
+    if (isIncrementing && currentPageNumber + pageNumber > lastPageNumberRoundedUp) {
       setCurrentPage(lastPageNumberRoundedUp);
-    } else if (!isIncrementing && currentPage + page < 1) {
+    } else if (!isIncrementing && currentPageNumber + pageNumber < 1) {
       setCurrentPage(1);
     } else {
-      setCurrentPage(currentPage + page);
+      setCurrentPage(currentPageNumber + pageNumber);
     }
   }
 
@@ -96,16 +96,22 @@ function DogsSelect(props: DogsSelectProps): React.JSX.Element {
   }
 
   function renderRangeButton(increment: number): React.JSX.Element {
+    const isLeftSide: boolean = increment < 0;
+    const isRightSide: boolean = increment > 0;
+    const isVisible: boolean =
+      (isLeftSide && currentPageNumber > displayedPageButtonsCount) ||
+      (isRightSide && currentPageNumber < lastPageNumberRoundedUp - (displayedPageButtonsCount - 1))
+    ;
     let character: string;
-    if (Math.abs(increment).toString().length === 1) {
-      character = increment > 0 ? greaterThan : lessThan;
+    if (Math.abs(increment) === 1) {
+      character = isLeftSide ? lessThan : greaterThan;
     } else {
-      character = increment > 0 ? doubleGreaterThan : doubleLessThan;
+      character = isLeftSide ? doubleLessThan : doubleGreaterThan;
     }
     return (
       <button
         onClick={() => onClickButtonPaginationRange(increment)}
-        className="button-range"
+        className={`button-pages-range ${isVisible ? '' : 'hidden'}`}
       >
         {character}
       </button>
@@ -121,15 +127,15 @@ function DogsSelect(props: DogsSelectProps): React.JSX.Element {
           <div className="new-search-container">
           </div>
           <h1 className="search-results">
-            <span>{dogsAscending.length} puppers found</span>
+            <span>{dogsAscending.length} found</span>
             <button onClick={onClickButtonNewSearch} className="button-secondary">
               New Search
             </button>
           </h1>
-          <h2>Click two or more favorites and then Match.</h2>
+          <h2>Match with two or more</h2>
           <div className="user-actions-container">
             <div className="user-action">
-              <span className="favorites-count">
+              <span className="user-action-text favorites-count">
                 {favoritesCount}
               </span>
               <button onClick={onClickButtonClear} className="button-secondary">
@@ -144,33 +150,32 @@ function DogsSelect(props: DogsSelectProps): React.JSX.Element {
                 Sort
               </button>
             </div>
+            <div className="user-action page-counter-container">
+              <span>{renderRangeButton(-1)}</span>
+              <span className="user-action-text page-counter">
+                {currentPageNumber}/{lastPageNumberRoundedUp}
+              </span>
+              <span>{renderRangeButton(1)}</span>
+            </div>
           </div>
           <div className="dog-cards">
             {currentDogs.map(renderDogCard)}
           </div>
           <div className="user-action">
-            {
-              currentPage > displayedPageButtonsCount ?
-              <div>
-                <span>{renderRangeButton(-displayedPageButtonsCount)}</span>
-                <span>{renderRangeButton(-1)}</span>
-              </div> :
-              null
-            }
+            <div>
+              <span>{renderRangeButton(-displayedPageButtonsCount)}</span>
+              <span>{renderRangeButton(-1)}</span>
+            </div>
             <Pagination
-              currentPage={currentPage}
+              currentPageNumber={currentPageNumber}
               displayedButtonsCount={displayedPageButtonsCount}
               totalPagesCount={lastPageNumberRoundedUp}
               onClickButtonPageNumber={setCurrentPage}
             />
-            {
-              currentPage < lastPageNumberRoundedUp - (displayedPageButtonsCount - 1) ?
-              <div>
-                <span>{renderRangeButton(1)}</span>
-                <span>{renderRangeButton(displayedPageButtonsCount)}</span>
-              </div> :
-              null
-            }
+            <div>
+              <span>{renderRangeButton(1)}</span>
+              <span>{renderRangeButton(displayedPageButtonsCount)}</span>
+            </div>
           </div>
           <button
             onClick={onClickMatchButton}

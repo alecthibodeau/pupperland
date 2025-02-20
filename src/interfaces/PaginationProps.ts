@@ -1,5 +1,5 @@
 interface PaginationProps {
-  currentPage: number;
+  currentPageNumber: number;
   displayedButtonsCount: number;
   totalPagesCount: number;
   onClickButtonPageNumber: (page: number) => void;
