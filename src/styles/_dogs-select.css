@@ -47,6 +47,20 @@ h1.search-results {
   }
 }
 
+.button-range {
+  border: none;
+  border-radius: var(--border-radius-small);
+  font-size: 1.25rem;
+  font-weight: 600;
+  background-color: transparent;
+  color: var(--color-gold-dark);
+
+  &:hover {
+    background-color: var(--color-gold-dark);
+    color: var(--color-application-light);
+  }
+}
+
 .floating-action-button {
   position: fixed;
   display: flex;

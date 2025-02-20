@@ -4,25 +4,46 @@ import React from 'react';
 import PaginationProps from '../interfaces/PaginationProps';
 
 function Pagination(props: PaginationProps): React.JSX.Element {
-  const { currentPage, dogsPerPage, totalDogs, onClickButtonPageNumber } = props;
-  const lastPageRoundedUp: number = Math.ceil(totalDogs/dogsPerPage);
-  const pages: number[] = Array.from({ length: lastPageRoundedUp }, (_, i) => i + 1);
+  const {
+    currentPage,
+    displayedButtonsCount,
+    totalPagesCount,
+    onClickButtonPageNumber
+  } = props;
+  const pages: number[] = Array.from({ length: totalPagesCount }, (_, i) => i + 1);
+  const range: number = displayedButtonsCount;
+  const startingIndex: number = Math.floor((currentPage - 1) / range) * range;
+  const displayedButtons: number[] = calculateDisplayedButtons();
 
-  function renderPageButton(page: number, index: number): React.JSX.Element {
+  function calculateDisplayedButtons(): number[] {
+    let buttons: number[];
+    if (currentPage <= range) {
+      buttons = pages.slice(0, range);
+    } else if (currentPage > pages.length - range) {
+      buttons = pages.slice(pages.length - range);
+    } else {
+      buttons = pages.slice(startingIndex, startingIndex + range);
+    }
+    return buttons;
+  }
+
+  function renderPageButton(pageNumber: number): React.JSX.Element {
     return (
       <button
-        key={index}
-        onClick={() => onClickButtonPageNumber(page)}
-        className={`button-page-number${page === currentPage ? ' active' : ''}`}
+        key={`page${pageNumber}`}
+        onClick={() => onClickButtonPageNumber(pageNumber)}
+        className={`
+          button-page-number${pageNumber === currentPage ? ' active' : ''}
+        `}
       >
-        {page}
+        {pageNumber}
       </button>
     );
   }
 
   return (
     <div className="pagination">
-      {pages.map(renderPageButton)}
+      {displayedButtons.map(renderPageButton)}
     </div>
   );
 }

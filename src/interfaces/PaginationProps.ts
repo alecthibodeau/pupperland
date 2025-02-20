@@ -1,7 +1,7 @@
 interface PaginationProps {
   currentPage: number;
-  dogsPerPage: number;
-  totalDogs: number;
+  displayedButtonsCount: number;
+  totalPagesCount: number;
   onClickButtonPageNumber: (page: number) => void;
 }
 

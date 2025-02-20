@@ -4,8 +4,7 @@
 }
 
 .button-page-number {
-  width: 1.5rem;
-  aspect-ratio: 1;
+  min-width: 1.5rem;
   padding: .25rem;
   border: none;
   border-radius: var(--border-radius-small);
@@ -14,5 +13,9 @@
 
   &.active {
     background-color: var(--color-blue-dark);
+  }
+
+  &:hover {
+    text-decoration: underline;
   }
 }

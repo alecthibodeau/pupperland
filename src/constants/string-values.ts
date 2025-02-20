@@ -2,6 +2,13 @@ const urlBase = 'https://frontend-take-home-service.fetch.com';
 const urlDogs = `${urlBase}/dogs`;
 const ages: string[] = Array.from({ length: 16 }, (_, index) => (index).toString());
 
+const characters: { [key: string]: string } = {
+  greaterThan: '>',
+  lessThan: '<',
+  doubleGreaterThan: '>>',
+  doubleLessThan: '<<'
+}
+
 const hexColors: { [key: string]: string } = {
   colorApplicationLight: '#f5f5f5'
 }
@@ -27,6 +34,7 @@ const urls: { [key: string]: string } = {
 }
 
 const stringValues = {
+  characters,
   hexColors,
   selectOptions,
   texts,
