@@ -1,50 +1,106 @@
-# React + TypeScript + Vite
+# Pupperland
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Run this site locally
+In your local machine's command line interface (CLI) enter the following commands to clone and then serve the application:
 
-Currently, two official plugins are available:
+1. `git clone https://github.com/alecthibodeau/pupperland.git`
+2. `cd pupperland`
+3. `npm install`
+4. `npm run dev`
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Note the port number (likely `5173`) in your CLI's address
+- In your browser navigate to `http://localhost:5173/pupperland` &mdash; or to the equivalent port number
 
-## Expanding the ESLint configuration
+## Where is Pupperland?
+[pupperland.com](https://pupperland.com) redirects to [alect.me/pupperland](https://alect.me/pupperland)
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+**Caveat**: If you're viewing Pupperland on a mobile device you'll need to set your browser to allow `HttpOnly` cookies. On an iPhone, for example,  go to `Settings > Apps > Safari` and then uncheck the "Prevent Cross-Website Tracking" checkbox. Otherwise you won't be fully authenticated, which means search functionality won't work. And logout won't work either &mdash; at least not without reloading.
 
-- Configure the top-level `parserOptions` property like this:
+## What is Pupperland?
+Pupperland is a site that simulates browsing a group of shelter dogs (puppers!) who are available to bring home. The user is able to search thousands of dogs based on preferences: breed, age, number of dogs searched and zip code. The user can then select their favorite dogs and request a match. Matching will display a final single dog selected for the user.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## How to use Pupperland
+Follow these steps:
+1. Log in with a name and email address
+2. Configure any of the search preferences and then click the `Search Dogs` button
+3. From the list of resulting dog cards click on at least two cards to enable the `Match` button at lower-right
+4. Click the `Match` button
+5. See the resulting matched dog
+6. Search again as many times as you wish
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Features
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+### Current features
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+#### Code standards
+- Strictly-typed variables with TypeScript
+- Separation of concerns &mdash; with the majority of API call functions stored in one helper file
+- Componentization &mdash; with associated TSX, interface and style sheet files
+- Accessibility:
+  - Color contrast values at [WCAG Level AA](https://www.w3.org/WAI/WCAG2AA-Conformance) or greater
+  - Semantic HTML tags
+  - Responsive web design (mobile-first)
+
+#### Authentication
+- Login validation with messaging for the user:
+  - Name is required
+  - Email is required
+  - Email input's value must be formatted as a valid email address
+- The user can log out at any time
+- If the user's authentication token has expired after the allotted hour then clicking `Search Dogs` will redirect the user to the login interface
+
+#### User Interface: Search
+- Age range validation with messaging for the user:
+  - Minimum age must be less than or equal to maximum age
+  - The `Search Dogs` button is disabled if age range is invalid
+- Search size input's value is automatically formatted to&hellip;
+  - Be only digits
+  - Be limited to a range of `1` to `10,000` dogs
+- Search size validation with messaging for the user:
+  - Message appears if the user enters any character that's not a digit
+- Zip code input's value is automatically formatted to&hellip;
+  - Be only digits
+  - Be no more than five digits
+- Zip code validation with messaging for the user:
+  - Message appears if the user enters any character that's not a digit
+  - Message appears if the user tries to add a zip code containing less than five digits by clicking the `Add` button
+- A loader appears during the search after the user clicks `Search Dogs`
+- Messaging appears for the user if the search result is empty
+
+#### User Interface: Result of Search
+- The number of total dogs found in the search is displayed at top
+- The user can click the `New Search` button at any time
+- Dogs cards are displayed alphabetically by breed
+- The user can reverse the order of the dog cards by clicking the `Sort` button
+- Pagination of total dog cards: navigation elements are located both above and below the group of dog cards
+- The user can click any dog card to select it as a favorite
+- The favorites count is displayed at top
+- The user can clear all favorites by clicking the `Clear` button
+- The `Match` button is&hellip;
+  - A floating access button (FAB) for ease of use
+  - Disabled if the count of favorite dogs is less than two
+
+#### User Interface: Result of Matched Dog
+- The matched dog's photo is displayed at actual size within the limits of the viewport's dimensions
+
+#### Styling
+- Original color palette with custom variables
+- Google Fonts: [Open Sans](https://fonts.google.com/specimen/Open+Sans) (sans-serif) and [Fredoka](https://fonts.google.com/specimen/Fredoka) (serif)
+- Variety of approaches to icon generation:
+  - SVGs
+  - HTML entities
+  - CSS shapes
+
+### Possible future features
+- Option for user to save name in browser with `localStorage`
+- Redirect user back to login interface upon their authentication token expiring
+
+## Technologies
+
+Pupperland is built with:
+- [React](https://react.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Vite](https://vite.dev/)
+- [Cascading Style Sheets (CSS)](https://developer.mozilla.org/en-US/docs/Web/CSS)
+
+Software and content Copyright (C) Alec Thibodeau. Copyright year is by commit date.
