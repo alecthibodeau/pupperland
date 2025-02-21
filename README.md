@@ -23,7 +23,7 @@ Pupperland is a site that simulates browsing a directory of shelter dogs (pupper
 Follow these steps:
 1. Log in with a name and email address
 2. Configure any of the search preferences and then click the `Search Dogs` button
-3. From the list of resulting dog cards click on at least two cards to enable the `Match` button at lower-right
+3. From the list of resulting dog cards click at least two cards to enable the `Match` button at lower-right
 4. Click the `Match` button
 5. See the resulting matched dog
 6. Search again as many times as you wish
@@ -34,7 +34,7 @@ Follow these steps:
 
 #### Code standards
 - Strictly-typed variables with TypeScript
-- Separation of concerns &mdash; with all API request functions for the `dogs` URL stored in one helper file
+- Separation of concerns &mdash; with API request functions for `dogs` and `locations` stored in dedicated helper files
 - Componentization &mdash; with associated TSX, interface and style sheet files
 - Accessibility:
   - Color contrast values at [WCAG Level AA](https://www.w3.org/WAI/WCAG2AA-Conformance) or greater
@@ -81,7 +81,9 @@ Follow these steps:
   - Disabled if the count of favorite dogs is less than two
 
 #### User Interface: Result of Matched Dog
-- The matched dog's photo is displayed at actual size within the limits of the viewport's dimensions
+- This final step displays information for the matched dog: name, breed, city, state and age
+- The matched dog's photo is displayed at actual size within the limits of the viewport's width
+- The photo displays as large as possible when accounting for the variation in image dimensions across the database of dogs
 
 #### Styling
 - Original color palette with custom variables
@@ -93,15 +95,18 @@ Follow these steps:
 - Custom favicon
 
 ### Possible future features
+- Additional use of dog location data, either during the search process or for the resulting matched dog
 - Option for the user to save their name in the browser with [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
 - Redirect the user back to the login interface if their authentication token expires
+- Format the search size input to include a comma for numbers larger than 999
 
 ## Technologies
 
 Pupperland is built with:
-- [React](https://react.dev/)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Vite](https://vite.dev/)
+- [React](https://react.dev)
+- [React Router](https://reactrouter.com)
+- [TypeScript](https://www.typescriptlang.org)
+- [Vite](https://vite.dev)
 - [Cascading Style Sheets (CSS)](https://developer.mozilla.org/en-US/docs/Web/CSS)
 
 Software and content Copyright (C) Alec Thibodeau. Copyright year is by commit date.
