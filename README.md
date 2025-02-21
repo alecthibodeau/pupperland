@@ -11,13 +11,13 @@ In your local machine's command line interface (CLI) enter the following command
 - Note the port number (likely `5173`) in your CLI's address
 - In your browser navigate to `http://localhost:5173/pupperland` &mdash; or to the equivalent port number
 
+## What is Pupperland?
+Pupperland is a site that simulates browsing a directory of shelter dogs (puppers!) that are available to bring home. The user is able to search thousands of dogs based on preferences like breed, age, number of dogs searched and zip code. The user can then select their favorite dogs and request a match. The matching process results in a single dog selected for the user.
+
 ## Where is Pupperland?
 [pupperland.com](https://pupperland.com) redirects to [alect.me/pupperland](https://alect.me/pupperland)
 
-**Caveat**: If you're viewing Pupperland on a mobile device you'll need to set your browser to allow `HttpOnly` cookies. On an iPhone, for example,  go to `Settings > Apps > Safari` and then uncheck the "Prevent Cross-Website Tracking" checkbox. Otherwise you won't be fully authenticated, which means search functionality won't work. And logout won't work either &mdash; at least not without reloading.
-
-## What is Pupperland?
-Pupperland is a site that simulates browsing a group of shelter dogs (puppers!) who are available to bring home. The user is able to search thousands of dogs based on preferences: breed, age, number of dogs searched and zip code. The user can then select their favorite dogs and request a match. Matching will display a final single dog selected for the user.
+**Caveat**: If you're viewing Pupperland on a mobile device you'll need to set your browser to allow [HttpOnly](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#httponly) cookies. On an iPhone, for example,  go to `Settings > Apps > Safari` and then uncheck the "Prevent Cross-Website Tracking" checkbox. Otherwise you won't be fully authenticated, which means search functionality won't work. And logout won't work either &mdash; at least not without reloading.
 
 ## How to use Pupperland
 Follow these steps:
@@ -34,7 +34,7 @@ Follow these steps:
 
 #### Code standards
 - Strictly-typed variables with TypeScript
-- Separation of concerns &mdash; with the majority of API call functions stored in one helper file
+- Separation of concerns &mdash; with all API request functions for the `dogs` URL stored in one helper file
 - Componentization &mdash; with associated TSX, interface and style sheet files
 - Accessibility:
   - Color contrast values at [WCAG Level AA](https://www.w3.org/WAI/WCAG2AA-Conformance) or greater
@@ -86,14 +86,15 @@ Follow these steps:
 #### Styling
 - Original color palette with custom variables
 - Google Fonts: [Open Sans](https://fonts.google.com/specimen/Open+Sans) (sans-serif) and [Fredoka](https://fonts.google.com/specimen/Fredoka) (serif)
-- Variety of approaches to icon generation:
+- Multiple approaches to icon generation:
   - SVGs
   - HTML entities
   - CSS shapes
+- Custom favicon
 
 ### Possible future features
-- Option for user to save name in browser with `localStorage`
-- Redirect user back to login interface upon their authentication token expiring
+- Option for the user to save their name in the browser with [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
+- Redirect the user back to the login interface if their authentication token expires
 
 ## Technologies
 
