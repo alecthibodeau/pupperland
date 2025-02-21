@@ -71,7 +71,6 @@ function DogsSearch(props: DogsSearchProps): React.JSX.Element {
       }
       setIsLoading(false);
       resetValidation();
-      console.log('Fetched dogs:', fetchedDogs, isFetchedResultEmpty);
     }
   }
 

@@ -32,7 +32,6 @@ function Login(props: LoginProps): React.JSX.Element {
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-      console.log(`Successfull login, status ${response.status}:`, response);
       props.onUpdateIsUserAuthenticated(true);
       props.onUpdateUserName(name);
     } catch (error) {

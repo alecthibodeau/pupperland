@@ -22,7 +22,6 @@ async function getBreeds(): Promise<string[] | undefined> {
       throw new Error(textResponseNotOkay);
     }
     const availableBreeds: string[] = await response.json();
-    console.log('Available breeds:', availableBreeds);
     return availableBreeds;
   } catch (error) {
     console.error(error);
@@ -53,7 +52,6 @@ async function searchDogs(props: APISearchDogs): Promise<Dog[] | undefined> {
       }
     }
     const resultOfDogsSearch: ResultOfDogsSearch = await response.json();
-    console.log('Result of dogs search:', resultOfDogsSearch);
     return fetchDogs(resultOfDogsSearch.resultIds);
   } catch (error) {
     console.error(error);

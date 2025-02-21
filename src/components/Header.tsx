@@ -23,7 +23,6 @@ function Header(props: HeaderProps ): React.JSX.Element {
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-      console.log(`Successfull logout, status ${response.status}:`, response);
       props.onUpdateIsUserAuthenticated(false);
       navigate(routeHome);
     } catch (error) {
