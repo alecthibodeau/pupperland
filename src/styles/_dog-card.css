@@ -19,7 +19,7 @@
 .dog-card {
   display: flex;
   flex-direction: column;
-  width: var(--card-dimension);
+  width: var(--card-dimension-large);
   height: 100%;
   border-radius: var(--card-border-radius-outer);
   background-color: var(--color-blue-lighter);
@@ -37,8 +37,8 @@
 }
 
 .dog-image {
-  height: var(--card-dimension);
-  min-height: var(--card-dimension);
+  height: var(--card-dimension-large);
+  min-height: var(--card-dimension-large);
   object-fit: cover;
   border-top-left-radius: var(--card-border-radius-inner);
   border-top-right-radius: var(--card-border-radius-inner);
@@ -63,4 +63,18 @@
   font-family: 'Fredoka', serif;
   font-size: 1.25rem;
   font-weight: 600;
+}
+
+/* Media Queries*/
+
+@media (min-width: 576px /* --breakpoint-sm */) {
+
+  .dog-card {
+    width: var(--card-dimension-small);
+  }
+
+  .dog-image {
+    height: var(--card-dimension-small);
+    min-height: var(--card-dimension-small);
+  }
 }

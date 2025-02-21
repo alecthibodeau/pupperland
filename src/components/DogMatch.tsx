@@ -13,7 +13,11 @@ function DogMatch(props: { matchedDog: Dog | null }): React.JSX.Element {
   const { routes: { routeHome } } = stringValues;
 
   useEffect(() => {
-    if (!matchedDog) navigate(routeHome);
+    if (matchedDog) {
+      window.scrollTo(0, 0);
+    } else {
+      navigate(routeHome);
+    }
   }, [matchedDog, navigate, routeHome]);
 
   function onClickButtonNewSearch(): void {
@@ -27,12 +31,12 @@ function DogMatch(props: { matchedDog: Dog | null }): React.JSX.Element {
          New Search
        </button>
       </div>
-      <div className="dog-info">
+      <div className="dog-match-info">
         <h1>{`Your match is ${matchedDog?.name} the ${matchedDog?.breed}!`}</h1>
         <img
           src={matchedDog?.img}
           alt={`${matchedDog?.name} the ${matchedDog?.breed}`}
-          className="matched-dog-image"
+          className="dog-match-image"
         />
         <h2>
           {`${matchedDog?.name} is age ${matchedDog?.age} and from ${matchedDog?.zip_code}.`}

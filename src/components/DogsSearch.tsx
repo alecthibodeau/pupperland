@@ -44,6 +44,7 @@ function DogsSearch(props: DogsSearchProps): React.JSX.Element {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     (async (): Promise<void> => {
       const fetchedBreeds = await apiDogs.getBreeds();
       setBreeds(fetchedBreeds || []);

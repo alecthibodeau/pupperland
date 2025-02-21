@@ -39,14 +39,17 @@ main {
 }
 
 h1 {
-  margin: 1.5rem 0 1rem;
+  max-width: 80vw;
+  margin: .75rem 0;
   font-family: 'Fredoka', serif;
+  font-size: 1.5rem;
   color: var(--color-blue-dark);
 }
 
 h2 {
-  margin: 0 0 1.5rem 0;
-  font-size: 1.25rem;
+  max-width: 80vw;
+  margin: 0 0 1rem 0;
+  font-size: 1rem;
 }
 
 .button-primary,
@@ -96,4 +99,19 @@ h2 {
 
 .validation-message {
   color: var(--color-red-dark);
+}
+
+/* Media Queries*/
+
+@media (min-width: 576px /* --breakpoint-sm */) {
+
+  h1 {
+    margin: 1.5rem 0 1rem;
+    font-size: 2rem;
+  }
+
+  h2 {
+    margin: 0 0 1.5rem 0;
+    font-size: 1.25rem;
+  }
 }

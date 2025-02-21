@@ -8,18 +8,19 @@
   justify-content: left;
   align-items: center;
   width: 100%;
-  padding: 1rem;
+  padding: 1rem 1rem 0;
 }
 
-.dog-info {
+.dog-match-info {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.matched-dog-image {
+.dog-match-image {
+  max-width: 80vw;
   outline: 5px solid var(--color-blue-green);
   border: 5px solid var(--color-green-light);
   border-radius: var(--card-border-radius-outer);
-  margin: 1rem;
+  margin-bottom: 1rem;
 }

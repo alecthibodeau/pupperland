@@ -13,14 +13,10 @@ section.search-parameter-container {
   background-color: var(--color-yellow-light);
 }
 
-h2.search-message {
-  max-width: 80vw;
-
-  &.sorry {
-    padding: .25rem 1rem;
-    background-color: var(--color-orange-medium);
-    color: var(--color-red-dark);
-  }
+h2.search-message.sorry {
+  padding: .25rem 1rem;
+  background-color: var(--color-orange-medium);
+  color: var(--color-red-dark);
 }
 
 section.search-parameter-container > h3 {

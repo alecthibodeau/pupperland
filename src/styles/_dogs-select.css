@@ -20,7 +20,7 @@ h1.search-results {
   justify-content: center;
   max-width: 660px;
   gap: .5rem 1.5rem;
-  margin-bottom: .5rem;
+  margin-bottom: .25rem;
 }
 
 .user-action {
@@ -131,8 +131,8 @@ div[class^='triangle'] {
   z-index: 5;
   width: var(--dimension-floating-action-button);
   height: var(--dimension-floating-action-button);
-  inset-block: auto var(--dimension-viewport-margin);
-  inset-inline: auto var(--dimension-viewport-margin);
+  inset-block: auto var(--dimension-viewport-margin-large);
+  inset-inline: auto var(--dimension-viewport-margin-small);
   border: 5px solid transparent;
   border-radius: 50%;
   font-family: 'Fredoka', serif;
@@ -151,5 +151,18 @@ div[class^='triangle'] {
   &:not(.disabled):hover {
     background-color: var(--color-application-light);
     color: var(--color-blue-dark);
+  }
+}
+
+/* Media Queries*/
+
+@media (min-width: 576px /* --breakpoint-sm */) {
+
+  .user-actions-container {
+    margin-bottom: .5rem;
+  }
+
+  .floating-action-button {
+    inset-block: auto var(--dimension-viewport-margin-small);
   }
 }

@@ -1,4 +1,5 @@
-/* Responsive Breakpoints for reference */
+/* Responsive Breakpoints, for reference only:
+   To work within media queries these would require a CSS preprocessor */
 /* --breakpoint-sm: 576px; */
 /* --breakpoint-md: 768px; */
 /* --breakpoint-lg: 992px; */
@@ -45,9 +46,11 @@
   --border-radius-medium: .5rem;
   --border-radius-large: 2rem;
   --border-radius-button-pill: var(--border-radius-large);
-  --card-dimension: 200px;
+  --card-dimension-small: 200px;
+  --card-dimension-large: 300px;
   --card-border-radius-outer: .5625rem;
   --card-border-radius-inner: var(--border-radius-medium);
-  --dimension-viewport-margin: 5vmin;
+  --dimension-viewport-margin-small: 5vmin;
+  --dimension-viewport-margin-large: 32vmin;
   --dimension-floating-action-button: 120px;
 }
