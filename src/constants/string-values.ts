@@ -1,6 +1,7 @@
 const urlBase = 'https://frontend-take-home-service.fetch.com';
 const urlDogs = `${urlBase}/dogs`;
 const ages: string[] = Array.from({ length: 16 }, (_, index) => (index).toString());
+const routeBase = '/pupperland';
 
 const characters: { [key: string]: string } = {
   greaterThan: '>',
@@ -18,8 +19,8 @@ const networkMessages: { [key: string]: string } = {
 };
 
 const routes: { [key: string]: string } = {
-  routeHome: '/',
-  routeMatch: '/match'
+  routeHome: routeBase,
+  routeMatch: `${routeBase}/match`
 };
 
 const selectOptions: { [key: string]: string[] } = {
