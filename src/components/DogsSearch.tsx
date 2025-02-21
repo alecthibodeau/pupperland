@@ -23,6 +23,7 @@ function DogsSearch(): React.JSX.Element {
   const [isAgeRangeValid, setIsAgeRangeValid] = useState<boolean>(true);
   const [isFetchedResultEmpty, setIsFetchedResultEmpty] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSizeValid, setIsSizeValid] = useState<boolean>(true);
   const [isZipCodeValid, setIsZipCodeValid] = useState<boolean>(true);
   const [maximumAge, setMaximumAge] = useState<string>('');
   const [minimumAge, setMinimumAge] = useState<string>('');
@@ -62,12 +63,18 @@ function DogsSearch(): React.JSX.Element {
     if (fetchedDogs) {
       if (fetchedDogs.length) {
         setDogs(fetchedDogs);
-        setIsLoading(false);
       } else {
         setIsFetchedResultEmpty(true);
       }
+      setIsLoading(false);
+      resetValidation();
       console.log('Fetched dogs:', fetchedDogs, isFetchedResultEmpty);
     }
+  }
+
+  function resetValidation(): void {
+    setIsSizeValid(true);
+    setIsZipCodeValid(true);
   }
 
   function enableNewSearch(): void {
@@ -156,10 +163,16 @@ function DogsSearch(): React.JSX.Element {
     const enteredSize: string = event.target.value;
     const lastEnteredCharacter: string = enteredSize.slice(-1);
     if (event.target) {
-      if (!isTextOnlyDigits(lastEnteredCharacter) || +enteredSize > 10000) {
+      if (+enteredSize.slice(0, 5) === 10000) {
+        setSize(enteredSize.slice(0, 5));
+      } else if (+enteredSize > 10000) {
         setSize(enteredSize.slice(0, -1));
+      } else if (enteredSize && (!isTextOnlyDigits(lastEnteredCharacter) || +enteredSize < 1)) {
+        setSize(enteredSize.slice(0, -1));
+        setIsSizeValid(false);
       } else {
         setSize(enteredSize);
+        setIsSizeValid(true);
       }
     }
   }
@@ -169,8 +182,9 @@ function DogsSearch(): React.JSX.Element {
     const lastEnteredCharacter: string = enteredZipCode.slice(-1);
     if (!isZipCodeValid) setIsZipCodeValid(true);
     if (event.target) {
-      if (!isTextOnlyDigits(lastEnteredCharacter)) {
+      if (enteredZipCode && !isTextOnlyDigits(lastEnteredCharacter)) {
         setZipCode(enteredZipCode.slice(0, -1));
+        setIsZipCodeValid(false);
       } else if (enteredZipCode.length > 5) {
         setZipCode(enteredZipCode.slice(0, 5));
       } else {
@@ -234,8 +248,15 @@ function DogsSearch(): React.JSX.Element {
                 onChange={handleChangeSize}
                 className="search-input size-input"
               />
-              <label htmlFor="sizeSelect">Choose up to 10,000 dogs searched</label>
+              <label htmlFor="sizeSelect">Choose up to 10000 dogs searched</label>
             </div>
+            {
+              !isSizeValid ?
+              <div className="validation-message search-field-validation-message">
+                Enter a number between 1 and 10000.
+              </div> :
+              null
+            }
           </section>
           <section className="search-parameter-container">
             <h3>Zip Code</h3>
