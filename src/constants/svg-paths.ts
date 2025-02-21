@@ -4,6 +4,6 @@ const closingX: string = '417.33 364.87 261.18 208.72 417.19 52.71 364.87 .39 20
 const svgPaths = {
   checkmark,
   closingX
-}
+};
 
 export default svgPaths;

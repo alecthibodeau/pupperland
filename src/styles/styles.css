@@ -1,5 +1,6 @@
 @import url('./_checkmark');
 @import url('./_dog-card');
+@import url('./_dog-match');
 @import url('./_dogs-search');
 @import url('./_dogs-select');
 @import url('./_footer');
@@ -7,7 +8,6 @@
 @import url('./_loader');
 @import url('./_login');
 @import url('./_pagination');
-@import url('./_matched-dog');
 @import url('./_select-age-container');
 @import url('./_variables');
 

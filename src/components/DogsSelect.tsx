@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 /* Components */
 import DogCard from './DogCard';
-import MatchedDog from './MatchedDog';
 import Pagination from './Pagination';
 
 /* Interfaces */
@@ -20,10 +20,11 @@ function DogsSelect(props: DogsSelectProps): React.JSX.Element {
   const [currentPageNumber, setCurrentPage] = useState<number>(1);
   const [isDogsListAscending, setIsDogsListAscending] = useState<boolean>(true);
   const [favoriteDogs, setFavoriteDogs] = useState<Dog[]>([]);
-  const [matchedDog, setMatchedDog] = useState<Dog | null>(null);
+  const navigate = useNavigate();
   const { formatLettersAndNumbers } = formatText;
   const {
     characters: { greaterThan, lessThan, doubleGreaterThan, doubleLessThan },
+    routes: { routeMatch },
     texts: { textLeft, textRight }
   } = stringValues;
   const dogsAscending: Dog[] = props.dogs;
@@ -42,8 +43,9 @@ function DogsSelect(props: DogsSelectProps): React.JSX.Element {
     const matchingDogId: string | undefined = await apiDogs.generateMatch(favoriteDogs);
     const matchingDog: Dog | undefined = favoriteDogs.find(dog => dog.id === matchingDogId);
     if (matchingDog) {
-      setMatchedDog(matchingDog);
+      props.onUpdateMatchedDog(matchingDog);
       setFavoriteDogs([]);
+      navigate(routeMatch);
     } else {
       alert('No match found. Try again.');
     }
@@ -51,7 +53,6 @@ function DogsSelect(props: DogsSelectProps): React.JSX.Element {
 
   function onClickButtonNewSearch(): void {
     props.onClickButtonNewSearch(true);
-    setMatchedDog(null);
   }
 
   function onClickButtonClear(): void {
@@ -128,76 +129,72 @@ function DogsSelect(props: DogsSelectProps): React.JSX.Element {
 
   return (
     <div className="dogs-select">
-      {
-        matchedDog ?
-        <MatchedDog matchedDog={matchedDog}/> :
-        <div className="dogs-selections">
-          <div className="new-search-container">
-          </div>
-          <h1 className="search-results">
-            <span>{dogsAscending.length} found</span>
-            <button onClick={onClickButtonNewSearch} className="button-secondary">
-              New Search
-            </button>
-          </h1>
-          <h2>Click two or more, then Match!</h2>
-          <div className="user-actions-container">
-            <div className="user-action">
-              <span className="user-action-text favorites-count">
-                {favoritesCount}
-              </span>
-              <button onClick={onClickButtonClear} className="button-secondary">
-                Clear
-              </button>
-            </div>
-            <div className="user-action">
-              <span className={`sort-arrow${isDogsListAscending ? '' : ' descending'}`}>
-                {isDogsListAscending ? <span>&darr;</span> : <span>&uarr;</span>}
-              </span>
-              <button onClick={onClickButtonSort} className="button-secondary">
-                Sort
-              </button>
-            </div>
-            <div className="user-action page-counter-container">
-              <span>{renderPageRangeButton(-1, textLeft)}</span>
-              <span className="user-action-text page-counter">
-                {currentPageNumber}/{lastPageNumberRoundedUp}
-              </span>
-              <span>{renderPageRangeButton(1, textRight)}</span>
-            </div>
-          </div>
-          <div className="dog-cards">
-            {currentDogs.map(renderDogCard)}
-          </div>
-          <div className="user-action pagination-container">
-            <div>
-              <span>{renderPageRangeButton(-displayedPageButtonsCount)}</span>
-              <span>{renderPageRangeButton(-1)}</span>
-            </div>
-            <Pagination
-              currentPageNumber={currentPageNumber}
-              displayedButtonsCount={displayedPageButtonsCount}
-              totalPagesCount={lastPageNumberRoundedUp}
-              onClickButtonPageNumber={setCurrentPage}
-            />
-            <div>
-              <span>{renderPageRangeButton(1)}</span>
-              <span>{renderPageRangeButton(displayedPageButtonsCount)}</span>
-            </div>
-          </div>
-          <button
-            onClick={onClickMatchButton}
-            disabled={isFavoritesCountLessThanTwo}
-            className={`
-              floating-action-button ${isFavoritesCountLessThanTwo ?
-              ' disabled' :
-              ''}
-            `}
-          >
-            <span>Match</span>
-          </button>
+      <div className="dogs-selections">
+        <div className="new-search-container">
         </div>
-      }
+        <h1 className="search-results">
+          <span>{dogsAscending.length} found</span>
+          <button onClick={onClickButtonNewSearch} className="button-secondary">
+            New Search
+          </button>
+        </h1>
+        <h2>Click two or more, then Match!</h2>
+        <div className="user-actions-container">
+          <div className="user-action">
+            <span className="user-action-text favorites-count">
+              {favoritesCount}
+            </span>
+            <button onClick={onClickButtonClear} className="button-secondary">
+              Clear
+            </button>
+          </div>
+          <div className="user-action">
+            <span className={`sort-arrow${isDogsListAscending ? '' : ' descending'}`}>
+              {isDogsListAscending ? <span>&darr;</span> : <span>&uarr;</span>}
+            </span>
+            <button onClick={onClickButtonSort} className="button-secondary">
+              Sort
+            </button>
+          </div>
+          <div className="user-action page-counter-container">
+            <span>{renderPageRangeButton(-1, textLeft)}</span>
+            <span className="user-action-text page-counter">
+              {currentPageNumber}/{lastPageNumberRoundedUp}
+            </span>
+            <span>{renderPageRangeButton(1, textRight)}</span>
+          </div>
+        </div>
+        <div className="dog-cards">
+          {currentDogs.map(renderDogCard)}
+        </div>
+        <div className="user-action pagination-container">
+          <div>
+            <span>{renderPageRangeButton(-displayedPageButtonsCount)}</span>
+            <span>{renderPageRangeButton(-1)}</span>
+          </div>
+          <Pagination
+            currentPageNumber={currentPageNumber}
+            displayedButtonsCount={displayedPageButtonsCount}
+            totalPagesCount={lastPageNumberRoundedUp}
+            onClickButtonPageNumber={setCurrentPage}
+          />
+          <div>
+            <span>{renderPageRangeButton(1)}</span>
+            <span>{renderPageRangeButton(displayedPageButtonsCount)}</span>
+          </div>
+        </div>
+        <button
+          onClick={onClickMatchButton}
+          disabled={isFavoritesCountLessThanTwo}
+          className={`
+            floating-action-button ${isFavoritesCountLessThanTwo ?
+            ' disabled' :
+            ''}
+          `}
+        >
+          <span>Match</span>
+        </button>
+      </div>
     </div>
   );
 }

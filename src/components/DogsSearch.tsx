@@ -204,7 +204,11 @@ function DogsSearch(props: DogsSearchProps): React.JSX.Element {
       {isLoading ? <Loader /> : null }
       {
         dogs.length ?
-        <DogsSelect dogs={dogs} onClickButtonNewSearch={enableNewSearch} /> :
+        <DogsSelect
+          dogs={dogs}
+          onClickButtonNewSearch={enableNewSearch}
+          onUpdateMatchedDog={props.onUpdateMatchedDog}
+        /> :
         <div className="dogs-search">
           <h1 className="search-heading">
             {`Welcome to Pupperland${userName ? `, ${userName}` : ''}.`}

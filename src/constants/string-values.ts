@@ -7,19 +7,24 @@ const characters: { [key: string]: string } = {
   lessThan: '<',
   doubleGreaterThan: '>>',
   doubleLessThan: '<<'
-}
+};
 
 const hexColors: { [key: string]: string } = {
   colorApplicationLight: '#f5f5f5'
-}
+};
 
 const networkMessages: { [key: string]: string } = {
   textResponseNotOkay: 'Network response was not ok.'
-}
+};
+
+const routes: { [key: string]: string } = {
+  routeHome: '/',
+  routeMatch: '/match'
+};
 
 const selectOptions: { [key: string]: string[] } = {
   ages
-}
+};
 
 const texts: { [key: string]: string } = {
   textChoose: 'Choose your preferences below to customize your search for lovable puppers: shelter dogs looking to match with a new home. Or just click Search Dogs now to view a bunch of puppers!',
@@ -28,7 +33,7 @@ const texts: { [key: string]: string } = {
   textRight: 'right',
   textMaximum: 'maximum',
   textMinimum: 'minimum'
-}
+};
 
 const urls: { [key: string]: string } = {
   urlAuthLogin: `${urlBase}/auth/login`,
@@ -39,12 +44,13 @@ const urls: { [key: string]: string } = {
   urlDogsSearch: `${urlDogs}/search`,
   urlPortfolio: 'https://alect.me',
   urlPupperlandReadMe: 'https://github.com/alecthibodeau/pupperland/blob/main/README.md#pupperland'
-}
+};
 
 const stringValues = {
   characters,
   hexColors,
   networkMessages,
+  routes,
   selectOptions,
   texts,
   urls
