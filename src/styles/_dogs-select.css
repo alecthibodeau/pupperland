@@ -138,8 +138,8 @@ div[class^='triangle'] {
   font-family: 'Fredoka', serif;
   font-size: 1.75rem;
   font-weight: 600;
-  background-color: var(--color-gray);
-  color: var(--color-gray-medium);
+  background-color: var(--color-gray-medium);
+  color: var(--color-gray-light);
 
   &:not(.disabled) {
     outline: 5px solid var(--color-green-light);

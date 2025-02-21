@@ -17,7 +17,7 @@
   width: 60vw;
   border: 5px solid var(--color-green-light);
   border-radius: var(--border-radius-medium);
-  background-color: var(--color-blue-green);
+  background-color: var(--color-blue-green-medium);
 }
 
 .login-fields {
@@ -28,7 +28,7 @@
 
   input {
     padding: .5rem .375rem;
-    border-color: var(--color-blue-green);
+    border-color: var(--color-blue-green-medium);
     border-radius: var(--border-radius-small);
     font-size: 1rem;
   }

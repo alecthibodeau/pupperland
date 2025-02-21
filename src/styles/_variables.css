@@ -9,34 +9,25 @@
 :root {
 
   /* Colors Grayscale */
-  --color-white: #fff;
-  --color-black: #000;
   --color-application-light: #f5f5f5;
   --color-application-dark: #0d0d0d;
-  --color-gray-dark: #4c4c4c;
-  --color-gray: #808080;
-  --color-gray-medium: #e5e5e5;
-  --color-gray-light: #d3d3d3;
+  --color-gray-medium: #808080;
+  --color-gray-light: #e5e5e5;
 
   /* Colors Hued */
   --color-blue-dark: #1252f0;
   --color-blue-medium: #2c62e9;
   --color-blue-light: #4f9cff;
   --color-blue-lighter: #b1d3ff;
-  --color-blue-green: #87ebc9;
-  --color-blue-green-intense: #71fedc;
-  --color-green-dark: #006d41;
+  --color-blue-green-medium: #87ebc9;
   --color-green-dark: #01653d;
   --color-green-medium: #0cc078;
   --color-green-light: #79de79;
-  --color-green-lighter: #cbf8cf;
   --color-yellow-medium: #ede696;
   --color-yellow-light: #f2f0b9;
-  --color-yellow-lighter: #fffed5;
   --color-gold-dark: #855A0F;
   --color-orange-medium: #f7b045;
   --color-red-dark: #bd0101;
-  --color-red-light: #fb6962;
   --color-violet-dark: #8a36d9;
   --color-violet-medium: #9c4ee4;
   --color-violet-light: #ae66f1;

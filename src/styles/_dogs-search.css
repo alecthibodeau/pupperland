@@ -73,6 +73,6 @@ section.search-parameter-container > h3 {
   }
 
   &.disabled {
-    background-color: var(--color-gray);
+    background-color: var(--color-gray-medium);
   }
 }

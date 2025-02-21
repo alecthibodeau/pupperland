@@ -14,9 +14,6 @@ import Dog from './interfaces/Dog';
 /* Constants */
 import stringValues from './constants/string-values';
 
-/* Styles */
-import './App.css'
-
 function App() {
   const [matchedDog, setMatchedDog] = useState<Dog | null>(null);
   const [isUserAuthenticated, setIsUserAuthenticated] = useState<boolean>(false);

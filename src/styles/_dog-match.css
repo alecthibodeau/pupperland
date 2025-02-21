@@ -19,7 +19,7 @@
 
 .dog-match-image {
   max-width: 80vw;
-  outline: 5px solid var(--color-blue-green);
+  outline: 5px solid var(--color-blue-green-medium);
   border: 5px solid var(--color-green-light);
   border-radius: var(--card-border-radius-outer);
   margin-bottom: 1rem;
