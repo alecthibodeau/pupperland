@@ -53,49 +53,51 @@ function Login(props: LoginProps): React.JSX.Element {
   }
 
   return (
-    <div className="login">
-      <div className="login-fields">
-        <input
-          type="text"
-          placeholder="Name"
-          value={name}
-          maxLength={50}
-          onChange={handleChangeName}
-        />
-        <input
-          type="text"
-          placeholder="Email"
-          value={email}
-          maxLength={50}
-          onChange={handleChangeEmail}
-        />
+    <div className="login-container">
+      <div className="login">
+        <div className="login-fields">
+          <input
+            type="text"
+            placeholder="Name"
+            value={name}
+            maxLength={50}
+            onChange={handleChangeName}
+          />
+          <input
+            type="text"
+            placeholder="Email"
+            value={email}
+            maxLength={50}
+            onChange={handleChangeEmail}
+          />
+        </div>
+        <button
+          onClick={OnClickButtonLogin}
+          className="button-primary button-authentication button-login"
+        >
+          Log In
+        </button>
+        {
+          !isNameValid || !isEmailValid ?
+          <div className="validation-message-container">
+            {
+              !isNameValid ?
+              <div className="validation-message">
+                Enter a valid name.
+              </div> :
+              null
+            }
+            {
+              !isEmailValid ?
+              <div className="validation-message">
+                Enter a valid email.
+              </div> :
+              null
+            }
+          </div> :
+          null
+        }
       </div>
-      <button
-        onClick={OnClickButtonLogin}
-        className="button-primary button-authentication button-login"
-      >
-        Log In
-      </button>
-      {
-        !isNameValid || !isEmailValid ?
-        <div className="validation-message-container">
-          {
-            !isNameValid ?
-            <div className="validation-message">
-              Enter a valid name.
-            </div> :
-            null
-          }
-          {
-            !isEmailValid ?
-            <div className="validation-message">
-              Enter a valid email.
-            </div> :
-            null
-          }
-        </div> :
-        null
-      }
     </div>
   );
 }

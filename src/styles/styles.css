@@ -49,12 +49,13 @@ h2 {
   font-size: 1.25rem;
 }
 
-.button-primary {
-  padding: .5rem 1rem;
+.button-primary,
+.header-link-container {
+  padding: .375rem .75rem;
   border: none;
   border-radius: var(--border-radius-medium);
-  font-size: 1rem;
   font-family: 'Open Sans', sans-serif;
+  font-size: 1rem;
 }
 
 .button-secondary {
@@ -73,7 +74,8 @@ h2 {
   }
 }
 
-.button-authentication {
+.button-authentication,
+.header-link-container {
   font-weight: 600;
   background-color: var(--color-violet-medium);
   color: var(--color-application-light);

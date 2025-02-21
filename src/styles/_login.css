@@ -1,13 +1,23 @@
+.login-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+}
+
 .login {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 2rem;
-  width: 80vw;
+  width: 40vw;
   max-width: 360px;
   border: 5px solid var(--color-green-light);
   border-radius: var(--border-radius-medium);
-  margin: 3rem 2rem;
   background-color: var(--color-blue-green);
 }
 

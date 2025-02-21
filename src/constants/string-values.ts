@@ -31,12 +31,14 @@ const texts: { [key: string]: string } = {
 }
 
 const urls: { [key: string]: string } = {
+  urlAuthLogin: `${urlBase}/auth/login`,
+  urlAuthLogout: `${urlBase}/auth/logout`,
   urlDogs: urlDogs,
   urlDogsBreeds: `${urlDogs}/breeds`,
   urlDogsMatch: `${urlDogs}/match`,
   urlDogsSearch: `${urlDogs}/search`,
-  urlAuthLogin: `${urlBase}/auth/login`,
-  urlAuthLogout: `${urlBase}/auth/logout`
+  urlPortfolio: 'https://alect.me',
+  urlPupperlandReadMe: 'https://github.com/alecthibodeau/pupperland/blob/main/README.md#pupperland'
 }
 
 const stringValues = {

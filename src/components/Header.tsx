@@ -7,7 +7,7 @@ import HeaderProps from '../interfaces/HeaderProps';
 import stringValues from '../constants/string-values';
 
 function Header(props: HeaderProps ): React.JSX.Element {
-  const { urls: { urlAuthLogout } } = stringValues;
+  const { urls: { urlPupperlandReadMe, urlAuthLogout } } = stringValues;
 
   async function logOut(): Promise<void> {
     try {
@@ -30,16 +30,23 @@ function Header(props: HeaderProps ): React.JSX.Element {
       <span className="header-title">
         Pupperland
       </span>
-      {
-        props.isUserAuthenticated ?
-        <button
-          onClick={logOut}
-          className="button-primary button-authentication"
-        >
-          Log out
-        </button> :
-        null
-      }
+      <span className="header-actions-container">
+        <span className="header-link-container">
+          <a href={urlPupperlandReadMe}>
+            Read Me
+          </a>
+        </span>
+        {
+          props.isUserAuthenticated ?
+          <button
+            onClick={logOut}
+            className="button-primary button-authentication"
+          >
+            Log out
+          </button> :
+          null
+        }
+      </span>
     </header>
   );
 }

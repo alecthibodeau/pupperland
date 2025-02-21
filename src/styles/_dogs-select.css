@@ -128,7 +128,7 @@ div[class^='triangle'] {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1;
+  z-index: 5;
   width: var(--dimension-floating-action-button);
   height: var(--dimension-floating-action-button);
   inset-block: auto var(--dimension-viewport-margin);

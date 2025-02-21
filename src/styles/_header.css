@@ -1,13 +1,27 @@
 header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  z-index: 1;
   padding: .75rem 1rem;
   background-color: var(--color-violet-medium);
 }
 
 .header-title {
   font-family: 'Fredoka', serif;
-  font-size: 1.75rem;
+  font-size: 1.625rem;
   font-weight: 600;
+  color: var(--color-application-light);
+}
+
+.header-actions-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: .25rem;
+}
+
+.header-link-container a {
+  text-decoration: none;
   color: var(--color-application-light);
 }

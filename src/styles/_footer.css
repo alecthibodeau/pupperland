@@ -1,6 +1,13 @@
 footer {
-  padding: .5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  padding: 1rem;
   margin-top: auto;
-  text-align: center;
   background-color: var(--color-orange-medium);
+
+  a {
+    color: var(--color-application-dark);
+  }
 }
