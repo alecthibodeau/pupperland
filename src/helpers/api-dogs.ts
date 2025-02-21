@@ -1,11 +1,11 @@
-/* Constants */
-import stringValues from '../constants/string-values';
-
 /* Interfaces */
 import APISearchDogs from '../interfaces/APISearchDogs';
 import Dog from '../interfaces/Dog';
 import Match from '../interfaces/Match';
 import ResultOfDogsSearch from '../interfaces/ResultOfDogsSearch';
+
+/* Constants */
+import stringValues from '../constants/string-values';
 
 const {
   networkMessages: { textResponseNotOkay },

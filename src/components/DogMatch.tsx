@@ -1,24 +1,38 @@
-import React, { useEffect }  from 'react';
+import React, { useEffect, useState }  from 'react';
 import { useNavigate } from 'react-router-dom';
 
 /* Interfaces */
 import Dog from '../interfaces/Dog';
+import Location from '../interfaces/Location';
 
 /* Constants */
 import stringValues from '../constants/string-values';
 
+/* Helpers */
+import apiLocations from '../helpers/api-locations';
+
 function DogMatch(props: { matchedDog: Dog | null }): React.JSX.Element {
+  const [matchedDogLocation, setMatchedDogLocation] = useState<Location | null>(null);
   const navigate = useNavigate();
   const { matchedDog } = props;
   const { routes: { routeHome } } = stringValues;
 
+  const formattedLocation: string | undefined = matchedDogLocation ?
+    `${matchedDogLocation.city}, ${matchedDogLocation.state}` :
+    matchedDog?.zip_code
+  ;
+
   useEffect(() => {
     if (matchedDog) {
       window.scrollTo(0, 0);
+      (async (): Promise<void> => {
+        const dogLocation: Location | undefined = await apiLocations.fetchLocation(matchedDog.zip_code);
+        if (dogLocation) setMatchedDogLocation(dogLocation);
+      })();
     } else {
       navigate(routeHome);
     }
-  }, [matchedDog, navigate, routeHome]);
+  }, [matchedDog, navigate, routeHome,]);
 
   function onClickButtonNewSearch(): void {
     navigate(routeHome);
@@ -39,7 +53,10 @@ function DogMatch(props: { matchedDog: Dog | null }): React.JSX.Element {
           className="dog-match-image"
         />
         <h2>
-          {`${matchedDog?.name} is age ${matchedDog?.age} and from ${matchedDog?.zip_code}.`}
+          {`
+            ${matchedDog?.name} is from ${formattedLocation}.
+            ${matchedDog?.name}'s age is ${matchedDog?.age}.
+          `}
         </h2>
       </div>
     </div>

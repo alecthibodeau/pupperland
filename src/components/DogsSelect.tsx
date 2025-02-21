@@ -130,8 +130,6 @@ function DogsSelect(props: DogsSelectProps): React.JSX.Element {
   return (
     <div className="dogs-select">
       <div className="dogs-selections">
-        <div className="new-search-container">
-        </div>
         <h1 className="search-results">
           <span>{dogsAscending.length} found</span>
           <button onClick={onClickButtonNewSearch} className="button-secondary">

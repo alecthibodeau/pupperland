@@ -40,7 +40,7 @@ main {
 
 h1 {
   max-width: 80vw;
-  margin: .75rem 0;
+  margin: 1rem 0;
   font-family: 'Fredoka', serif;
   font-size: 1.5rem;
   color: var(--color-blue-dark);
@@ -113,5 +113,10 @@ h2 {
   h2 {
     margin: 0 0 1.5rem 0;
     font-size: 1.25rem;
+  }
+
+  .button-primary,
+  .header-link-container {
+    padding: .5rem 1rem;
   }
 }

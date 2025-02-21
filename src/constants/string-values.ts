@@ -1,5 +1,6 @@
 const urlBase = 'https://frontend-take-home-service.fetch.com';
 const urlDogs = `${urlBase}/dogs`;
+const urlLocations = `${urlBase}/locations`;
 const ages: string[] = Array.from({ length: 16 }, (_, index) => (index).toString());
 const routeBase = '/pupperland';
 
@@ -43,6 +44,7 @@ const urls: { [key: string]: string } = {
   urlDogsBreeds: `${urlDogs}/breeds`,
   urlDogsMatch: `${urlDogs}/match`,
   urlDogsSearch: `${urlDogs}/search`,
+  urlLocations: urlLocations,
   urlPortfolio: 'https://alect.me',
   urlPupperlandReadMe: 'https://github.com/alecthibodeau/pupperland/blob/main/README.md#pupperland'
 };

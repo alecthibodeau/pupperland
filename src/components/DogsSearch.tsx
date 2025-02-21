@@ -257,12 +257,12 @@ function DogsSearch(props: DogsSearchProps): React.JSX.Element {
                 onChange={handleChangeSize}
                 className="search-input size-input"
               />
-              <label htmlFor="sizeSelect">Choose up to 10000 dogs searched</label>
+              <label htmlFor="sizeSelect">Choose up to 10,000 dogs searched</label>
             </div>
             {
               !isSizeValid ?
               <div className="validation-message search-field-validation-message">
-                Enter a number between 1 and 10000.
+                Enter a number between 1 and 10,000.
               </div> :
               null
             }
