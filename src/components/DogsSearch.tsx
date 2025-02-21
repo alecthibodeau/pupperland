@@ -9,6 +9,7 @@ import SelectAgeContainer from './SelectAgeContainer';
 /* Interfaces */
 import APISearchDogsProps from '../interfaces/APISearchDogs';
 import Dog from '../interfaces/Dog';
+import DogsSearchProps from '../interfaces/DogsSearchProps';
 
 /* Constants */
 import stringValues from '../constants/string-values';
@@ -17,12 +18,12 @@ import stringValues from '../constants/string-values';
 import apiDogs from '../helpers/api-dogs';
 import formatText from '../helpers/format-text';
 
-function DogsSearch(): React.JSX.Element {
+function DogsSearch(props: DogsSearchProps): React.JSX.Element {
   const [breeds, setBreeds] = useState<string[]>([]);
   const [dogs, setDogs] = useState<Dog[]>([]);
   const [isAgeRangeValid, setIsAgeRangeValid] = useState<boolean>(true);
   const [isFetchedResultEmpty, setIsFetchedResultEmpty] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isSizeValid, setIsSizeValid] = useState<boolean>(true);
   const [isZipCodeValid, setIsZipCodeValid] = useState<boolean>(true);
   const [maximumAge, setMaximumAge] = useState<string>('');
@@ -33,6 +34,7 @@ function DogsSearch(): React.JSX.Element {
   const [zipCode, setZipCode] = useState<string>('');
   const zipCodeInputRef = useRef<HTMLInputElement>(null);
   const { isTextOnlyDigits, formatLettersAndNumbers } = formatText;
+  const { userName } = props;
   const {
     selectOptions: { ages },
     texts: { textChoose, textSorry, textMaximum, textMinimum },
@@ -204,7 +206,9 @@ function DogsSearch(): React.JSX.Element {
         dogs.length ?
         <DogsSelect dogs={dogs} onClickButtonNewSearch={enableNewSearch} /> :
         <div className="dogs-search">
-          <h1 className="search-heading">Welcome to Pupperland.</h1>
+          <h1 className="search-heading">
+            {`Welcome to Pupperland${userName ? `, ${userName}` : ''}.`}
+          </h1>
           <h2 className={`search-message${isFetchedResultEmpty ? ' sorry' : ''}`}>
             {isFetchedResultEmpty ? textSorry : textChoose}
           </h2>

@@ -1,7 +1,6 @@
-import { Dispatch, SetStateAction } from 'react';
-
 interface LoginProps {
-  onUpdateIsUserAuthenticated: Dispatch<SetStateAction<boolean>>;
+  onUpdateIsUserAuthenticated: (isUserLoggedIn: boolean) => void;
+  onUpdateUserName: (userName: string) => void;
 }
 
 export default LoginProps;

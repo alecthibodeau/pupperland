@@ -1,4 +1,8 @@
 import React, { useState } from 'react';
+
+/* Components */
+import Loader from './Loader';
+
 /* Interfaces */
 import LoginProps from '../interfaces/LoginProps';
 
@@ -10,10 +14,12 @@ function Login(props: LoginProps): React.JSX.Element {
   const [name, setName] = useState<string>('');
   const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
   const [isNameValid, setIsNameValid] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { urls: { urlAuthLogin } } = stringValues;
   const validEmailAddress: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   async function logIn(): Promise<void> {
+    setIsLoading(true);
     try {
       const response: Response = await fetch(urlAuthLogin, {
         method: 'POST',
@@ -28,6 +34,7 @@ function Login(props: LoginProps): React.JSX.Element {
       }
       console.log(`Successfull login, status ${response.status}:`, response);
       props.onUpdateIsUserAuthenticated(true);
+      props.onUpdateUserName(name);
     } catch (error) {
       console.error('Error:', error);
     }
@@ -53,52 +60,55 @@ function Login(props: LoginProps): React.JSX.Element {
   }
 
   return (
-    <div className="login-container">
-      <div className="login">
-        <div className="login-fields">
-          <input
-            type="text"
-            placeholder="Name"
-            value={name}
-            maxLength={50}
-            onChange={handleChangeName}
-          />
-          <input
-            type="text"
-            placeholder="Email"
-            value={email}
-            maxLength={50}
-            onChange={handleChangeEmail}
-          />
+    <>
+      {isLoading ? <Loader /> : null}
+      <div className="login-container">
+        <div className="login">
+          <div className="login-fields">
+            <input
+              type="text"
+              placeholder="Name"
+              value={name}
+              maxLength={50}
+              onChange={handleChangeName}
+            />
+            <input
+              type="text"
+              placeholder="Email"
+              value={email}
+              maxLength={50}
+              onChange={handleChangeEmail}
+            />
+          </div>
+          <button
+            onClick={OnClickButtonLogin}
+            className="button-primary button-authentication button-login"
+          >
+            Log In
+          </button>
+          {
+            !isNameValid || !isEmailValid ?
+            <div className="validation-message-container">
+              {
+                !isNameValid ?
+                <div className="validation-message">
+                  Enter a valid name.
+                </div> :
+                null
+              }
+              {
+                !isEmailValid ?
+                <div className="validation-message">
+                  Enter a valid email.
+                </div> :
+                null
+              }
+            </div> :
+            null
+          }
         </div>
-        <button
-          onClick={OnClickButtonLogin}
-          className="button-primary button-authentication button-login"
-        >
-          Log In
-        </button>
-        {
-          !isNameValid || !isEmailValid ?
-          <div className="validation-message-container">
-            {
-              !isNameValid ?
-              <div className="validation-message">
-                Enter a valid name.
-              </div> :
-              null
-            }
-            {
-              !isEmailValid ?
-              <div className="validation-message">
-                Enter a valid email.
-              </div> :
-              null
-            }
-          </div> :
-          null
-        }
       </div>
-    </div>
+    </>
   );
 }
 

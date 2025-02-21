@@ -1,8 +1,6 @@
-import { Dispatch, SetStateAction } from 'react';
-
 interface HeaderProps {
   isUserAuthenticated: boolean;
-  onUpdateIsUserAuthenticated: Dispatch<SetStateAction<boolean>>;
+  onUpdateIsUserAuthenticated: (isUserLoggedIn: boolean) => void;
 }
 
 export default HeaderProps;

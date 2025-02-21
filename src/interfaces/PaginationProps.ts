@@ -2,7 +2,7 @@ interface PaginationProps {
   currentPageNumber: number;
   displayedButtonsCount: number;
   totalPagesCount: number;
-  onClickButtonPageNumber: (page: number) => void;
+  onClickButtonPageNumber: (pageNumber: number) => void;
 }
 
 export default PaginationProps;

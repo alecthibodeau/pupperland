@@ -10,7 +10,8 @@ import Login from './components/Login'
 import './App.css'
 
 function App() {
-  const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
+  const [isUserAuthenticated, setIsUserAuthenticated] = useState<boolean>(false);
+  const [userName, setIsUserName] = useState<string>('');
 
   return (
     <>
@@ -21,8 +22,11 @@ function App() {
       <main>
         {
           isUserAuthenticated ?
-          <DogsSearch /> :
-          <Login onUpdateIsUserAuthenticated={setIsUserAuthenticated}/>
+          <DogsSearch userName={userName} /> :
+          <Login
+            onUpdateIsUserAuthenticated={setIsUserAuthenticated}
+            onUpdateUserName={setIsUserName}
+          />
         }
       </main>
       <Footer />

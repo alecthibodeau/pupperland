@@ -32,16 +32,11 @@ function Header(props: HeaderProps ): React.JSX.Element {
       </span>
       <span className="header-actions-container">
         <span className="header-link-container">
-          <a href={urlPupperlandReadMe}>
-            Read Me
-          </a>
+          <a href={urlPupperlandReadMe} target="_blank">Read Me</a>
         </span>
         {
           props.isUserAuthenticated ?
-          <button
-            onClick={logOut}
-            className="button-primary button-authentication"
-          >
+          <button onClick={logOut} className="button-primary button-authentication">
             Log out
           </button> :
           null

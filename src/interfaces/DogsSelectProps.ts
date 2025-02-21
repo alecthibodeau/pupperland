@@ -3,7 +3,7 @@ import Dog from './Dog';
 
 interface DogsSelectProps {
   dogs: Dog[];
-  onClickButtonNewSearch: (value: boolean) => void;
+  onClickButtonNewSearch: (isNewSearch: boolean) => void;
 }
 
 export default DogsSelectProps;
