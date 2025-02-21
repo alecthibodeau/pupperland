@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 /* Interfaces */
 import HeaderProps from '../interfaces/HeaderProps';
@@ -7,7 +8,11 @@ import HeaderProps from '../interfaces/HeaderProps';
 import stringValues from '../constants/string-values';
 
 function Header(props: HeaderProps ): React.JSX.Element {
-  const { urls: { urlPupperlandReadMe, urlAuthLogout } } = stringValues;
+  const navigate = useNavigate();
+  const {
+    routes: { routeHome },
+    urls: { urlPupperlandReadMe, urlAuthLogout }
+  } = stringValues;
 
   async function logOut(): Promise<void> {
     try {
@@ -20,6 +25,7 @@ function Header(props: HeaderProps ): React.JSX.Element {
       }
       console.log(`Successfull logout, status ${response.status}:`, response);
       props.onUpdateIsUserAuthenticated(false);
+      navigate(routeHome);
     } catch (error) {
       console.error('Error:', error);
     }
