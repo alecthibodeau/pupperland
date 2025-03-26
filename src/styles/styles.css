@@ -53,7 +53,7 @@ h2 {
 }
 
 .button-primary,
-.header-link-container {
+.header-link {
   padding: .375rem .75rem;
   border: none;
   border-radius: var(--border-radius-medium);
@@ -78,7 +78,7 @@ h2 {
 }
 
 .button-authentication,
-.header-link-container {
+.header-link {
   font-weight: 600;
   background-color: var(--color-violet-medium);
   color: var(--color-application-light);
@@ -116,7 +116,7 @@ h2 {
   }
 
   .button-primary,
-  .header-link-container {
+  .header-link {
     padding: .5rem 1rem;
   }
 }

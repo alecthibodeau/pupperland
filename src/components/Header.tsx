@@ -36,9 +36,13 @@ function Header(props: HeaderProps ): React.JSX.Element {
         Pupperland
       </span>
       <span className="header-actions-container">
-        <span className="header-link-container">
-          <a href={urlPupperlandReadMe} target="_blank">Read Me</a>
-        </span>
+        <a
+          href={urlPupperlandReadMe}
+          className="header-link"
+          target="_blank"
+        >
+          Read Me
+        </a>
         {
           props.isUserAuthenticated ?
           <button onClick={logOut} className="button-primary button-authentication">

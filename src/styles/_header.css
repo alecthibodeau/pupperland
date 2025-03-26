@@ -21,7 +21,7 @@ header {
   gap: .25rem;
 }
 
-.header-link-container a {
+.header-link {
   text-decoration: none;
   color: var(--color-application-light);
 }
