@@ -1,5 +1,5 @@
 /* Interfaces */
-import ButtonFilterProps from '../interfaces/ButtonFilter';
+import ButtonFilterProps from '../interfaces/ButtonFilterProps';
 
 /* Constants */
 import stringValues from '../constants/string-values';
