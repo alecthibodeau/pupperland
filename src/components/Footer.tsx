@@ -9,7 +9,8 @@ function Footer(): React.JSX.Element {
   return (
     <footer>
       <span>
-        <a href={urlPortfolio}>Alec Thibodeau</a>, {new Date().getFullYear()}
+        <a href={urlPortfolio} target="_blank">Alec Thibodeau</a>
+        , {new Date().getFullYear()}
       </span>
     </footer>
   );
