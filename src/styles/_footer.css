@@ -1,10 +1,8 @@
 footer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   z-index: 1;
   padding: 1rem;
   margin-top: auto;
+  font-size: .75rem;
   background-color: var(--color-orange-medium);
 
   a {
