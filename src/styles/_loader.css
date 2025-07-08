@@ -13,10 +13,8 @@
 .loader {
   border-width: 6px;
   border-style: solid;
-  border-top-color: var(--color-violet-medium);
-  border-right-color: var(--color-blue-green-medium);
-  border-bottom-color: var(--color-gold-dark);
-  border-left-color: var(--color-orange-medium);
+  border-color: var(--color-blue-medium-transparent);
+  border-top-color: var(--color-blue-medium);
   border-radius: 50%;
   width: 60px;
   height: 60px;

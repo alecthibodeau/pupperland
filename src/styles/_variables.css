@@ -17,6 +17,7 @@
   /* Colors Hued */
   --color-blue-dark: #1252f0;
   --color-blue-medium: #2c62e9;
+  --color-blue-medium-transparent: rgba(44, 98, 233, 0.375);
   --color-blue-light: #4f9cff;
   --color-blue-lighter: #b1d3ff;
   --color-blue-green-medium: #87ebc9;
