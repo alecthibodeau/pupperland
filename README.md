@@ -1,32 +1,22 @@
 # Pupperland
 
-## Run this site locally
-In your local machine's command line interface (CLI) enter the following commands to clone and then serve the application:
+## What's Pupperland?
+Pupperland is a portal that simulates browsing a directory of shelter dogs (puppers!) that are available to bring home. The user is able to search thousands of dogs based on preferences like breed, age, number of dogs searched and zip code. The user can then select their favorite dogs and request a match. The matching process results in a single dog selected for the user.
 
-1. `git clone https://github.com/alecthibodeau/pupperland.git`
-2. `cd pupperland`
-3. `npm install`
-4. `npm run dev`
-
-- Note the port number (likely `5173`) in your CLI's address
-- In your browser navigate to `http://localhost:5173/pupperland` &mdash; or to the equivalent port number
-
-## What is Pupperland?
-Pupperland is a site that simulates browsing a directory of shelter dogs (puppers!) that are available to bring home. The user is able to search thousands of dogs based on preferences like breed, age, number of dogs searched and zip code. The user can then select their favorite dogs and request a match. The matching process results in a single dog selected for the user.
-
-## Where is Pupperland?
+## Where's Pupperland?
 [pupperland.com](https://pupperland.com) redirects to [alect.me/pupperland](https://alect.me/pupperland)
 
 **Caveat**: If you're viewing Pupperland on a mobile device you'll need to set your browser to allow [HttpOnly](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#httponly) cookies. On an iPhone, for example,  go to `Settings > Apps > Safari` and then uncheck the "Prevent Cross-Website Tracking" checkbox. Otherwise you won't be fully authenticated, which means search functionality won't work. And logout won't work either &mdash; at least not without reloading.
 
 ## How to use Pupperland
 Follow these steps:
-1. Log in with a name and email address
-2. Configure any of the search preferences and then click the `Search Dogs` button
-3. From the list of resulting dog cards click at least two cards to enable the `Match` button at lower-right
-4. Click the `Match` button
-5. See the resulting matched dog
-6. Search again as many times as you wish
+1. Log in with a name and email address &mdash; any dummy email address should work, with no registration required
+2. (Optional) Configure any of the search preferences: Breed, Age, Search Size, Zip Code
+3. Click the `Search Dogs` button
+4. From the list of resulting dog cards click at least two cards to enable the `Match` button at lower-right
+5. Click the `Match` button
+6. See the resulting matched dog
+7. Search again as many times as you wish
 
 ## Features
 
@@ -102,7 +92,7 @@ Follow these steps:
 
 ## Technologies
 
-Pupperland is built with:
+Pupperland is a client-side user interface. It makes requests to API endpoints at a back end built by Fetch. Pupperland's front end  is built with:
 - [React](https://react.dev)
 - [React Router](https://reactrouter.com)
 - [TypeScript](https://www.typescriptlang.org)
