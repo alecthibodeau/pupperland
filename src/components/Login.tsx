@@ -73,7 +73,7 @@ function Login(props: LoginProps): React.JSX.Element {
             />
             <input
               type="text"
-              placeholder="Email"
+              placeholder="Email (real or dummy)"
               value={email}
               maxLength={50}
               onChange={handleChangeEmail}
